@@ -1,0 +1,27 @@
+/.project
+/bin/
+/build/
+/.classpath
+/.gradle/
+/.settings/
+/task-api/.project
+/task-api/.settings
+/task-api/.classpath
+/task-api/bin/
+/task-executor/.project
+/task-executor/.settings
+/task-executor/.classpath
+/task-executor/bin/
+/task-message/.project
+/task-message/.settings
+/task-message/.classpath
+/task-message/bin/
+/gradle/
+/.gitattributes
+/docker/certs/
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

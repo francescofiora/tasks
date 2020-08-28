@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+  tasks-mongodb:
+    image: mongo:4.2.3
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    ports:
+      - '27017:27017'
+    volumes:
+      - tasks-mongodb-data:/data/db
+
+  tasks-activemq:
+    image: artemis-debian
+    environment:
+      ARTEMIS_USER: artemis
+      ARTEMIS_PASSWORD: artemis
+      ANONYMOUS_LOGIN: "false"
+      EXTRA_ARGS: "--http-host tasks-activemq --relax-jolokia"
+    volumes:
+      - "./artemis-instance:/var/lib/artemis-instance"
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+
+  tasks-mysql:
+    image: mysql:8.0.21
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - tasks-mysql-data:/var/lib/mysql
+      - "./conf.d:/etc/mysql/conf.d/"
+      - "./certs:/etc/certs"
+      - "./data:/docker-entrypoint-initdb.d"
+    ports:
+      - "3306:3306"
+   
+  tasks-myadmin:
+    image: phpmyadmin/phpmyadmin:5.0.2
+    environment:
+      - PMA_HOST=tasks-mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=secret
+    volumes:
+      - "./certs:/etc/certs"
+      - "./phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
+    ports:
+      - "8080:80"
+
+volumes:
+  tasks-mysql-data:
+  tasks-mongodb-data:
