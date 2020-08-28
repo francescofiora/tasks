@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.validation.constraints.NotBlank;
 
@@ -62,25 +63,12 @@ public class ParameterDto implements Serializable {
       return false;
     }
     ParameterDto other = (ParameterDto) obj;
-    if (name == null) {
-      if (other.name != null) {
-        return false;
-      }
-    } else {
-      if (!name.equals(other.name)) {
-        return false;
-      }
+    if ((other.getName() == null && other.getValue() == null)
+        || (getName() == null && getValue() == null)) {
+      return false;
     }
-    if (value == null) {
-      if (other.value != null) {
-        return false;
-      }
-    } else {
-      if (!value.equals(other.value)) {
-        return false;
-      }
-    }
-    return true;
+    return Objects.equals(getName(), other.getName())
+        && Objects.equals(getValue(), other.getValue());
   }
 
   @Override

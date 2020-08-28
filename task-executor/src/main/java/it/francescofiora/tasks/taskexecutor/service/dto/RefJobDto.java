@@ -74,11 +74,11 @@ public class RefJobDto implements Serializable {
       return false;
     }
 
-    RefTaskDto refAuthorDto = (RefTaskDto) o;
-    if (refAuthorDto.getId() == null || getId() == null) {
+    RefJobDto other = (RefJobDto) o;
+    if (other.getId() == null || getId() == null) {
       return false;
     }
-    return Objects.equals(getId(), refAuthorDto.getId());
+    return Objects.equals(getId(), other.getId());
   }
 
   @Override

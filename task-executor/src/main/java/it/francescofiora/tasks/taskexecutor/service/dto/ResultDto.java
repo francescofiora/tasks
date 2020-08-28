@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -58,14 +59,10 @@ public class ResultDto implements Serializable {
       return false;
     }
     ResultDto other = (ResultDto) obj;
-    if (value == null) {
-      if (other.value != null) {
-        return false;
-      }
-    } else if (!value.equals(other.value)) {
+    if (other.getValue() == null || getValue() == null) {
       return false;
     }
-    return true;
+    return Objects.equals(getValue(), other.getValue());
   }
 
   @Override

@@ -36,7 +36,7 @@ public class TaskRepositoryTest extends AbstractTestRepository {
           || assertEquals(expecteted2, actual)).isTrue();
     }
 
-    Task expecteted3 = createAuthor3();
+    Task expecteted3 = createTask3();
     Task task = tasks.getContent().get(0);
     task.setJmsMessageId(expecteted3.getJmsMessageId());
     task.setJobInstanceId(expecteted3.getJobInstanceId());
@@ -72,7 +72,7 @@ public class TaskRepositoryTest extends AbstractTestRepository {
         && expecteted.getTaskType().equals(actual.getTaskType());
   }
 
-  private Task createAuthor3() {
+  private Task createTask3() {
     return new Task()
         .jmsMessageId("ABC")
         .jobInstanceId(1L)
