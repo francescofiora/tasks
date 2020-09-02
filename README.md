@@ -22,6 +22,12 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
 ### Using Docker to simplify development
 The purpose of this tutorial is a Producer consumer microservice, however I have inserted and a Dockerfile for MySql and phpMyAdmin + ActiveMQ Artemis + MongoDb.
 
+### Compile
+    ./gradlew clean build
+
+Check Reports available on task-api/build/reports/checkstyle/main.html and task-executor/build/reports/checkstyle/main.html
+Tests Reports available on task-api/build/reports/tests/test/index.html and task-executor/build/reports/tests/test/index.html
+
 ### Create artemis-debian image
  - Download Apache Artemis (https://activemq.apache.org/components/artemis/download/)
     tar xvzf apache-artemis-2.14.0-bin.tar.gz
@@ -34,31 +40,39 @@ The purpose of this tutorial is a Producer consumer microservice, however I have
  - Check image created
     docker image ls artemis-debian
 
-### Compile
-    ./gradlew clean build
-
-Check Reports available on task-api/build/reports/checkstyle/main.html and task-executor/build/reports/checkstyle/main.html
-Tests Reports available on task-api/build/reports/tests/test/index.html and task-executor/build/reports/tests/test/index.html
-
-### Create self-aigned certificates
-    cd docker
-    ./create_certificate.sh
+## Dev environment
+Basic environment for development with dev profile.
 
 ### Hot to execute applications
-    docker-compose -f docker/app.yml up
+    docker-compose -f docker_dev/app.yml rm
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
     java -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
 
+it could be possible run applications using Eclipse 
+
  - http://localhost:8081/tasks-api/swagger-ui.html
- - http://localhost:8082/tasks-executor/swagger-ui/index.html
+ - http://localhost:8082/tasks-executor/swagger-ui.html
  - http://localhost:8080/
+ - http://localhost:8161/console/login
 
 ### Debug Support
 java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
 
-### How to execute with JMX support
-    java -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false  -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
-    java -Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false  -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
+## System Integration Test environment
+Environment with sit profile and SSL connection.
+
+### Create self-signed certificates and prepare environment
+    cd docker
+    ./create_all_certificates.sh
+    ./cp_jars.sh
+
+### Hot to execute applications
+    docker-compose -f docker/app.yml up
+
+ - https://localhost:8081/tasks-api/swagger-ui.html
+ - https://localhost:8082/tasks-executor/swagger-ui.html
+ - http://localhost:8080/
+ - http://localhost:8161/console/login
 
  - service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
  - service:jmx:rmi:///jndi/rmi://localhost:9998/jmxrmi

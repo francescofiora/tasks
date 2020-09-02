@@ -8,10 +8,12 @@
 /task-api/.settings
 /task-api/.classpath
 /task-api/bin/
+/task-api/logs/
 /task-executor/.project
 /task-executor/.settings
 /task-executor/.classpath
 /task-executor/bin/
+/task-executor/logs/
 /task-message/.project
 /task-message/.settings
 /task-message/.classpath

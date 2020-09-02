@@ -5,7 +5,6 @@ KEY_STORE_PEM_FILE="./certs/${2}-key.pem"
 REQ_FILE="./certs/${2}-req.pem"
 CERT_FILE="./certs/${2}-cert.pem"
 KEY_STORE_P12_FILE="./certs/${2}-keystore.p12"
-TRUST_STORE_JKS_FILE="./certs/${2}-truststore.ts"
 KEY_STORE_JKS_FILE="./certs/${2}-keystore.jks"
 
 # Create the certificates
@@ -15,7 +14,7 @@ if [ ! -f $KEY_STORE_PEM_FILE ]; then
 fi	
 
 if [ ! -f $CERT_FILE ]; then
-	openssl x509 -req -in $REQ_FILE -days 3600 -CA ./certs/ca.pem -CAkey ./certs/ca-key.pem -set_serial 01 -out $CERT_FILE
+	openssl x509 -req -in $REQ_FILE -days 3600 -CA ./certs/ca.pem -CAkey ./certs/ca-key.pem -set_serial $3 -out $CERT_FILE
 fi
 
 # Verify the certificate are correct
@@ -27,10 +26,9 @@ if [ ! -f $KEY_STORE_P12_FILE ]; then
 	openssl pkcs12 -export -in $CERT_FILE -inkey $KEY_STORE_PEM_FILE -passout pass:mypass -out $KEY_STORE_P12_FILE
 fi
 
-if [ ! -f $TRUST_STORE_JKS_FILE ]; then
-	keytool -importcert -file ./certs/ca.pem -keystore $TRUST_STORE_JKS_FILE -storepass mypass -noprompt
-fi
+keytool -importcert -trustcacerts -file $CERT_FILE -keystore ./certs/truststore.ts -storepass mypass -alias $2 -noprompt
 
 if [ ! -f $KEY_STORE_JKS_FILE ]; then
 	keytool -importkeystore -srckeystore $KEY_STORE_P12_FILE -srcstoretype pkcs12 -srcstorepass mypass -destkeystore $KEY_STORE_JKS_FILE -deststoretype JKS -deststorepass mypass
+	keytool -import -alias ca -keystore $KEY_STORE_JKS_FILE -file ./certs/ca.pem -storepass mypass -noprompt
 fi

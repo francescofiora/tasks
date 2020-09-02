@@ -6,10 +6,16 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=secret
+    command:
+      - '--config'
+      - '/etc/mongo.conf'
+      - '--bind_ip_all'
     ports:
       - '27017:27017'
     volumes:
       - tasks-mongodb-data:/data/db
+      - "./mongodb/mongo.conf:/etc/mongo.conf"
+      - "./certs:/etc/ssl"
 
   tasks-activemq:
     image: artemis-debian
@@ -30,9 +36,9 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - tasks-mysql-data:/var/lib/mysql
-      - "./conf.d:/etc/mysql/conf.d/"
+      - "./mysql/conf.d:/etc/mysql/conf.d/"
       - "./certs:/etc/certs"
-      - "./data:/docker-entrypoint-initdb.d"
+      - "./mysql/data:/docker-entrypoint-initdb.d"
     ports:
       - "3306:3306"
    
@@ -47,6 +53,32 @@ services:
       - "./phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
     ports:
       - "8080:80"
+
+  tasks-api:
+    image: openjdk:8-jdk-alpine
+    environment:
+      - "SPRING_PROFILES_ACTIVE=sit"
+    volumes:
+      - "./tasks-api:/workspace"
+    working_dir: /workspace
+    command: java -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar ./task-api-1.0-SNAPSHOT.jar
+    ports:
+      - '8081:8081'
+    depends_on:
+      - tasks-mongodb
+
+  task-executor:
+    image: openjdk:8-jdk-alpine
+    environment:
+      - "SPRING_PROFILES_ACTIVE=sit"
+    volumes:
+      - "./tasks-executor:/workspace"
+    working_dir: /workspace
+    command: java -Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar ./task-executor-1.0-SNAPSHOT.jar
+    ports:
+      - '8082:8082'
+    depends_on:
+      - tasks-mysql
 
 volumes:
   tasks-mysql-data:

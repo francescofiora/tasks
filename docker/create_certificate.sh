@@ -12,10 +12,12 @@ if [ ! -f $KEY_STORE_FILE ]; then
 fi	
 
 if [ ! -f $CERT_FILE ]; then
-	openssl x509 -req -in $REQ_FILE -days 3600 -CA ./certs/ca.pem -CAkey ./certs/ca-key.pem -set_serial 01 -out $CERT_FILE
+	openssl x509 -req -in $REQ_FILE -days 3600 -CA ./certs/ca.pem -CAkey ./certs/ca-key.pem -set_serial $3 -out $CERT_FILE
 fi
 
 # Verify the certificate are correct
 openssl verify -CAfile ./certs/ca.pem $CERT_FILE
+
+keytool -importcert -file $CERT_FILE -keystore ./certs/truststore.ts -storepass mypass -alias $2 -noprompt
 
 chmod a=r $KEY_STORE_FILE

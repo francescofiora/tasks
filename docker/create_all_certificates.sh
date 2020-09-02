@@ -1,8 +1,10 @@
 #!/bin/bash
-OPENSSL_SUBJ="/C=IT/ST=Ireland/L=Cork"
+OPENSSL_SUBJ="/C=IE/ST=Ireland/L=Cork"
 OPENSSL_CA="${OPENSSL_SUBJ}/CN=ca.francescofiora.it"
 
-# Generate new CA certificate ca.pem file.
+if [ -d ./certs ]; then
+	rm certs/*
+fi
 if [ ! -d ./certs ]; then
 	mkdir certs
 fi
@@ -18,13 +20,23 @@ fi
 
 chmod a=r ./certs/ca.pem
 
-./create_java_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-activemq" activemq
-./create_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-mysql" mysql
-./create_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-myadmin" myadmin
-./create_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-mongodb" mongodb
-./create_java_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-api" tasks
-./create_java_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-executor" executor
-./create_java_certificate.sh "${OPENSSL_SUBJ}/CN=localhost" localhost
+keytool -importcert -file ./certs/ca.pem -keystore ./certs/truststore.ts -storepass mypass -alias "ca.francescofiora.it" -noprompt
 
-cp ./certs/activemq-keystore.jks ./artemis-instance/etc
-cp ./certs/activemq-truststore.ts ./artemis-instance/etc
+./create_java_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-activemq" "tasks-activemq" "01"
+./create_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-mysql" "tasks-mysql" "02"
+./create_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-myadmin" "tasks-myadmin" "03"
+./create_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-mongodb" "tasks-mongodb" "04"
+./create_java_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-api" "tasks-api" "05"
+./create_java_certificate.sh "${OPENSSL_SUBJ}/CN=tasks-executor" "tasks-executor" "06"
+
+cp ./certs/tasks-activemq-keystore.jks ./artemis-instance/etc
+cp ./certs/truststore.ts ./artemis-instance/etc
+
+cp ./certs/tasks-api-keystore.jks ./tasks-api/config
+cp ./certs/truststore.ts ./tasks-api/config
+
+cp ./certs/tasks-executor-keystore.jks ./tasks-executor/config
+cp ./certs/truststore.ts ./tasks-executor/config
+
+cat ./certs/tasks-mongodb-key.pem ./certs/tasks-mongodb-cert.pem > ./certs/mongodb.pem
+

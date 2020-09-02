@@ -21,7 +21,7 @@ dependencies {
 
 	implementation "org.mapstruct:mapstruct:${mapstruct_version}"
   annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
-
+  
   implementation project(':task-message')
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -49,5 +49,9 @@ test {
 
 task cleanResources(type: Delete) {
     delete "build/resources"
+}
+
+bootBuildImage {
+	imageName = "francescofiora.it/library/${project.name}:${project.version}"
 }
 
