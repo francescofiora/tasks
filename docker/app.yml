@@ -66,6 +66,7 @@ services:
       - '8081:8081'
     depends_on:
       - tasks-mongodb
+      - tasks-activemq
 
   task-executor:
     image: openjdk:8-jdk-alpine
@@ -79,6 +80,7 @@ services:
       - '8082:8082'
     depends_on:
       - tasks-mysql
+      - tasks-activemq
 
 volumes:
   tasks-mysql-data:

@@ -4,9 +4,12 @@ import it.francescofiora.tasks.message.MessageDto;
 
 import javax.jms.ConnectionFactory;
 
+import org.apache.activemq.ActiveMQSslConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
@@ -29,6 +32,24 @@ public class JmsConfig {
     converter.setTargetType(MessageType.TEXT);
     converter.setTypeIdPropertyName(MessageDto.class.getName());
     return converter;
+  }
+
+  @Profile("!dev")
+  @Bean
+  public ConnectionFactory connectionFactory(
+          @Value("${spring.activemq.broker-url}") String brokerUrl,
+          @Value("${spring.activemq.ssl.trustStorePath}") String trustStorePath,
+          @Value("${spring.activemq.ssl.trustStorePass}") String trustStorePass,
+          @Value("${spring.activemq.ssl.keyStorePath}") String keyStorePath,
+          @Value("${spring.activemq.ssl.keyStorePass}") String keyStorePass,
+          @Value("${spring.activemq.user}") String userName) throws Exception {
+      ActiveMQSslConnectionFactory factory = new ActiveMQSslConnectionFactory(brokerUrl);
+      factory.setTrustStore(trustStorePath);
+      factory.setTrustStorePassword(trustStorePass);
+      factory.setKeyStore(keyStorePath);
+      factory.setKeyStorePassword(keyStorePass);
+      factory.setUserName(userName);
+      return factory;
   }
 
   /**
