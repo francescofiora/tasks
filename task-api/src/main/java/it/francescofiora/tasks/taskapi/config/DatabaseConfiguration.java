@@ -102,8 +102,8 @@ public class DatabaseConfiguration extends AbstractMongoClientConfiguration {
           new SecureRandom());
 
       // TODO fix later
-//      sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(),
-//          new SecureRandom());
+      // sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(),
+      //   new SecureRandom());
 
       return sslContext;
     } catch (Exception e) {

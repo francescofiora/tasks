@@ -69,10 +69,10 @@ Environment with sit profile and SSL connection.
 ### Hot to execute applications
     docker-compose -f docker/app.yml up
 
- - https://localhost:8081/tasks-api/swagger-ui.html
- - https://localhost:8082/tasks-executor/swagger-ui.html
- - http://localhost:8080/
- - http://localhost:8161/console/login
+ - https://localhost:8081/tasks-api/swagger-ui.html (Tasks-Api)
+ - https://localhost:8082/tasks-executor/swagger-ui.html (Tasks-Executor)
+ - http://localhost:8080/ (PhpMyAdmin)
+ - https://localhost:8161/console/login (ActiveMQ)
 
  - service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
  - service:jmx:rmi:///jndi/rmi://localhost:9998/jmxrmi
