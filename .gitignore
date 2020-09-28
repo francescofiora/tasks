@@ -9,7 +9,9 @@
 /docker/*/*/*.jks
 /docker/*/*/*.ts
 /docker/*/*.jar
+/docker/*/log/
 /docker/*/logs/
+/docker/*/lock/
 /docker/certs/
 /task-api/.project
 /task-api/.settings
