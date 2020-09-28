@@ -44,7 +44,7 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
 Basic environment for development with dev profile.
 
 ### Hot to execute applications
-    docker-compose -f docker_dev/app.yml rm
+    docker-compose -f docker_dev/app.yml up
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
     java -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
 

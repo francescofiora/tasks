@@ -17,23 +17,27 @@ public abstract class AbstractTasklet implements Tasklet {
   public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
       throws Exception {
 
-    final ExecutionContext executionContext = chunkContext.getStepContext().getStepExecution()
-        .getJobExecution().getExecutionContext();
+    final ExecutionContext executionContext =
+        chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext();
     final StepContext stepContext = chunkContext.getStepContext();
-    final String jobName = stepContext.getJobName();
     final Long jobInstanceId = stepContext.getJobInstanceId();
     final Map<String, Object> jobParameters = stepContext.getJobParameters();
 
-    execute(jobName, jobInstanceId, jobParameters, executionContext);
+    execute(jobInstanceId, jobParameters, executionContext);
 
     return RepeatStatus.FINISHED;
   }
 
-  abstract void execute(String jobName, Long jobInstanceId, Map<String, Object> jobParameters,
+  abstract void execute(Long jobInstanceId, Map<String, Object> jobParameters,
       ExecutionContext executionContext);
 
   protected String getJmsMessageId(Map<String, Object> jobParameters) {
     return getString(jobParameters, JmsParameters.JMS_MESSAGE_ID);
+  }
+  
+
+  protected String getJobType(Map<String, Object> jobParameters) {
+    return getString(jobParameters, JmsParameters.JOB_TYPE);
   }
 
   protected Long getTaskRef(Map<String, Object> jobParameters) {
@@ -69,8 +73,8 @@ public abstract class AbstractTasklet implements Tasklet {
     return null;
   }
 
-  static final String TASK = "TASK";
-  
+  public static final String TASK = "TASK";
+
   protected void setTask(ExecutionContext executionContext, Task task) {
     executionContext.put(TASK, task);
   }

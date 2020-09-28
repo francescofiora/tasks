@@ -48,7 +48,8 @@ public class StrategyManagerImpl implements StrategyManager {
           .addString(JmsParameters.JMS_MESSAGE_ID, event.getJmsMessageId())
           .addString(JmsParameters.TASK_TYPE, type)
           .addLong(JmsParameters.TASK_REF, event.getRequest().getTaskId())
-          .addLong(JmsParameters.MESSAGE_CREATED, event.getTimestamp());
+          .addLong(JmsParameters.MESSAGE_CREATED, event.getTimestamp())
+          .addString(JmsParameters.JOB_TYPE, job.getName());
 
       event.getRequest().getParameters()
           .forEach((key, value) -> jobParametersBuilder.addString(key, value));

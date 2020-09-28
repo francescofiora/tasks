@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SaveDbTasklet extends AbstractTasklet {
 
+  public static final String NAME = "saveDbStep";
+  
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final TaskService taskService;
@@ -29,7 +31,7 @@ public class SaveDbTasklet extends AbstractTasklet {
   }
 
   @Override
-  void execute(String jobName, Long jobInstanceId, Map<String, Object> jobParameters,
+  void execute(Long jobInstanceId, Map<String, Object> jobParameters,
       ExecutionContext executionContext) {
     log.info("SaveDbTasklet.execute() id:" + jobInstanceId);
 
@@ -47,7 +49,7 @@ public class SaveDbTasklet extends AbstractTasklet {
           .filter(parameter -> parameter.getValue() != null).collect(Collectors.toSet()));
     }
     task.setJmsMessageId(getJmsMessageId(jobParameters));
-    task.setJobName(JobType.valueOf(jobName));
+    task.setJobName(JobType.valueOf(getJobType(jobParameters)));
     task.setTaskType(getTaskType(jobParameters));
     task.setMessageCreated(new Timestamp(getMessageCreated(jobParameters)));
     task.setJobInstanceId(jobInstanceId);

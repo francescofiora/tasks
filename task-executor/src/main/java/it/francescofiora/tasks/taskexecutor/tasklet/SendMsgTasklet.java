@@ -15,26 +15,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class SendMsgTasklet extends AbstractTasklet {
 
+  public static final String NAME = "sendMsgStep";
+
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final TaskResponder taskResponder;
-  
+
   public SendMsgTasklet(TaskResponder taskResponder) {
     super();
     this.taskResponder = taskResponder;
   }
 
   @Override
-  void execute(String jobName, Long jobInstanceId, Map<String, Object> parameter,
+  void execute(Long jobInstanceId, Map<String, Object> parameter,
       ExecutionContext executionContext) {
     log.info("SendMsgTasklet.execute() id:" + jobInstanceId);
-    
+
     Task task = getTask(executionContext);
-    
-    taskResponder.send(new MessageDtoResponseImpl()
-        .taskId(task.getTaskRef())
-        .type(TaskType.valueOf(task.getTaskType()))
-        .status(task.getStatus())
+
+    taskResponder.send(new MessageDtoResponseImpl().taskId(task.getTaskRef())
+        .type(TaskType.valueOf(task.getTaskType())).status(task.getStatus())
         .result(task.getResult()));
   }
 }

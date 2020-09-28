@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShortTasklet extends AbstractTasklet {
 
+  public static final String NAME = "shortStep";
+
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
-  
+
   private final TaskService taskService;
 
   public ShortTasklet(TaskService taskService) {
@@ -24,10 +26,10 @@ public class ShortTasklet extends AbstractTasklet {
   }
 
   @Override
-  void execute(String jobName, Long jobInstanceId, Map<String, Object> jobParameters,
+  void execute(Long jobInstanceId, Map<String, Object> jobParameters,
       ExecutionContext executionContext) {
     log.info("ShortTasklet.execute() id:" + jobInstanceId);
-    
+
     try {
       Thread.sleep(100);
     } catch (Exception e) {

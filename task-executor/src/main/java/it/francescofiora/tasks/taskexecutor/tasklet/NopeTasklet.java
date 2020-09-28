@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class NopeTasklet extends AbstractTasklet {
 
+  public static final String NAME = "nopeStep";
+
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
-  
+
   private final TaskService taskService;
 
   public NopeTasklet(TaskService taskService) {
@@ -24,10 +26,10 @@ public class NopeTasklet extends AbstractTasklet {
   }
 
   @Override
-  void execute(String jobName, Long jobInstanceId, Map<String, Object> jobParameters,
+  void execute(Long jobInstanceId, Map<String, Object> jobParameters,
       ExecutionContext executionContext) {
     log.info("NopeTasklet.execute() id:" + jobInstanceId);
-    
+
     Task task = getTask(executionContext);
     task.setStatus(TaskStatus.ERROR);
     task.setResult("Type not supported!");

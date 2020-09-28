@@ -22,32 +22,32 @@ public class TaskRepositoryTest extends AbstractTestRepository {
   
   @Test
   public void testCRUD() throws Exception {
-    Task expecteted1 = createTask1();
-    Task expecteted2 = createTask2();
-    taskRepository.save(expecteted1);
-    taskRepository.save(expecteted2);
+    Task expected1 = createTask1();
+    Task expected2 = createTask2();
+    taskRepository.save(expected1);
+    taskRepository.save(expected2);
     
     Page<Task> tasks = taskRepository.findAll(PageRequest.of(0, 10));
     assertThat(tasks).isNotNull().isNotEmpty();
 
     for (Task actual : tasks) {
       assertThat(actual).isNotNull();
-      assertThat(assertEquals(expecteted1, actual)
-          || assertEquals(expecteted2, actual)).isTrue();
+      assertThat(assertEquals(expected1, actual)
+          || assertEquals(expected2, actual)).isTrue();
     }
 
-    Task expecteted3 = createTask3();
+    Task expected3 = createTask3();
     Task task = tasks.getContent().get(0);
-    task.setDescription(expecteted3.getDescription());
-    task.setStatus(expecteted3.getStatus());
-    task.setType(expecteted3.getType());
-    task.getResult().setValue(expecteted3.getResult().getValue());
+    task.setDescription(expected3.getDescription());
+    task.setStatus(expected3.getStatus());
+    task.setType(expected3.getType());
+    task.getResult().setValue(expected3.getResult().getValue());
     taskRepository.save(task);
 
     Optional<Task> optional = taskRepository.findById(task.getId());
     assertThat(optional).isPresent();
     task = optional.get();
-    assertThat(assertEquals(expecteted3, task)).isTrue();
+    assertThat(assertEquals(expected3, task)).isTrue();
 
     for (Task actual : tasks) {
       taskRepository.delete(actual);
@@ -57,11 +57,11 @@ public class TaskRepositoryTest extends AbstractTestRepository {
     assertThat(tasks).isNotNull().isEmpty();
   }
   
-  private boolean assertEquals(Task expecteted, Task task) {
-    return expecteted.getDescription().equals(task.getDescription())
-        && expecteted.getStatus().equals(task.getStatus())
-        && expecteted.getType().equals(task.getType())
-        && expecteted.getResult().equals(task.getResult());
+  private boolean assertEquals(Task expected, Task task) {
+    return expected.getDescription().equals(task.getDescription())
+        && expected.getStatus().equals(task.getStatus())
+        && expected.getType().equals(task.getType())
+        && expected.getResult().equals(task.getResult());
   }
 
   private Task createTask1() {

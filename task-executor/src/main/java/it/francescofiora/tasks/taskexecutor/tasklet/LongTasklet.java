@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class LongTasklet extends AbstractTasklet {
 
+  public static String NAME = "longTasklet";
+
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
-  
+
   private final TaskService taskService;
 
   public LongTasklet(TaskService taskService) {
@@ -24,10 +26,10 @@ public class LongTasklet extends AbstractTasklet {
   }
 
   @Override
-  void execute(String jobName, Long jobInstanceId, Map<String, Object> jobParameters,
+  void execute(Long jobInstanceId, Map<String, Object> jobParameters,
       ExecutionContext executionContext) {
     log.info("LongTasklet.execute() id:" + jobInstanceId);
-    
+
     try {
       Thread.sleep(1000);
     } catch (Exception e) {
@@ -39,5 +41,4 @@ public class LongTasklet extends AbstractTasklet {
     task.setResult("Task Terminated");
     taskService.save(task);
   }
-
 }

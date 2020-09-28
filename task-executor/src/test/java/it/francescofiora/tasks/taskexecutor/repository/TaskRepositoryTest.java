@@ -22,36 +22,36 @@ public class TaskRepositoryTest extends AbstractTestRepository {
   
   @Test
   public void testCRUD() throws Exception {
-    Task expecteted1 = createTask1();
-    Task expecteted2 = createTask2();
-    taskRepository.save(expecteted1);
-    taskRepository.save(expecteted2);
+    Task expected1 = createLongTask();
+    Task expected2 = createShortTask2();
+    taskRepository.save(expected1);
+    taskRepository.save(expected2);
 
     Page<Task> tasks = taskRepository.findAll(PageRequest.of(0, 10));
     assertThat(tasks).isNotNull().isNotEmpty();
 
     for (Task actual : tasks) {
       assertThat(actual).isNotNull();
-      assertThat(assertEquals(expecteted1, actual)
-          || assertEquals(expecteted2, actual)).isTrue();
+      assertThat(assertEquals(expected1, actual)
+          || assertEquals(expected2, actual)).isTrue();
     }
 
-    Task expecteted3 = createTask3();
+    Task expected3 = createShortTask1();
     Task task = tasks.getContent().get(0);
-    task.setJmsMessageId(expecteted3.getJmsMessageId());
-    task.setJobInstanceId(expecteted3.getJobInstanceId());
-    task.setJobName(expecteted3.getJobName());
-    task.setMessageCreated(expecteted3.getMessageCreated());
-    task.setResult(expecteted3.getResult());
-    task.setStatus(expecteted3.getStatus());
-    task.setTaskRef(expecteted3.getTaskRef());
-    task.setTaskType(expecteted3.getTaskType());
+    task.setJmsMessageId(expected3.getJmsMessageId());
+    task.setJobInstanceId(expected3.getJobInstanceId());
+    task.setJobName(expected3.getJobName());
+    task.setMessageCreated(expected3.getMessageCreated());
+    task.setResult(expected3.getResult());
+    task.setStatus(expected3.getStatus());
+    task.setTaskRef(expected3.getTaskRef());
+    task.setTaskType(expected3.getTaskType());
     taskRepository.save(task);
 
     Optional<Task> optional = taskRepository.findById(task.getId());
     assertThat(optional).isPresent();
     task = optional.get();
-    assertThat(assertEquals(expecteted3, task)).isTrue();
+    assertThat(assertEquals(expected3, task)).isTrue();
 
     for (Task actual : tasks) {
       taskRepository.delete(actual);
@@ -61,18 +61,18 @@ public class TaskRepositoryTest extends AbstractTestRepository {
     assertThat(tasks).isNotNull().isEmpty();
   }
 
-  private boolean assertEquals(Task expecteted, Task actual) {
-    return expecteted.getJmsMessageId().equals(actual.getJmsMessageId())
-        && expecteted.getJobInstanceId().equals(actual.getJobInstanceId())
-        && expecteted.getJobName().equals(actual.getJobName())
-        && expecteted.getMessageCreated().equals(actual.getMessageCreated())
-        && expecteted.getResult().equals(actual.getResult())
-        && expecteted.getStatus().equals(actual.getStatus())
-        && expecteted.getTaskRef().equals(actual.getTaskRef())
-        && expecteted.getTaskType().equals(actual.getTaskType());
+  private boolean assertEquals(Task expected, Task actual) {
+    return expected.getJmsMessageId().equals(actual.getJmsMessageId())
+        && expected.getJobInstanceId().equals(actual.getJobInstanceId())
+        && expected.getJobName().equals(actual.getJobName())
+        && expected.getMessageCreated().equals(actual.getMessageCreated())
+        && expected.getResult().equals(actual.getResult())
+        && expected.getStatus().equals(actual.getStatus())
+        && expected.getTaskRef().equals(actual.getTaskRef())
+        && expected.getTaskType().equals(actual.getTaskType());
   }
 
-  private Task createTask3() {
+  private Task createShortTask1() {
     return new Task()
         .jmsMessageId("ABC")
         .jobInstanceId(1L)
@@ -84,7 +84,7 @@ public class TaskRepositoryTest extends AbstractTestRepository {
         .result("Result1");
   }
 
-  private Task createTask2() {
+  private Task createShortTask2() {
     return new Task()
         .jmsMessageId("FBC")
         .jobInstanceId(2L)
@@ -96,7 +96,7 @@ public class TaskRepositoryTest extends AbstractTestRepository {
         .result("Result2");
   }
 
-  private Task createTask1() {
+  private Task createLongTask() {
     return new Task()
         .jmsMessageId("FWC")
         .jobInstanceId(3L)
