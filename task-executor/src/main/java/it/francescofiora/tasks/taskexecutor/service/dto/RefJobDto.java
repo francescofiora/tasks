@@ -9,7 +9,6 @@ import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
@@ -51,7 +50,7 @@ public class RefJobDto implements Serializable {
     this.id = id;
   }
 
-  @NotBlank
+  @NotNull
   public JobType getJobName() {
     return jobName;
   }

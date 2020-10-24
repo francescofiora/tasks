@@ -11,6 +11,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
@@ -51,7 +52,7 @@ public class NewTaskDto implements Serializable {
     this.type = type;
   }
 
-  @NotNull
+  @NotEmpty
   public Set<ParameterDto> getParameters() {
     return parameters;
   }

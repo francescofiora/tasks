@@ -1,6 +1,7 @@
 package it.francescofiora.tasks.taskapi.web.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,7 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -56,19 +57,18 @@ public class TasksApi {
    * {@code POST  /tasks} : Create a new task.
    *
    * @param taskDto the taskDto to create.
-   * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
-   *         body the new taskDto, or with status {@code 400 (Bad Request)} if the
-   *         task has already an ID.
+   * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new
+   *         taskDto, or with status {@code 400 (Bad Request)} if the task has already an ID.
    * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
-  @Operation(
-      summary = "add new Task", description = "add a new Task to the system", tags = { "task" })
-  @ApiResponses(
-      value = { @ApiResponse(responseCode = "201", description = "Task created"),
-          @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
-          @ApiResponse(responseCode = "409", description = "an existing Task already exists") })
+  @Operation(summary = "add new Task", description = "add a new Task to the system",
+      tags = {"task"})
+  @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Task created"),
+      @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+      @ApiResponse(responseCode = "409", description = "an existing Task already exists")})
   @PostMapping("/tasks")
-  public ResponseEntity<Void> createTask(@RequestBody NewTaskDto taskDto)
+  public ResponseEntity<Void> createTask(
+      @Parameter(description = "add new Task") @Valid @RequestBody NewTaskDto taskDto)
       throws URISyntaxException {
     log.debug("REST request to save Task : {}", taskDto);
     TaskDto result = taskService.create(taskDto);
@@ -81,19 +81,18 @@ public class TasksApi {
    * {@code PATCH  /tasks} : Patches an existing task.
    *
    * @param taskDto the taskDto to patch.
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with
-   *         status {@code 400 (Bad Request)} if the taskDto is not valid, or with
-   *         status {@code 500 (Internal Server Error)} if the taskDto couldn't be
-   *         patched.
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with status
+   *         {@code 400 (Bad Request)} if the taskDto is not valid, or with status
+   *         {@code 500 (Internal Server Error)} if the taskDto couldn't be patched.
    * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
-  @Operation(summary = "patch Task", description = "patch an Task to the system", tags = { "task" })
-  @ApiResponses(
-      value = { @ApiResponse(responseCode = "200", description = "Task patched"),
-          @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
-          @ApiResponse(responseCode = "404", description = "not found") })
+  @Operation(summary = "patch Task", description = "patch an Task to the system", tags = {"task"})
+  @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Task patched"),
+      @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+      @ApiResponse(responseCode = "404", description = "not found")})
   @PatchMapping("/tasks")
-  public ResponseEntity<Void> patchTask(@RequestBody UpdatableTaskDto taskDto)
+  public ResponseEntity<Void> patchTask(
+      @Parameter(description = "task to update") @Valid @RequestBody UpdatableTaskDto taskDto)
       throws URISyntaxException {
     log.debug("REST request to patch Task : {}", taskDto);
     if (taskDto.getId() == null) {
@@ -109,20 +108,15 @@ public class TasksApi {
    * {@code GET  /tasks} : get all the tasks.
    *
    * @param pageable the pagination information.
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
-   *         of tasks in body.
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
    */
-  @Operation(
-      summary = "searches tasks", description = "By passing in the appropriate options, "
-          + "you can search for available tasks in the system",
-      tags = { "task" })
-  @ApiResponses(
-      value = {
-          @ApiResponse(
-              responseCode = "200", description = "search results matching criteria",
-              content = @Content(
-                  array = @ArraySchema(schema = @Schema(implementation = TaskDto.class)))),
-          @ApiResponse(responseCode = "400", description = "bad input parameter") })
+  @Operation(summary = "searches tasks", description = "By passing in the appropriate options, "
+      + "you can search for available tasks in the system", tags = {"task"})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "search results matching criteria",
+          content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = TaskDto.class)))),
+      @ApiResponse(responseCode = "400", description = "bad input parameter")})
   @GetMapping("/tasks")
   public ResponseEntity<List<TaskDto>> getAllTasks(Pageable pageable) {
     log.debug("REST request to get a page of Tasks");
@@ -136,20 +130,20 @@ public class TasksApi {
    * {@code GET  /tasks/:id} : get the "id" task.
    *
    * @param id the id of the taskDto to retrieve.
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
-   *         the taskDto, or with status {@code 404 (Not Found)}.
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the taskDto, or
+   *         with status {@code 404 (Not Found)}.
    */
-  @Operation(
-      summary = "searches task by 'id'", description = "searches task by 'id'", tags = { "task" })
-  @ApiResponses(
-      value = {
-          @ApiResponse(
-              responseCode = "200", description = "search results matching criteria",
-              content = @Content(schema = @Schema(implementation = TaskDto.class))),
-          @ApiResponse(responseCode = "400", description = "bad input parameter"),
-          @ApiResponse(responseCode = "404", description = "not found") })
+  @Operation(summary = "searches task by 'id'", description = "searches task by 'id'",
+      tags = {"task"})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "search results matching criteria",
+          content = @Content(schema = @Schema(implementation = TaskDto.class))),
+      @ApiResponse(responseCode = "400", description = "bad input parameter"),
+      @ApiResponse(responseCode = "404", description = "not found")})
   @GetMapping("/tasks/{id}")
-  public ResponseEntity<TaskDto> getTask(@PathVariable Long id) {
+  public ResponseEntity<TaskDto> getTask(@Parameter(
+      description = "id of the task to get", required = true,
+      example = "1") @PathVariable Long id) {
     log.debug("REST request to get Task : {}", id);
     Optional<TaskDto> taskDto = taskService.findOne(id);
     return ResponseUtil.wrapOrNotFound(ENTITY_NAME, taskDto);
@@ -159,20 +153,19 @@ public class TasksApi {
    * {@code DELETE  /tasks} : Deletes an existing task.
    *
    * @param id the id of the taskDto to retrieve.
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with
-   *         status {@code 400 (Bad Request)} if the taskDto is not valid, or with
-   *         status {@code 500 (Internal Server Error)} if the taskDto couldn't be
-   *         deleted.
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with status
+   *         {@code 400 (Bad Request)} if the taskDto is not valid, or with status
+   *         {@code 500 (Internal Server Error)} if the taskDto couldn't be deleted.
    * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
-  @Operation(
-      summary = "delete Task", description = "delete an Task to the system", tags = { "task" })
-  @ApiResponses(
-      value = { @ApiResponse(responseCode = "204", description = "Task deleted"),
-          @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
-          @ApiResponse(responseCode = "404", description = "not found") })
+  @Operation(summary = "delete Task", description = "delete an Task to the system", tags = {"task"})
+  @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Task deleted"),
+      @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+      @ApiResponse(responseCode = "404", description = "not found")})
   @DeleteMapping("/tasks/{id}")
-  public ResponseEntity<Void> deleteTask(@PathVariable Long id) throws URISyntaxException {
+  public ResponseEntity<Void> deleteTask(@Parameter(
+      description = "id of the task to delete", required = true,
+      example = "1") @PathVariable Long id) throws URISyntaxException {
     log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
     return ResponseEntity.noContent()

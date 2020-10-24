@@ -13,6 +13,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +30,7 @@ public class TaskExecutorDto implements Serializable {
   @Schema(description = "Task", required = true)
   @JsonProperty("task")
   private RefTaskDto task;
-  
+
   @Schema(description = "JMS Unique identifier", required = true)
   @JsonProperty("jmsMessageId")
   private String jmsMessageId;
@@ -37,7 +38,7 @@ public class TaskExecutorDto implements Serializable {
   @Schema(description = "Job", required = true)
   @JsonProperty("job")
   private RefJobDto job = new RefJobDto();
-  
+
   @Schema(description = "status of task", example = "TERMINATED", required = true)
   @JsonProperty("status")
   private TaskStatus status;
@@ -45,7 +46,7 @@ public class TaskExecutorDto implements Serializable {
   @Schema(description = "messageCreated", required = true)
   @JsonProperty("messageCreated")
   private Timestamp messageCreated;
-  
+
   @Schema(description = "result of execution", required = false)
   @JsonProperty("result")
   @Valid
@@ -56,7 +57,7 @@ public class TaskExecutorDto implements Serializable {
   @Valid
   private Set<ParameterDto> parameters = new HashSet<>();
 
-  @NotBlank
+  @NotNull
   public Long getId() {
     return id;
   }
@@ -74,7 +75,7 @@ public class TaskExecutorDto implements Serializable {
     this.jmsMessageId = jmsMessageId;
   }
 
-  @NotBlank
+  @NotNull
   public RefJobDto getJob() {
     return job;
   }
@@ -83,7 +84,7 @@ public class TaskExecutorDto implements Serializable {
     this.job = job;
   }
 
-  @NotBlank
+  @NotNull
   public Timestamp getMessageCreated() {
     return messageCreated;
   }
@@ -92,7 +93,7 @@ public class TaskExecutorDto implements Serializable {
     this.messageCreated = messageCreated;
   }
 
-  @NotBlank
+  @NotNull
   public RefTaskDto getTask() {
     return task;
   }
@@ -118,7 +119,7 @@ public class TaskExecutorDto implements Serializable {
     this.result = result;
   }
 
-  @NotNull
+  @NotEmpty
   public Set<ParameterDto> getParameters() {
     return parameters;
   }

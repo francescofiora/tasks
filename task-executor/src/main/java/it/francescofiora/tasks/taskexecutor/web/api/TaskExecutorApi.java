@@ -1,6 +1,7 @@
 package it.francescofiora.tasks.taskexecutor.web.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -91,7 +92,9 @@ public class TaskExecutorApi {
           @ApiResponse(responseCode = "400", description = "bad input parameter"),
           @ApiResponse(responseCode = "404", description = "not found") })
   @GetMapping("/tasks/{id}")
-  public ResponseEntity<TaskExecutorDto> getTask(@PathVariable Long id) {
+  public ResponseEntity<TaskExecutorDto> getTask(@Parameter(
+      description = "id of the task to get", required = true,
+      example = "1") @PathVariable Long id) {
     log.debug("REST request to get Task : {}", id);
     Optional<TaskExecutorDto> taskDto = taskService.findOne(id);
     return ResponseUtil.wrapOrNotFound(ENTITY_NAME, taskDto);
@@ -114,7 +117,9 @@ public class TaskExecutorApi {
           @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
           @ApiResponse(responseCode = "404", description = "not found") })
   @DeleteMapping("/tasks/{id}")
-  public ResponseEntity<Void> deleteTask(@PathVariable Long id) throws URISyntaxException {
+  public ResponseEntity<Void> deleteTask(@Parameter(
+      description = "id of the task to delete", required = true,
+      example = "1") @PathVariable Long id) throws URISyntaxException {
     log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
     return ResponseEntity.noContent()

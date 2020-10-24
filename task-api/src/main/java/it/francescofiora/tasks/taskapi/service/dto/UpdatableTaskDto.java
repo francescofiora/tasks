@@ -6,9 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
@@ -24,7 +23,7 @@ public class UpdatableTaskDto implements Serializable {
   @JsonProperty("description")
   private String description;
 
-  @NotBlank
+  @NotNull
   public Long getId() {
     return id;
   }
