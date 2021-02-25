@@ -10,12 +10,14 @@ import org.mapstruct.Mapping;
  * Mapper for the entity {@link Task} and its DTO {@link TaskDto}.
  */
 @Mapper(componentModel = "spring", uses = {})
-public interface TaskMapper extends EntityMapper<TaskDto, Task> {
+public interface TaskMapper {
 
   @Mapping(target = "parameters", ignore = true)
   @Mapping(target = "removeParameter", ignore = true)
   Task toEntity(TaskDto taskDto);
 
+  TaskDto toDto(Task entity);
+  
   /**
    * new Task from Id.
    * @param id Long

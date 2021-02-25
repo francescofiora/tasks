@@ -11,7 +11,7 @@ import org.mapstruct.MappingTarget;
  * Mapper for the entity {@link Task} and its DTO {@link UpdatableTaskDto}.
  */
 @Mapper(componentModel = "spring", uses = {})
-public interface UpdatableTaskDtoTaskMapper extends EntityMapper<UpdatableTaskDto, Task> {
+public interface UpdatableTaskDtoTaskMapper {
 
   @Mapping(target = "type", ignore = true)
   @Mapping(target = "status", ignore = true)

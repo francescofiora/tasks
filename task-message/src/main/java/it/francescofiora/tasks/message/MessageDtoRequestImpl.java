@@ -1,24 +1,20 @@
 package it.francescofiora.tasks.message;
 
 import it.francescofiora.tasks.message.enumeration.TaskType;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
 
+@Getter
 public final class MessageDtoRequestImpl extends MessageDtoImpl
     implements MessageDtoRequest, Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   private Map<String, String> parameters = new HashMap<>();
-
-  @Override
-  public @NotNull Map<String, String> getParameters() {
-    return parameters;
-  }
 
   /**
    * builder helper for parameters.

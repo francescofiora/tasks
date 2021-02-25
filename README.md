@@ -80,11 +80,12 @@ Environment with sit profile and SSL connection.
 # Technologies used
 - [Gradle 6.3](https://gradle.org/)
 - [Java 8](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
-- [Spring Boot 2.3](https://spring.io/projects/spring-boot)
+- [Spring Boot 2.4](https://spring.io/projects/spring-boot)
 - [Spring Batch 4.2](https://spring.io/projects/spring-batch)
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Swagger OpeApi 3.0](https://swagger.io/specification/)
 - [Mapstruct 1.3](https://mapstruct.org/)
+- [Lombok 1.18](https://projectlombok.org/)
 - [Spring Data JPA](https://projects.spring.io/spring-data-jpa)
 - [Spring Data MongoDb](https://spring.io/projects/spring-data-mongodb)
 - [Mysql connector 8.0](https://www.mysql.com/products/connector/)

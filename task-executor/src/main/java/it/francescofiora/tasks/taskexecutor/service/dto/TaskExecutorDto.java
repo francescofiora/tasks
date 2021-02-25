@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -15,118 +14,57 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-import org.springframework.validation.annotation.Validated;
-
-@Validated
+@Getter
+@Setter
 public class TaskExecutorDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   @Schema(description = "Unique Task Execution identifier", example = "1", required = true)
   @JsonProperty("id")
   private Long id;
 
+  @NotNull
+  @Valid
   @Schema(description = "Task", required = true)
   @JsonProperty("task")
   private RefTaskDto task;
 
+  @NotBlank
   @Schema(description = "JMS Unique identifier", required = true)
   @JsonProperty("jmsMessageId")
   private String jmsMessageId;
 
+  @NotNull
+  @Valid
   @Schema(description = "Job", required = true)
   @JsonProperty("job")
   private RefJobDto job = new RefJobDto();
 
+  @NotNull
   @Schema(description = "status of task", example = "TERMINATED", required = true)
   @JsonProperty("status")
   private TaskStatus status;
 
+  @NotNull
   @Schema(description = "messageCreated", required = true)
   @JsonProperty("messageCreated")
   private Timestamp messageCreated;
 
+  @Valid
   @Schema(description = "result of execution", required = false)
   @JsonProperty("result")
-  @Valid
   private ResultDto result;
 
+  @NotEmpty
+  @Valid
   @Schema(required = true)
   @JsonProperty("parameters")
-  @Valid
   private Set<ParameterDto> parameters = new HashSet<>();
-
-  @NotNull
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  @NotBlank
-  public String getJmsMessageId() {
-    return jmsMessageId;
-  }
-
-  public void setJmsMessageId(String jmsMessageId) {
-    this.jmsMessageId = jmsMessageId;
-  }
-
-  @NotNull
-  public RefJobDto getJob() {
-    return job;
-  }
-
-  public void setJob(RefJobDto job) {
-    this.job = job;
-  }
-
-  @NotNull
-  public Timestamp getMessageCreated() {
-    return messageCreated;
-  }
-
-  public void setMessageCreated(Timestamp messageCreated) {
-    this.messageCreated = messageCreated;
-  }
-
-  @NotNull
-  public RefTaskDto getTask() {
-    return task;
-  }
-
-  public void setTask(RefTaskDto task) {
-    this.task = task;
-  }
-
-  @NotNull
-  public TaskStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(TaskStatus status) {
-    this.status = status;
-  }
-
-  public ResultDto getResult() {
-    return result;
-  }
-
-  public void setResult(ResultDto result) {
-    this.result = result;
-  }
-
-  @NotEmpty
-  public Set<ParameterDto> getParameters() {
-    return parameters;
-  }
-
-  public void setParameters(Set<ParameterDto> parameters) {
-    this.parameters = parameters;
-  }
 
   @Override
   public boolean equals(Object o) {

@@ -2,16 +2,19 @@ package it.francescofiora.tasks.taskapi.domain;
 
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+@Getter
+@Setter
 @Document(collection = "task")
 public class Task implements Serializable {
 
@@ -38,21 +41,9 @@ public class Task implements Serializable {
   @Field("result")
   private Result result;
   
-  public Long getId() {
-    return id;
-  }
-
   public Task id(Long id) {
     this.id = id;
     return this;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getDescription() {
-    return description;
   }
 
   public Task description(String description) {
@@ -60,38 +51,14 @@ public class Task implements Serializable {
     return this;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public TaskType getType() {
-    return type;
-  }
-
   public Task type(TaskType type) {
     this.type = type;
     return this;
   }
 
-  public void setType(TaskType type) {
-    this.type = type;
-  }
-
-  public TaskStatus getStatus() {
-    return status;
-  }
-
   public Task status(TaskStatus status) {
     this.status = status;
     return this;
-  }
-
-  public void setStatus(TaskStatus status) {
-    this.status = status;
-  }
-
-  public Set<Parameter> getParameters() {
-    return parameters;
   }
 
   public Task parameters(Set<Parameter> parameters) {
@@ -109,23 +76,10 @@ public class Task implements Serializable {
     return this;
   }
 
-  public void setParameters(Set<Parameter> parameters) {
-    this.parameters = parameters;
-  }
-
-  public Result getResult() {
-    return result;
-  }
-
   public Task result(Result result) {
     this.result = result;
     return this;
   }
-  
-  public void setResult(Result result) {
-    this.result = result;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

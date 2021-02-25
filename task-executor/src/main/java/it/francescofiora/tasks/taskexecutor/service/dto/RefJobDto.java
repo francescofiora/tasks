@@ -5,23 +5,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
-
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-import org.springframework.validation.annotation.Validated;
-
-@Validated
+@Getter
+@Setter
 public class RefJobDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   @Schema(description = "Unique Job identifier", example = "1", required = true)
   @JsonProperty("id")
   private Long id;
 
+  @NotNull
   @Schema(description = "Job name", required = true)
   @JsonProperty("jobName")
   private JobType jobName;
@@ -38,24 +39,6 @@ public class RefJobDto implements Serializable {
   public RefJobDto(Long id, JobType jobName) {
     super();
     this.id = id;
-    this.jobName = jobName;
-  }
-
-  @NotNull
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  @NotNull
-  public JobType getJobName() {
-    return jobName;
-  }
-
-  public void setJobName(JobType jobName) {
     this.jobName = jobName;
   }
 

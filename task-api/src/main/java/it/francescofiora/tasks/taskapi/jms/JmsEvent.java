@@ -1,7 +1,10 @@
 package it.francescofiora.tasks.taskapi.jms;
 
 import it.francescofiora.tasks.message.MessageDtoResponse;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public final class JmsEvent {
 
   private final MessageDtoResponse response;
@@ -19,18 +22,6 @@ public final class JmsEvent {
     this.response = response;
     this.jmsMessageId = jmsMessageId;
     this.timestamp = timestamp;
-  }
-
-  public MessageDtoResponse getResponse() {
-    return response;
-  }
-
-  public String getJmsMessageId() {
-    return jmsMessageId;
-  }
-
-  public Long getTimestamp() {
-    return timestamp;
   }
 
   @Override

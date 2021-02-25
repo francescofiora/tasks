@@ -1,9 +1,12 @@
 package it.francescofiora.tasks.taskapi.domain;
 
 import java.io.Serializable;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+@Getter
+@Setter
 public class Parameter implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -14,30 +17,14 @@ public class Parameter implements Serializable {
   @Field("value")
   private String value;
 
-  public String getName() {
-    return name;
-  }
-
   public Parameter name(String name) {
     this.name = name;
     return this;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getValue() {
-    return value;
-  }
-
   public Parameter value(String value) {
     this.value = value;
     return this;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
   }
 
   @Override

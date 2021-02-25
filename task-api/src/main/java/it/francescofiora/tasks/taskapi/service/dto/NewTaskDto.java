@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import it.francescofiora.tasks.message.enumeration.TaskType;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,53 +12,30 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-import org.springframework.validation.annotation.Validated;
-
-@Validated
+@Getter
+@Setter
 public class NewTaskDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @NotBlank
   @Schema(description = "description", example = "description", required = true)
   @JsonProperty("description")
   private String description;
 
+  @NotNull
   @Schema(description = "type of task", example = "SHORT", required = true)
   @JsonProperty("type")
   private TaskType type;
 
+  @NotEmpty
+  @Valid
   @Schema(required = true)
   @JsonProperty("parameters")
-  @Valid
   private Set<ParameterDto> parameters = new HashSet<>();
-
-  @NotBlank
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  @NotNull
-  public TaskType getType() {
-    return type;
-  }
-
-  public void setType(TaskType type) {
-    this.type = type;
-  }
-
-  @NotEmpty
-  public Set<ParameterDto> getParameters() {
-    return parameters;
-  }
-
-  public void setParameters(Set<ParameterDto> parameters) {
-    this.parameters = parameters;
-  }
 
   @Override
   public int hashCode() {

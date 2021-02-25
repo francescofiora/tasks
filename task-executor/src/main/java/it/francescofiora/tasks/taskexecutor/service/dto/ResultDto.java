@@ -3,17 +3,19 @@ package it.francescofiora.tasks.taskexecutor.service.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
-import org.springframework.validation.annotation.Validated;
-
-@Validated
+@Getter
+@Setter
 public class ResultDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @NotBlank
   @Schema(description = "value", example = "value", required = true)
   @JsonProperty("value")
   private String value;
@@ -26,17 +28,9 @@ public class ResultDto implements Serializable {
     this.value = value;
   }
 
-  public String getValue() {
-    return value;
-  }
-
   public ResultDto value(String value) {
     this.value = value;
     return this;
-  }
-  
-  public void setValue(String value) {
-    this.value = value;
   }
 
   @Override

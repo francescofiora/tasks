@@ -9,9 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "parameter")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -29,38 +33,14 @@ public class Parameter implements Serializable {
   @Column(name = "value", nullable = false)
   private String value;
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public Parameter name(String name) {
     this.name = name;
     return this;
   }
   
-  public String getValue() {
-    return value;
-  }
-
   public Parameter value(String value) {
     this.value = value;
     return this;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
   }
 
   @Override

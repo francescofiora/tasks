@@ -2,17 +2,22 @@ package it.francescofiora.tasks.message;
 
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
-
 import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public final class MessageDtoResponseImpl extends MessageDtoImpl
     implements MessageDtoResponse, Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   private TaskStatus status;
+
+  @NotNull
   private String result;
 
   public MessageDtoResponseImpl taskId(Long taskId) {
@@ -25,23 +30,9 @@ public final class MessageDtoResponseImpl extends MessageDtoImpl
     return this;
   }
 
-  @Override
-  public @NotNull TaskStatus getStatus() {
-    return status;
-  }
-
   public MessageDtoResponseImpl status(TaskStatus status) {
     this.status = status;
     return this;
-  }
-
-  public void setStatus(TaskStatus status) {
-    this.status = status;
-  }
-
-  @Override
-  public @NotNull String getResult() {
-    return result;
   }
 
   public MessageDtoResponseImpl result(String result) {
@@ -49,10 +40,6 @@ public final class MessageDtoResponseImpl extends MessageDtoImpl
     return this;
   }
   
-  public void setResult(String result) {
-    this.result = result;
-  }
-
   @Override
   public String toString() {
     return "MessageDtoResponseImpl {status=" + getStatus() + ", result=" + getResult() + ", type="

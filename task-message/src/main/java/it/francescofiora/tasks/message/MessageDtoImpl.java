@@ -1,29 +1,17 @@
 package it.francescofiora.tasks.message;
 
 import it.francescofiora.tasks.message.enumeration.TaskType;
-
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public abstract class MessageDtoImpl implements MessageDto {
 
+  @NotNull
   private Long taskId;
+
+  @NotNull
   private TaskType type;
-  
-  @Override
-  public @NotNull TaskType getType() {
-    return type;
-  }
-
-  @Override
-  public @NotNull Long getTaskId() {
-    return taskId;
-  }
-
-  public void setTaskId(Long taskId) {
-    this.taskId = taskId;
-  }
-
-  public void setType(TaskType type) {
-    this.type = type;
-  }
 }

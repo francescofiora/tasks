@@ -4,23 +4,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import it.francescofiora.tasks.message.enumeration.TaskType;
-
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-import org.springframework.validation.annotation.Validated;
-
-@Validated
+@Getter
+@Setter
 public class RefTaskDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   @Schema(description = "Unique Task identifier", example = "1", required = true)
   @JsonProperty("id")
   private Long id;
 
+  @NotNull
   @Schema(description = "type of task", example = "SHORT", required = true)
   @JsonProperty("type")
   private TaskType type;
@@ -38,24 +39,6 @@ public class RefTaskDto implements Serializable {
   public RefTaskDto(Long id, TaskType type) {
     super();
     this.id = id;
-    this.type = type;
-  }
-
-  @NotNull
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  @NotNull
-  public TaskType getType() {
-    return type;
-  }
-
-  public void setType(TaskType type) {
     this.type = type;
   }
 
@@ -84,5 +67,4 @@ public class RefTaskDto implements Serializable {
   public String toString() {
     return "RefTaskDto {id=" + getId() + ", type=" + getType() + "}";
   }
-
 }
