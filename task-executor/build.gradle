@@ -7,6 +7,7 @@ def springdoc_openapi_version = parent.property('springdoc-openapi.version')
 def mysql_connector_version = parent.property('mysql_connector.version')
 def mapstruct_version = parent.property('mapstruct.version')
 def lombok_version = parent.property('lombok.version')
+def openpojo_version = parent.property('openpojo.version')
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -36,6 +37,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
   testImplementation 'org.springframework.batch:spring-batch-test'
   testImplementation 'org.hsqldb:hsqldb'
+  testImplementation "com.openpojo:openpojo:$openpojo_version"
+  testImplementation "org.projectlombok:lombok:${lombok_version}"
+  testAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
 }
 
 springBoot {

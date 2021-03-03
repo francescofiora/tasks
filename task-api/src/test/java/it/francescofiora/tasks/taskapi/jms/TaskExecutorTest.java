@@ -1,7 +1,5 @@
 package it.francescofiora.tasks.taskapi.jms;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;

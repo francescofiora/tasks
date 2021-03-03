@@ -1,16 +1,12 @@
 package it.francescofiora.tasks.taskexecutor.domain;
 
 import org.junit.jupiter.api.Test;
-
-import it.francescofiora.tasks.taskexecutor.TestUtil;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParameterTest {
 
   @Test
   public void equalsVerifier() throws Exception {
-    TestUtil.equalsVerifier(Parameter.class);
     Parameter parameter1 = new Parameter();
     parameter1.setId(1L);
     Parameter parameter2 = new Parameter();

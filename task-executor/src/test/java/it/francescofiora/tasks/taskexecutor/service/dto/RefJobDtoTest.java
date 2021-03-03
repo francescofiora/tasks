@@ -3,14 +3,10 @@ package it.francescofiora.tasks.taskexecutor.service.dto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-
-import it.francescofiora.tasks.taskexecutor.TestUtil;
-
 public class RefJobDtoTest {
 
   @Test
   public void dtoEqualsVerifier() throws Exception {
-    TestUtil.equalsVerifier(RefJobDto.class);
     RefJobDto refJobDto1 = new RefJobDto();
     refJobDto1.setId(1L);
     RefJobDto refJobDto2 = new RefJobDto();

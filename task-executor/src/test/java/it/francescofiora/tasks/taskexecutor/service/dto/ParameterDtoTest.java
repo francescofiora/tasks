@@ -3,14 +3,10 @@ package it.francescofiora.tasks.taskexecutor.service.dto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-
-import it.francescofiora.tasks.taskexecutor.TestUtil;
-
 public class ParameterDtoTest {
 
   @Test
   public void dtoEqualsVerifier() throws Exception {
-    TestUtil.equalsVerifier(ParameterDto.class);
     ParameterDto parameterDto1 = new ParameterDto();
     parameterDto1.setName("Name1");
     parameterDto1.setValue("Value1");

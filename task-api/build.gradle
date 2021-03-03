@@ -6,6 +6,7 @@ plugins {
 def springdoc_openapi_version = parent.property('springdoc-openapi.version')
 def mapstruct_version = parent.property('mapstruct.version')
 def lombok_version = parent.property('lombok.version')
+def openpojo_version = parent.property('openpojo.version')
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -31,6 +32,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+  testImplementation "com.openpojo:openpojo:$openpojo_version"
   testImplementation "org.projectlombok:lombok:${lombok_version}"
   testAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
 }

@@ -2,7 +2,6 @@ package it.francescofiora.tasks.taskapi.jms;
 
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public final class JmsEvent {

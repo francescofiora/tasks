@@ -4,13 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import it.francescofiora.tasks.taskapi.TestUtil;
-
 public class ResultTest {
 
   @Test
   public void equalsVerifier() throws Exception {
-    TestUtil.equalsVerifier(Parameter.class);
     Result result1 = new Result();
     result1.setValue("Result1");
     Result result2 = new Result();

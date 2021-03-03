@@ -4,13 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import it.francescofiora.tasks.taskapi.TestUtil;
-
 public class UpdatableTaskDtoTest {
 
   @Test
   public void dtoEqualsVerifier() throws Exception {
-    TestUtil.equalsVerifier(UpdatableTaskDto.class);
     UpdatableTaskDto taskDto1 = new UpdatableTaskDto();
     taskDto1.setId(1L);
     UpdatableTaskDto taskDto2 = new UpdatableTaskDto();

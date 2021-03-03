@@ -28,17 +28,4 @@ public interface UpdatableTaskDtoTaskMapper {
   @Mapping(target = "removeParameter", ignore = true)
   void updateEntityFromDto(UpdatableTaskDto taskDto, @MappingTarget Task task);
 
-  /**
-   * new Task from Id.
-   * @param id Long
-   * @return Task
-   */
-  default Task fromId(Long id) {
-    if (id == null) {
-      return null;
-    }
-    Task task = new Task();
-    task.setId(id);
-    return task;
-  }
 }

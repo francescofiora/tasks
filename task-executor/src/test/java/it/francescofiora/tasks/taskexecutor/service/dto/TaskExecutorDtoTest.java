@@ -1,16 +1,12 @@
 package it.francescofiora.tasks.taskexecutor.service.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
-
-import it.francescofiora.tasks.taskexecutor.TestUtil;
 
 public class TaskExecutorDtoTest {
 
   @Test
   public void dtoEqualsVerifier() throws Exception {
-    TestUtil.equalsVerifier(TaskExecutorDto.class);
     TaskExecutorDto taskDto1 = new TaskExecutorDto();
     taskDto1.setId(1L);
     TaskExecutorDto taskDto2 = new TaskExecutorDto();

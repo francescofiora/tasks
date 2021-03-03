@@ -52,10 +52,7 @@ public class NewTaskDto implements Serializable {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
     NewTaskDto other = (NewTaskDto) obj;
@@ -85,7 +82,6 @@ public class NewTaskDto implements Serializable {
 
   @Override
   public String toString() {
-    return "TaskDto{description='" + getDescription() + "', type='"
-        + getType() + "'}";
+    return "TaskDto{description='" + getDescription() + "', type='" + getType() + "'}";
   }
 }

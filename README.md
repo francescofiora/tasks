@@ -16,6 +16,7 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
     - Repositories using DataMongoTest
     - Services using Mockito
     - EndPoints using WebMvcTest
+    - Pojos and Dtos using OpenPojo
 - JMX
 
 # Getting Started
@@ -94,3 +95,4 @@ Environment with sit profile and SSL connection.
 - [LogBack 1.2](https://logback.qos.ch/)
 - [Mockito](https://site.mockito.org/)
 - [JUnit 5](https://junit.org/junit5/)
+- [OpenPojo 0.8](https://github.com/OpenPojo)

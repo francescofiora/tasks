@@ -40,7 +40,7 @@ public class Task implements Serializable {
 
   @Field("result")
   private Result result;
-  
+
   public Task id(Long id) {
     this.id = id;
     return this;
@@ -80,6 +80,7 @@ public class Task implements Serializable {
     this.result = result;
     return this;
   }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
