@@ -51,14 +51,6 @@ eclipse {
   }
 }
 
-test {
-  useJUnitPlatform()
-}
-
-task cleanResources(type: Delete) {
-    delete "build/resources"
-}
-
 bootBuildImage {
 	imageName = "francescofiora.it/library/${project.name}:${project.version}"
 }

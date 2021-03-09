@@ -1,37 +1,17 @@
-/.project
-/bin/
-/build/
-/.classpath
-/.gradle/
-/.settings/
-/docker/artemis-instance/bin/
+.project
+bin
+build
+.classpath
+.gradle
+.settings
 /docker/artemis-instance/data/
 /docker/*/*/*.jks
 /docker/*/*/*.ts
 /docker/*/*.jar
-/docker/*/log/
-/docker/*/logs/
 /docker/*/lock/
 /docker/certs/
-/task-api/.project
-/task-api/.settings
-/task-api/.classpath
-/task-api/bin/
-/task-api/logs/
-/task-executor/.project
-/task-executor/.settings
-/task-executor/.classpath
-/task-executor/bin/
-/task-executor/logs/
-/task-message/.project
-/task-message/.settings
-/task-message/.classpath
-/task-message/bin/
+logs
+log
 /gradle/
-/.gitattributes
+.gitattributes
 
-# Ignore Gradle project-specific cache directory
-.gradle
-
-# Ignore Gradle build output directory
-build

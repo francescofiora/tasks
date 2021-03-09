@@ -3,6 +3,7 @@ package it.francescofiora.tasks.message;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +40,28 @@ public final class MessageDtoResponseImpl extends MessageDtoImpl
     this.result = result;
     return this;
   }
-  
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    MessageDtoResponseImpl responseDto = (MessageDtoResponseImpl) o;
+    if (responseDto.getTaskId() == null || getTaskId() == null) {
+      return false;
+    }
+    return Objects.equals(getTaskId(), responseDto.getTaskId());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getTaskId());
+  }
+
   @Override
   public String toString() {
     return "MessageDtoResponseImpl {status=" + getStatus() + ", result=" + getResult() + ", type="

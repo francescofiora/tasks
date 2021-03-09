@@ -4,10 +4,13 @@ import it.francescofiora.tasks.message.enumeration.TaskType;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public final class MessageDtoRequestImpl extends MessageDtoImpl
     implements MessageDtoRequest, Serializable {
 
@@ -18,6 +21,7 @@ public final class MessageDtoRequestImpl extends MessageDtoImpl
 
   /**
    * builder helper for parameters.
+   *
    * @param parameters Map
    * @return MessageDtoRequestImpl
    */
@@ -41,6 +45,27 @@ public final class MessageDtoRequestImpl extends MessageDtoImpl
   public MessageDtoRequestImpl type(TaskType type) {
     setType(type);
     return this;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    MessageDtoRequestImpl requestDto = (MessageDtoRequestImpl) o;
+    if (requestDto.getTaskId() == null || getTaskId() == null) {
+      return false;
+    }
+    return Objects.equals(getTaskId(), requestDto.getTaskId());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getTaskId());
   }
 
   @Override

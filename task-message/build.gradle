@@ -3,12 +3,22 @@ plugins {
 }
 
 def lombok_version = parent.property('lombok.version')
+def openpojo_version = parent.property('openpojo.version')
+def jakarta_validation_version = parent.property('jakarta-validation.version')
+def unit_test_version = parent.property('unit-test.version')
+def assertj_version = parent.property('assertj.version')
 
 dependencies {
 
-	implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
+  implementation "jakarta.validation:jakarta.validation-api:${jakarta_validation_version}"
   implementation "org.projectlombok:lombok:${lombok_version}"
 
-	annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+  annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter-api:${unit_test_version}"
+  testImplementation "org.junit.jupiter:junit-jupiter-engine:${unit_test_version}"
+  testImplementation "org.assertj:assertj-core:${assertj_version}"
+  testImplementation "com.openpojo:openpojo:${openpojo_version}"
+  testImplementation "org.projectlombok:lombok:${lombok_version}"
+  testAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
 }
-		

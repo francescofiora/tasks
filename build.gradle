@@ -20,6 +20,7 @@ subprojects {
 		apply plugin: 'java'
 		apply plugin: 'eclipse-wtp'
     apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -50,6 +51,19 @@ subprojects {
 		checkstyleMain {
   		source ='src/main/java'
 		}
+
+    test {
+      useJUnitPlatform()
+      finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+      dependsOn test
+    }
+
+    task cleanResources(type: Delete) {
+      delete "build/resources"
+    }
 }
 
 wrapper {
