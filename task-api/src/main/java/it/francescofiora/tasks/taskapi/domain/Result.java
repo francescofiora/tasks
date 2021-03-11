@@ -1,6 +1,7 @@
 package it.francescofiora.tasks.taskapi.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -32,10 +33,7 @@ public class Result implements Serializable {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((value == null) ? 0 : value.hashCode());
-    return result;
+    return Objects.hashCode(getValue());
   }
 
   @Override
