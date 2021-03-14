@@ -1,6 +1,11 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
+import it.francescofiora.tasks.taskexecutor.config.job.ShortJobConfig;
+import it.francescofiora.tasks.taskexecutor.domain.Task;
+import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -24,10 +29,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
-import it.francescofiora.tasks.taskexecutor.config.job.ShortJobConfig;
-import it.francescofiora.tasks.taskexecutor.domain.Task;
-import it.francescofiora.tasks.taskexecutor.service.TaskService;
 
 @ContextConfiguration(classes = {ShortTaskletTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)

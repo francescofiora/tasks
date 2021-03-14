@@ -8,17 +8,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.web.util.HeaderUtil;
 import it.francescofiora.tasks.taskexecutor.web.util.PaginationUtil;
 import it.francescofiora.tasks.taskexecutor.web.util.ResponseUtil;
-
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

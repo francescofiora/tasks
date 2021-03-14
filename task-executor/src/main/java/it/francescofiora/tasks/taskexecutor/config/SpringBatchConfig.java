@@ -2,7 +2,6 @@ package it.francescofiora.tasks.taskexecutor.config;
 
 import it.francescofiora.tasks.taskexecutor.tasklet.SaveDbTasklet;
 import it.francescofiora.tasks.taskexecutor.tasklet.SendMsgTasklet;
-
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;

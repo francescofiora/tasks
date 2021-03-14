@@ -1,5 +1,7 @@
 package it.francescofiora.tasks.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
@@ -10,10 +12,11 @@ import com.openpojo.validation.test.impl.SetterTester;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.util.DtoEqualsTester;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 public class MessageDtoResponseImplTest {
+
+  private static final String RESULT = "Result";
 
   @Test
   public void testDtoStructureAndBehavior() {
@@ -36,7 +39,7 @@ public class MessageDtoResponseImplTest {
     MessageDtoResponseImpl request1 = new MessageDtoResponseImpl();
     request1.setTaskId(1L);
     request1.setType(TaskType.LONG);
-    request1.setResult("Result");
+    request1.setResult(RESULT);
     request1.setStatus(TaskStatus.TERMINATED);
 
     MessageDtoResponseImpl request2 = buildRequest(request1.getTaskId(), request1.getType(),
@@ -62,7 +65,7 @@ public class MessageDtoResponseImplTest {
   @Test
   public void equalsVerifier() throws Exception {
     MessageDtoResponseImpl request1 =
-        buildRequest(1L, TaskType.LONG, "Result", TaskStatus.TERMINATED);
+        buildRequest(1L, TaskType.LONG, RESULT, TaskStatus.TERMINATED);
 
     MessageDtoResponseImpl request2 = new MessageDtoResponseImpl();
     request2.setTaskId(request1.getTaskId());

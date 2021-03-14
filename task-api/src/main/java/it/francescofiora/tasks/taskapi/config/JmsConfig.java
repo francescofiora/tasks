@@ -1,9 +1,7 @@
 package it.francescofiora.tasks.taskapi.config;
 
 import it.francescofiora.tasks.message.MessageDto;
-
 import javax.jms.ConnectionFactory;
-
 import org.apache.activemq.ActiveMQSslConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
@@ -23,7 +21,7 @@ public class JmsConfig {
 
   /**
    * MessageConverter bean.
-   * 
+   *
    * @return MessageConverter
    */
   @Bean
@@ -36,7 +34,7 @@ public class JmsConfig {
 
   /**
    * create a connectionFactory.
-   * 
+   *
    * @param brokerUrl      String
    * @param trustStorePath String
    * @param trustStorePass String
@@ -66,7 +64,7 @@ public class JmsConfig {
 
   /**
    * create JmsListenerContainerFactory.
-   * 
+   *
    * @param connectionFactory ConnectionFactory
    * @param configurer        DefaultJmsListenerContainerFactoryConfigurer
    * @return

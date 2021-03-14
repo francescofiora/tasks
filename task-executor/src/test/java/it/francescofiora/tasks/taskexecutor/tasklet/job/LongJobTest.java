@@ -1,6 +1,17 @@
 package it.francescofiora.tasks.taskexecutor.tasklet.job;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import it.francescofiora.tasks.message.enumeration.TaskStatus;
+import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
+import it.francescofiora.tasks.taskexecutor.config.job.LongJobConfig;
+import it.francescofiora.tasks.taskexecutor.domain.Task;
+import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
+import it.francescofiora.tasks.taskexecutor.service.TaskService;
+import it.francescofiora.tasks.taskexecutor.tasklet.JmsParameters;
+import it.francescofiora.tasks.taskexecutor.tasklet.LongTasklet;
+import it.francescofiora.tasks.taskexecutor.tasklet.SaveDbTasklet;
+import it.francescofiora.tasks.taskexecutor.tasklet.SendMsgTasklet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,16 +32,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import it.francescofiora.tasks.message.enumeration.TaskStatus;
-import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
-import it.francescofiora.tasks.taskexecutor.config.job.LongJobConfig;
-import it.francescofiora.tasks.taskexecutor.domain.Task;
-import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
-import it.francescofiora.tasks.taskexecutor.service.TaskService;
-import it.francescofiora.tasks.taskexecutor.tasklet.JmsParameters;
-import it.francescofiora.tasks.taskexecutor.tasklet.LongTasklet;
-import it.francescofiora.tasks.taskexecutor.tasklet.SaveDbTasklet;
-import it.francescofiora.tasks.taskexecutor.tasklet.SendMsgTasklet;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {LongJobTest.BatchConfiguration.class})

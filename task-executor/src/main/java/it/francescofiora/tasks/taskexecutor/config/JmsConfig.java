@@ -1,9 +1,7 @@
 package it.francescofiora.tasks.taskexecutor.config;
 
 import it.francescofiora.tasks.message.MessageDto;
-
 import javax.jms.ConnectionFactory;
-
 import org.apache.activemq.ActiveMQSslConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;

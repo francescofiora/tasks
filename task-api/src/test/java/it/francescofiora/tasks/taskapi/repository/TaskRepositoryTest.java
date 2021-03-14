@@ -2,18 +2,14 @@ package it.francescofiora.tasks.taskapi.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import it.francescofiora.tasks.taskapi.domain.Task;
+import it.francescofiora.tasks.taskapi.util.TestUtils;
+import java.util.Objects;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
-import it.francescofiora.tasks.message.enumeration.TaskStatus;
-import it.francescofiora.tasks.message.enumeration.TaskType;
-import it.francescofiora.tasks.taskapi.domain.Parameter;
-import it.francescofiora.tasks.taskapi.domain.Result;
-import it.francescofiora.tasks.taskapi.domain.Task;
 
 public class TaskRepositoryTest extends AbstractTestRepository {
 
@@ -21,9 +17,9 @@ public class TaskRepositoryTest extends AbstractTestRepository {
   private TaskRepository taskRepository;
   
   @Test
-  public void testCRUD() throws Exception {
-    Task expected1 = createTask1();
-    Task expected2 = createTask2();
+  public void testCrud() throws Exception {
+    Task expected1 = TestUtils.createTask1(generateSequence(Task.SEQUENCE_NAME));
+    Task expected2 = TestUtils.createTask2(generateSequence(Task.SEQUENCE_NAME));
     taskRepository.save(expected1);
     taskRepository.save(expected2);
     
@@ -32,11 +28,11 @@ public class TaskRepositoryTest extends AbstractTestRepository {
 
     for (Task actual : tasks) {
       assertThat(actual).isNotNull();
-      assertThat(assertEquals(expected1, actual)
-          || assertEquals(expected2, actual)).isTrue();
+      assertThat(dataEquals(expected1, actual)
+          || dataEquals(expected2, actual)).isTrue();
     }
 
-    Task expected3 = createTask3();
+    Task expected3 = TestUtils.createTask3(generateSequence(Task.SEQUENCE_NAME));
     Task task = tasks.getContent().get(0);
     task.setDescription(expected3.getDescription());
     task.setStatus(expected3.getStatus());
@@ -47,7 +43,7 @@ public class TaskRepositoryTest extends AbstractTestRepository {
     Optional<Task> optional = taskRepository.findById(task.getId());
     assertThat(optional).isPresent();
     task = optional.get();
-    assertThat(assertEquals(expected3, task)).isTrue();
+    assertThat(dataEquals(expected3, task)).isTrue();
 
     for (Task actual : tasks) {
       taskRepository.delete(actual);
@@ -57,40 +53,11 @@ public class TaskRepositoryTest extends AbstractTestRepository {
     assertThat(tasks).isNotNull().isEmpty();
   }
   
-  private boolean assertEquals(Task expected, Task task) {
-    return expected.getDescription().equals(task.getDescription())
-        && expected.getStatus().equals(task.getStatus())
-        && expected.getType().equals(task.getType())
-        && expected.getResult().equals(task.getResult());
+  private boolean dataEquals(Task expected, Task actual) {
+    return Objects.equals(expected.getDescription(), actual.getDescription())
+        && Objects.equals(expected.getStatus(), actual.getStatus())
+        && Objects.equals(expected.getType(), actual.getType())
+        && Objects.equals(expected.getResult(), actual.getResult());
   }
 
-  private Task createTask1() {
-    return new Task()
-        .id(generateSequence(Task.SEQUENCE_NAME))
-        .description("first")
-        .status(TaskStatus.SCHEDULATED)
-        .type(TaskType.SHORT)
-        .result(new Result().value("result 1"))
-        .addParameter(new Parameter().name("name").value("value"));
-  }
-
-  private Task createTask2() {
-    return new Task()
-        .id(generateSequence(Task.SEQUENCE_NAME))
-        .description("second")
-        .status(TaskStatus.SCHEDULATED)
-        .type(TaskType.LONG)
-        .result(new Result().value("result 2"))
-        .addParameter(new Parameter().name("key").value("value"));
-  }
-
-  private Task createTask3() {
-    return new Task()
-        .id(generateSequence(Task.SEQUENCE_NAME))
-        .description("third")
-        .status(TaskStatus.SCHEDULATED)
-        .type(TaskType.NEW_TYPE)
-        .result(new Result().value("result 3"))
-        .addParameter(new Parameter().name("par").value("value"));
-  }
 }

@@ -1,14 +1,12 @@
 package it.francescofiora.tasks.taskapi.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -52,28 +50,9 @@ public class NewTaskDto implements Serializable {
       return false;
     }
     NewTaskDto other = (NewTaskDto) obj;
-    if (description == null) {
-      if (other.description != null) {
-        return false;
-      }
-    } else {
-      if (!description.equals(other.description)) {
-        return false;
-      }
-    }
-    if (parameters == null) {
-      if (other.parameters != null) {
-        return false;
-      }
-    } else {
-      if (!parameters.equals(other.parameters)) {
-        return false;
-      }
-    }
-    if (type != other.type) {
-      return false;
-    }
-    return true;
+    return Objects.equals(getDescription(), other.getDescription())
+        && Objects.equals(getParameters(), other.getParameters())
+        && Objects.equals(getType(), other.getType());
   }
 
   @Override

@@ -2,6 +2,12 @@ package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import it.francescofiora.tasks.message.MessageDtoResponse;
+import it.francescofiora.tasks.message.enumeration.TaskStatus;
+import it.francescofiora.tasks.message.enumeration.TaskType;
+import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
+import it.francescofiora.tasks.taskexecutor.domain.Task;
+import it.francescofiora.tasks.taskexecutor.jms.TaskResponder;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -25,12 +31,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import it.francescofiora.tasks.message.MessageDtoResponse;
-import it.francescofiora.tasks.message.enumeration.TaskStatus;
-import it.francescofiora.tasks.message.enumeration.TaskType;
-import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
-import it.francescofiora.tasks.taskexecutor.domain.Task;
-import it.francescofiora.tasks.taskexecutor.jms.TaskResponder;
 
 @ContextConfiguration(classes = {SendMsgTaskletTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)

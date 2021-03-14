@@ -2,9 +2,7 @@ package it.francescofiora.tasks.taskexecutor.service;
 
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
-
 import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

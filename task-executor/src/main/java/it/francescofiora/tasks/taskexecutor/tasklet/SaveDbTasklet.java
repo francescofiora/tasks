@@ -5,12 +5,10 @@ import it.francescofiora.tasks.taskexecutor.domain.Parameter;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
-
 import java.sql.Timestamp;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;

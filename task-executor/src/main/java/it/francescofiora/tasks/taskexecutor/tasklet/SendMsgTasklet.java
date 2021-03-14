@@ -4,9 +4,7 @@ import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.jms.TaskResponder;
-
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;

@@ -1,12 +1,10 @@
 package it.francescofiora.tasks.taskexecutor.jms.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import it.francescofiora.tasks.message.MessageDtoRequest;
 import it.francescofiora.tasks.message.MessageDtoRequestImpl;
 import it.francescofiora.tasks.taskexecutor.jms.JmsEvent;
 import it.francescofiora.tasks.taskexecutor.jms.JmsValidator;
-
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

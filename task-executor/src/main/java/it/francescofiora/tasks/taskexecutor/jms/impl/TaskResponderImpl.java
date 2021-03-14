@@ -2,7 +2,6 @@ package it.francescofiora.tasks.taskexecutor.jms.impl;
 
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.taskexecutor.jms.TaskResponder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskexecutor.config;
 
 import javax.sql.DataSource;
-
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.explore.support.JobExplorerFactoryBean;

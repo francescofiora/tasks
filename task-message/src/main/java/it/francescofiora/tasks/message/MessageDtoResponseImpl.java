@@ -42,19 +42,14 @@ public final class MessageDtoResponseImpl extends MessageDtoImpl
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
-
-    MessageDtoResponseImpl responseDto = (MessageDtoResponseImpl) o;
-    if (responseDto.getTaskId() == null || getTaskId() == null) {
-      return false;
-    }
-    return Objects.equals(getTaskId(), responseDto.getTaskId());
+    return Objects.equals(getTaskId(), ((MessageDtoResponseImpl) obj).getTaskId());
   }
 
   @Override

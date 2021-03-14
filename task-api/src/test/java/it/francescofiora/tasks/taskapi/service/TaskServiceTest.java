@@ -2,21 +2,6 @@ package it.francescofiora.tasks.taskapi.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Collections;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import it.francescofiora.tasks.message.MessageDtoRequestImpl;
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
@@ -31,12 +16,25 @@ import it.francescofiora.tasks.taskapi.service.mapper.NewTaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.TaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.UpdatableTaskDtoTaskMapper;
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
+import java.util.Collections;
+import java.util.Optional;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 public class TaskServiceTest {
 
   private static final Long ID = 1L;
-  
+
   private TaskService taskService;
 
   @MockBean
@@ -58,7 +56,10 @@ public class TaskServiceTest {
   private TaskExecutor taskExecutor;
 
   private TaskExecutor spyTaskExecutor;
-  
+
+  /**
+   * Set up.
+   */
   @BeforeEach
   public void setUp() {
     spyTaskExecutor = Mockito.spy(taskExecutor);
@@ -72,14 +73,14 @@ public class TaskServiceTest {
     Mockito.when(newtaskMapper.toEntity(Mockito.any(NewTaskDto.class))).thenReturn(task);
 
     Mockito.when(taskRepository.save(Mockito.any(Task.class))).thenReturn(task);
-    
+
     TaskDto expected = new TaskDto();
     Mockito.when(taskMapper.toDto(Mockito.any(Task.class))).thenReturn(expected);
-    
+
     NewTaskDto taskDto = new NewTaskDto();
     TaskDto actual = taskService.create(taskDto);
     assertThat(actual).isEqualTo(expected);
-    
+
     Mockito.verify(spyTaskExecutor).send(Mockito.any(MessageDtoRequestImpl.class));
   }
 
@@ -122,8 +123,7 @@ public class TaskServiceTest {
   void testFindOne() throws Exception {
     Task task = new Task();
     task.setId(ID);
-    Mockito.when(taskRepository.findById(Mockito.eq(task.getId())))
-        .thenReturn(Optional.of(task));
+    Mockito.when(taskRepository.findById(Mockito.eq(task.getId()))).thenReturn(Optional.of(task));
     TaskDto expected = new TaskDto();
     Mockito.when(taskMapper.toDto(Mockito.any(Task.class))).thenReturn(expected);
 
@@ -142,12 +142,9 @@ public class TaskServiceTest {
   void testResponse() throws Exception {
     Task task = new Task();
     task.setId(ID);
-    Mockito.when(taskRepository.findById(Mockito.eq(task.getId())))
-        .thenReturn(Optional.of(task));
+    Mockito.when(taskRepository.findById(Mockito.eq(task.getId()))).thenReturn(Optional.of(task));
 
-    MessageDtoResponse response = new MessageDtoResponseImpl()
-        .taskId(ID)
-        .result("Result");
+    MessageDtoResponse response = new MessageDtoResponseImpl().taskId(ID).result("Result");
     taskService.response(response);
   }
 }

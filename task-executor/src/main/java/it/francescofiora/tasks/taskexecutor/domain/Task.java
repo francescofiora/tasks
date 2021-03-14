@@ -5,7 +5,6 @@ import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
@@ -28,7 +26,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "task")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Task implements Serializable {
+public class Task extends AbstractDomain implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -58,11 +56,10 @@ public class Task implements Serializable {
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false, length = 25)
   private TaskStatus status;
-  
+
   @ManyToMany
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  @JoinTable(
-      name = "task_parameter",
+  @JoinTable(name = "task_parameter",
       joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "paramter_id", referencedColumnName = "id"))
   private Set<Parameter> parameters;
@@ -111,29 +108,9 @@ public class Task implements Serializable {
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (!(obj instanceof Task)) {
-      return false;
-    }
-    return id != null && id.equals(((Task) obj).id);
-  }
-
-  @Override
   public String toString() {
     return "Task [id=" + getId() + ", jmsMessageId=" + getJmsMessageId() + ", jobName="
         + getJobName() + ", taskType=" + getTaskType() + ", messageCreated=" + getMessageCreated()
         + ", taskRef=" + getTaskRef() + ", result = " + getResult() + "]";
   }
-
 }

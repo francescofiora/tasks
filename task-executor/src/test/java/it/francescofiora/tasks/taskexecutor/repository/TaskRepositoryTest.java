@@ -2,18 +2,16 @@ package it.francescofiora.tasks.taskexecutor.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.Timestamp;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
+import java.sql.Timestamp;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public class TaskRepositoryTest extends AbstractTestRepository {
 
@@ -21,7 +19,7 @@ public class TaskRepositoryTest extends AbstractTestRepository {
   private TaskRepository taskRepository;
   
   @Test
-  public void testCRUD() throws Exception {
+  public void testCrud() throws Exception {
     Task expected1 = createLongTask();
     Task expected2 = createShortTask2();
     taskRepository.save(expected1);

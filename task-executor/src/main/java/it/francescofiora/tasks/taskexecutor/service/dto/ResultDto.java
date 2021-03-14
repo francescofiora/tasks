@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskexecutor.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.Objects;
@@ -28,17 +27,9 @@ public class ResultDto implements Serializable {
     this.value = value;
   }
 
-  public ResultDto value(String value) {
-    this.value = value;
-    return this;
-  }
-
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((value == null) ? 0 : value.hashCode());
-    return result;
+    return Objects.hashCode(getValue());
   }
 
   @Override
@@ -46,17 +37,10 @@ public class ResultDto implements Serializable {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
+    if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    ResultDto other = (ResultDto) obj;
-    if (other.getValue() == null || getValue() == null) {
-      return false;
-    }
-    return Objects.equals(getValue(), other.getValue());
+    return Objects.equals(getValue(), ((ResultDto) obj).getValue());
   }
 
   @Override

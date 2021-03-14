@@ -17,13 +17,10 @@ import it.francescofiora.tasks.taskapi.service.mapper.NewTaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.TaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.UpdatableTaskDtoTaskMapper;
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
-
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -47,13 +44,13 @@ public class TaskServiceImpl implements TaskService {
 
   /**
    * Constructor.
-   * 
-   * @param taskRepository             TaskRepository
-   * @param taskMapper                 TaskMapper
-   * @param newtaskMapper              NewTaskMapper
+   *
+   * @param taskRepository TaskRepository
+   * @param taskMapper TaskMapper
+   * @param newtaskMapper NewTaskMapper
    * @param updatableTaskDtoTaskMapper UpdatableTaskDtoTaskMapper
-   * @param sequenceGenerator          SequenceGeneratorService
-   * @param taskExecutor               TaskExecutor
+   * @param sequenceGenerator SequenceGeneratorService
+   * @param taskExecutor TaskExecutor
    */
   public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper,
       NewTaskMapper newtaskMapper, UpdatableTaskDtoTaskMapper updatableTaskDtoTaskMapper,
@@ -79,11 +76,13 @@ public class TaskServiceImpl implements TaskService {
 
   private void send(Task task) {
     try {
+      // @formatter:off
       taskExecutor.send(new MessageDtoRequestImpl()
           .taskId(task.getId())
           .type(task.getType())
           .addParameters(task.getParameters().stream()
               .collect(Collectors.toMap(Parameter::getName, Parameter::getValue))));
+      // @formatter:on
     } catch (Exception e) {
       task.setStatus(TaskStatus.ERROR);
       task.setResult(new Result());
@@ -126,14 +125,14 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public void response(MessageDtoResponse response) {
     log.debug("Response Task : {}", response);
-    
+
     Optional<Task> taskOpt = taskRepository.findById(response.getTaskId());
     if (!taskOpt.isPresent()) {
       throw new RuntimeException("Not found!");
     }
     Task task = taskOpt.get();
     task.setStatus(response.getStatus());
-    task.setResult(new Result().value(response.getResult()));
+    task.setResult(new Result(response.getResult()));
     taskRepository.save(task);
   }
 }

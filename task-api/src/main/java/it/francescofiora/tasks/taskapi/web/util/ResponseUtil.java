@@ -1,9 +1,7 @@
 package it.francescofiora.tasks.taskapi.web.util;
 
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
-
 import java.util.Optional;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 

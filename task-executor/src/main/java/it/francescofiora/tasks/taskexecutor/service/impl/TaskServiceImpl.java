@@ -6,9 +6,7 @@ import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
-
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

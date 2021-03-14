@@ -1,5 +1,5 @@
 rootProject.name = 'tasks'
 
+include 'task-message'
 include 'task-api'
 include 'task-executor'
-include 'task-message'

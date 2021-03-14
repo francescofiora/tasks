@@ -23,5 +23,4 @@ public class ParameterDtoTest {
     parameterDto1.setValue(null);
     assertThat(parameterDto1).isNotEqualTo(parameterDto2);
   }
-  
 }

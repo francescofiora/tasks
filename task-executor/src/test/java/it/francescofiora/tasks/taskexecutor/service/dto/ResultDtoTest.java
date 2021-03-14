@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 public class ResultDtoTest {
 
+  private static final String VALUE = "Value";
+
   @Test
   public void dtoEqualsVerifier() throws Exception {
     ResultDto resultDto1 = new ResultDto();
@@ -18,5 +20,11 @@ public class ResultDtoTest {
     assertThat(resultDto1).isNotEqualTo(resultDto2);
     resultDto1.setValue(null);
     assertThat(resultDto1).isNotEqualTo(resultDto2);
+  }
+
+  @Test
+  public void testConstructor() {
+    ResultDto result = new ResultDto(VALUE);
+    assertThat(result.getValue()).isEqualTo(VALUE);
   }
 }

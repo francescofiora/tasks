@@ -2,9 +2,14 @@ package it.francescofiora.tasks.taskexecutor.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import it.francescofiora.tasks.taskexecutor.domain.Task;
+import it.francescofiora.tasks.taskexecutor.repository.ParameterRepository;
+import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
+import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
+import it.francescofiora.tasks.taskexecutor.service.impl.TaskServiceImpl;
+import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
 import java.util.Collections;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,13 +20,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import it.francescofiora.tasks.taskexecutor.domain.Task;
-import it.francescofiora.tasks.taskexecutor.repository.ParameterRepository;
-import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
-import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
-import it.francescofiora.tasks.taskexecutor.service.impl.TaskServiceImpl;
-import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
 
 @ExtendWith(SpringExtension.class)
 public class TaskServiceTest {

@@ -3,7 +3,6 @@ package it.francescofiora.tasks.taskexecutor.service.mapper;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskapi.repository;
 
 import it.francescofiora.tasks.taskapi.domain.Task;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -3,9 +3,7 @@ package it.francescofiora.tasks.taskexecutor.tasklet;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
-
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;

@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskapi.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.Objects;
@@ -35,17 +34,10 @@ public class ParameterDto implements Serializable {
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
     ParameterDto other = (ParameterDto) obj;
-    if ((other.getName() == null && other.getValue() == null)
-        || (getName() == null && getValue() == null)) {
-      return false;
-    }
     return Objects.equals(getName(), other.getName())
         && Objects.equals(getValue(), other.getValue());
   }

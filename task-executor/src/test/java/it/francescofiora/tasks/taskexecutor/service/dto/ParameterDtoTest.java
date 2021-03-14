@@ -3,6 +3,7 @@ package it.francescofiora.tasks.taskexecutor.service.dto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+
 public class ParameterDtoTest {
 
   @Test

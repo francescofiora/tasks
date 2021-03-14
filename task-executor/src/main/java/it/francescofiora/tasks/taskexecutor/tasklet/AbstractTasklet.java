@@ -1,9 +1,7 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import it.francescofiora.tasks.taskexecutor.domain.Task;
-
 import java.util.Map;
-
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.scope.context.StepContext;

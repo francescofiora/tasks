@@ -4,10 +4,8 @@ import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.jms.JmsEvent;
 import it.francescofiora.tasks.taskexecutor.jms.StrategyManager;
 import it.francescofiora.tasks.taskexecutor.tasklet.JmsParameters;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;

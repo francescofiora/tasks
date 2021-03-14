@@ -16,7 +16,6 @@ import it.francescofiora.tasks.taskapi.web.errors.BadRequestAlertException;
 import it.francescofiora.tasks.taskapi.web.util.HeaderUtil;
 import it.francescofiora.tasks.taskapi.web.util.PaginationUtil;
 import it.francescofiora.tasks.taskapi.web.util.ResponseUtil;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

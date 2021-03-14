@@ -15,20 +15,22 @@ public class Result implements Serializable {
   @Field("value")
   private String value;
 
-  public Result value(String value) {
+  public Result() {
+  }
+
+  public Result(String value) {
     this.value = value;
-    return this;
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (!(o instanceof Result)) {
+    if (getValue() == null || obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    return value != null && value.equals(((Result) o).value);
+    return Objects.equals(getValue(), ((Result) obj).value);
   }
 
   @Override

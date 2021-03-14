@@ -3,7 +3,6 @@ package it.francescofiora.tasks.taskapi.web.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-
 import org.springframework.http.HttpHeaders;
 
 public interface HeaderUtil {

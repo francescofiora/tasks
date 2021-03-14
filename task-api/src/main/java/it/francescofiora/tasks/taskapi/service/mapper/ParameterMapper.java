@@ -2,7 +2,6 @@ package it.francescofiora.tasks.taskapi.service.mapper;
 
 import it.francescofiora.tasks.taskapi.domain.Parameter;
 import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
-
 import org.mapstruct.Mapper;
 
 /**

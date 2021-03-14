@@ -18,25 +18,15 @@ public class Parameter implements Serializable {
   @Field("value")
   private String value;
 
-  public Parameter name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  public Parameter value(String value) {
-    this.value = value;
-    return this;
-  }
-
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (!(o instanceof Parameter)) {
+    if (getName() == null || obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    return name != null && name.equals(((Parameter) o).name);
+    return Objects.equals(getName(), ((Parameter) obj).getName());
   }
 
   @Override

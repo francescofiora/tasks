@@ -1,15 +1,15 @@
 package it.francescofiora.tasks.taskexecutor.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
+import it.francescofiora.tasks.util.DtoIdentifier;
+import it.francescofiora.tasks.util.DtoUtils;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -19,7 +19,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TaskExecutorDto implements Serializable {
+public class TaskExecutorDto implements Serializable, DtoIdentifier {
 
   private static final long serialVersionUID = 1L;
 
@@ -67,19 +67,8 @@ public class TaskExecutorDto implements Serializable {
   private Set<ParameterDto> parameters = new HashSet<>();
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    TaskExecutorDto taskDto = (TaskExecutorDto) o;
-    if (taskDto.getId() == null || getId() == null) {
-      return false;
-    }
-    return Objects.equals(getId(), taskDto.getId());
+  public boolean equals(Object obj) {
+    return DtoUtils.equals(this, obj);
   }
 
   @Override
