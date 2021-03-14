@@ -31,11 +31,10 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
 
 ### Create artemis-debian image
  - Download Apache Artemis (https://activemq.apache.org/components/artemis/download/)
-    tar xvzf apache-artemis-2.14.0-bin.tar.gz
-    apache-artemis-2.14.0
+    tar xvzf apache-artemis-2.17.0-bin.tar.gz apache-artemis-2.17.0
  - Download files from (https://github.com/apache/activemq-artemis/tree/master/artemis-docker)
-    ./prepare-docker.sh apache-artemis-2.14.0
-    cd apache-artemis-2.14.0
+    ./prepare-docker.sh apache-artemis-2.17.0
+    cd apache-artemis-2.17.0
     chmod +x docker/docker-run.sh
     docker build -f ./docker/Dockerfile-debian -t artemis-debian .
  - Check image created
@@ -45,7 +44,7 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
 Basic environment for development with dev profile.
 
 ### Hot to execute applications
-    docker-compose -f docker_dev/app.yml up
+    docker-compose -f docker_dev/docker-compose.yml up
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
     java -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
 
@@ -68,7 +67,7 @@ Environment with sit profile and SSL connection.
     ./cp_jars.sh
 
 ### Hot to execute applications
-    docker-compose -f docker/app.yml up
+    docker-compose -f docker/docker-compose.yml up
 
  - https://localhost:8081/tasks-api/swagger-ui.html (Tasks-Api)
  - https://localhost:8082/tasks-executor/swagger-ui.html (Tasks-Executor)

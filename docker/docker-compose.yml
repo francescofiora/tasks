@@ -2,7 +2,7 @@ version: '3'
 services:
 
   tasks-mongodb:
-    image: mongo:4.2.3
+    image: mongo:4.4.4
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=secret
@@ -31,7 +31,7 @@ services:
       - "8161:8161"
 
   tasks-mysql:
-    image: mysql:8.0.21
+    image: mysql:8.0.23
     environment:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
@@ -43,7 +43,7 @@ services:
       - "3306:3306"
    
   tasks-myadmin:
-    image: phpmyadmin/phpmyadmin:5.0.2
+    image: phpmyadmin/phpmyadmin:5.1.0
     environment:
       - PMA_HOST=tasks-mysql
       - PMA_USER=root
@@ -55,7 +55,7 @@ services:
       - "8080:80"
 
   tasks-api:
-    image: openjdk:8-jdk-alpine
+    image: openjdk:8u282-jdk-slim
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
     volumes:
@@ -69,7 +69,7 @@ services:
       - tasks-activemq
 
   task-executor:
-    image: openjdk:8-jdk-alpine
+    image: openjdk:8u282-jdk-slim
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
     volumes:
