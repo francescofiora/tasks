@@ -3,7 +3,6 @@ package it.francescofiora.tasks.taskapi.service.mapper;
 import it.francescofiora.tasks.taskapi.domain.Task;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Task} and its DTO {@link TaskDto}.

@@ -13,7 +13,6 @@ import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.web.util.HeaderUtil;
 import it.francescofiora.tasks.taskexecutor.web.util.PaginationUtil;
 import it.francescofiora.tasks.taskexecutor.web.util.ResponseUtil;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -105,7 +104,6 @@ public class TaskExecutorApi {
    *         status {@code 400 (Bad Request)} if the taskDto is not valid, or with
    *         status {@code 500 (Internal Server Error)} if the taskDto couldn't be
    *         deleted.
-   * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
   @Operation(
       summary = "delete Task", description = "delete an Task to the system", tags = { "task" })
@@ -116,10 +114,10 @@ public class TaskExecutorApi {
   @DeleteMapping("/tasks/{id}")
   public ResponseEntity<Void> deleteTask(@Parameter(
       description = "id of the task to delete", required = true,
-      example = "1") @PathVariable Long id) throws URISyntaxException {
+      example = "1") @PathVariable Long id) {
     log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
     return ResponseEntity.noContent()
-        .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, String.valueOf(id))).build();
   }
 }

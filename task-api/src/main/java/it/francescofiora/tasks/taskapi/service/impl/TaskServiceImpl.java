@@ -30,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-  private static final String ENTITY_NAME = "Task";
+  private static final String ENTITY_NAME = "TaskDto";
 
   private final SequenceGeneratorService sequenceGenerator;
 
@@ -97,7 +97,8 @@ public class TaskServiceImpl implements TaskService {
 
     Optional<Task> taskOpt = taskRepository.findById(taskDto.getId());
     if (!taskOpt.isPresent()) {
-      throw new NotFoundAlertException(ENTITY_NAME);
+      String id = String.valueOf(taskDto.getId());
+      throw new NotFoundAlertException(ENTITY_NAME, id, ENTITY_NAME + " not found with id " + id);
     }
     Task task = taskOpt.get();
     updatableTaskDtoTaskMapper.updateEntityFromDto(taskDto, task);

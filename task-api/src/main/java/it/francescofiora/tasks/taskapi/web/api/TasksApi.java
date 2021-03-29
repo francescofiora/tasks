@@ -14,18 +14,12 @@ import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
 import it.francescofiora.tasks.taskapi.web.errors.BadRequestAlertException;
 import it.francescofiora.tasks.taskapi.web.util.HeaderUtil;
-import it.francescofiora.tasks.taskapi.web.util.PaginationUtil;
-import it.francescofiora.tasks.taskapi.web.util.ResponseUtil;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,20 +29,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @Tag(name = "task", description = "Task Rest API")
 @RequestMapping("/api")
-public class TasksApi {
+public class TasksApi extends AbstractApi {
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-  private static final String ENTITY_NAME = "Task";
+  private static final String ENTITY_NAME = "TaskDto";
 
   private final TaskService taskService;
 
   public TasksApi(TaskService taskService) {
-    super();
+    super(ENTITY_NAME);
     this.taskService = taskService;
   }
 
@@ -60,47 +53,44 @@ public class TasksApi {
    *         taskDto, or with status {@code 400 (Bad Request)} if the task has already an ID.
    * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
-  @Operation(summary = "add new Task", description = "add a new Task to the system",
+  @Operation(summary = "Add new Task", description = "Add a new Task to the system",
       tags = {"task"})
   @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Task created"),
-      @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
-      @ApiResponse(responseCode = "409", description = "an existing Task already exists")})
+      @ApiResponse(responseCode = "400", description = "Invalid input, object invalid"),
+      @ApiResponse(responseCode = "409", description = "An existing Task already exists")})
   @PostMapping("/tasks")
   public ResponseEntity<Void> createTask(
-      @Parameter(description = "add new Task") @Valid @RequestBody NewTaskDto taskDto)
+      @Parameter(description = "Add new Task") @Valid @RequestBody NewTaskDto taskDto)
       throws URISyntaxException {
     log.debug("REST request to save Task : {}", taskDto);
     TaskDto result = taskService.create(taskDto);
-    return ResponseEntity.created(new URI("/api/tasks/" + result.getId()))
-        .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-        .build();
+    return postResponse("/api/tasks/" + result.getId(), result.getId());
   }
 
   /**
-   * {@code PATCH  /tasks} : Patches an existing task.
+   * {@code PATCH  /tasks:id} : Patches an existing task.
    *
    * @param taskDto the taskDto to patch.
+   * @param id the id of the author to update
    * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with status
    *         {@code 400 (Bad Request)} if the taskDto is not valid, or with status
    *         {@code 500 (Internal Server Error)} if the taskDto couldn't be patched.
-   * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
-  @Operation(summary = "patch Task", description = "patch an Task to the system", tags = {"task"})
+  @Operation(summary = "Patch Task", description = "Patch an Task to the system", tags = {"task"})
   @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Task patched"),
-      @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
-      @ApiResponse(responseCode = "404", description = "not found")})
-  @PatchMapping("/tasks")
+      @ApiResponse(responseCode = "400", description = "Invalid input, object invalid"),
+      @ApiResponse(responseCode = "404", description = "Not found")})
+  @PatchMapping("/tasks/{id}")
   public ResponseEntity<Void> patchTask(
-      @Parameter(description = "task to update") @Valid @RequestBody UpdatableTaskDto taskDto)
-      throws URISyntaxException {
+      @Parameter(description = "Task to update") @Valid @RequestBody UpdatableTaskDto taskDto,
+      @Parameter(description = "The id of the task to update", required = true,
+      example = "1") @PathVariable("id") Long id) {
     log.debug("REST request to patch Task : {}", taskDto);
-    if (taskDto.getId() == null) {
+    if (!id.equals(taskDto.getId())) {
       throw new BadRequestAlertException(ENTITY_NAME, "idnull", "Invalid id");
     }
     taskService.patch(taskDto);
-    return ResponseEntity.ok()
-        .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, taskDto.getId().toString()))
-        .build();
+    return putResponse(id);
   }
 
   /**
@@ -109,20 +99,17 @@ public class TasksApi {
    * @param pageable the pagination information.
    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
    */
-  @Operation(summary = "searches tasks", description = "By passing in the appropriate options, "
+  @Operation(summary = "Searches tasks", description = "By passing in the appropriate options, "
       + "you can search for available tasks in the system", tags = {"task"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "search results matching criteria",
+      @ApiResponse(responseCode = "200", description = "Search results matching criteria",
           content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = TaskDto.class)))),
-      @ApiResponse(responseCode = "400", description = "bad input parameter")})
+      @ApiResponse(responseCode = "400", description = "Bad input parameter")})
   @GetMapping("/tasks")
   public ResponseEntity<List<TaskDto>> getAllTasks(Pageable pageable) {
     log.debug("REST request to get a page of Tasks");
-    Page<TaskDto> page = taskService.findAll(pageable);
-    HttpHeaders headers = PaginationUtil
-        .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-    return ResponseEntity.ok().headers(headers).body(page.getContent());
+    return getResponse(taskService.findAll(pageable));
   }
 
   /**
@@ -132,20 +119,19 @@ public class TasksApi {
    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the taskDto, or
    *         with status {@code 404 (Not Found)}.
    */
-  @Operation(summary = "searches task by 'id'", description = "searches task by 'id'",
+  @Operation(summary = "Searches task by 'id'", description = "Searches task by 'id'",
       tags = {"task"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "search results matching criteria",
+      @ApiResponse(responseCode = "200", description = "Search results matching criteria",
           content = @Content(schema = @Schema(implementation = TaskDto.class))),
-      @ApiResponse(responseCode = "400", description = "bad input parameter"),
+      @ApiResponse(responseCode = "400", description = "Bad input parameter"),
       @ApiResponse(responseCode = "404", description = "not found")})
   @GetMapping("/tasks/{id}")
   public ResponseEntity<TaskDto> getTask(@Parameter(
       description = "id of the task to get", required = true,
       example = "1") @PathVariable Long id) {
     log.debug("REST request to get Task : {}", id);
-    Optional<TaskDto> taskDto = taskService.findOne(id);
-    return ResponseUtil.wrapOrNotFound(ENTITY_NAME, taskDto);
+    return getResponse(taskService.findOne(id), id);
   }
 
   /**
@@ -168,6 +154,6 @@ public class TasksApi {
     log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
     return ResponseEntity.noContent()
-        .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, String.valueOf(id))).build();
   }
 }
