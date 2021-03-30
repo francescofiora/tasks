@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskapi.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import it.francescofiora.tasks.taskapi.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
 public class ResultTest {
@@ -12,11 +11,13 @@ public class ResultTest {
     result1.setValue("Result1");
     Result result2 = new Result();
     result2.setValue(result1.getValue());
-    assertThat(result1).isEqualTo(result2);
+    TestUtils.checkEqualHashAndToString(result1, result2);
+
     result2.setValue("Result2");
-    assertThat(result1).isNotEqualTo(result2);
+    TestUtils.checkNotEqualHashAndToString(result1, result2);
+
     result1.setValue(null);
-    assertThat(result1).isNotEqualTo(result2);
+    TestUtils.checkNotEqualHashAndToString(result1, result2);
   }
 
 }

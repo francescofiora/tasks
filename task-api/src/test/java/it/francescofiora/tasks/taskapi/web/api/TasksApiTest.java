@@ -7,7 +7,6 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.service.TaskService;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
@@ -41,9 +39,6 @@ public class TasksApiTest extends AbstractTestApi {
 
   @MockBean
   private TaskService taskService;
-
-  @Autowired
-  private ObjectMapper mapper;
 
   @Test
   public void testCreateTask() throws Exception {
@@ -193,8 +188,7 @@ public class TasksApiTest extends AbstractTestApi {
         .willReturn(new PageImpl<TaskDto>(Collections.singletonList(expected)));
 
     MvcResult result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
-    List<TaskDto> list = mapper.readValue(result.getResponse().getContentAsString(),
-        new TypeReference<List<TaskDto>>() {});
+    List<TaskDto> list = readValue(result, new TypeReference<List<TaskDto>>() {});
     assertThat(list).isNotNull().isNotEmpty();
     assertThat(list.get(0)).isEqualTo(expected);
   }
@@ -205,8 +199,7 @@ public class TasksApiTest extends AbstractTestApi {
     expected.setId(ID);
     given(taskService.findOne(eq(ID))).willReturn(Optional.of(expected));
     MvcResult result = performGet(TASKS_ID_URI, ID).andExpect(status().isOk()).andReturn();
-    TaskDto actual = mapper.readValue(result.getResponse().getContentAsString(),
-        new TypeReference<TaskDto>() {});
+    TaskDto actual = readValue(result, new TypeReference<TaskDto>() {});
     assertThat(actual).isNotNull().isEqualTo(expected);
   }
 

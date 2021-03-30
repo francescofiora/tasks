@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskapi.service.dto;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import it.francescofiora.tasks.taskapi.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
 public class ResultDtoTest {
@@ -11,12 +10,15 @@ public class ResultDtoTest {
     ResultDto resultDto1 = new ResultDto();
     resultDto1.setValue("Value1");
     ResultDto resultDto2 = new ResultDto();
-    assertThat(resultDto1).isNotEqualTo(resultDto2);
+    TestUtils.checkNotEqualHashAndToString(resultDto1, resultDto2);
+
     resultDto2.setValue(resultDto1.getValue());
-    assertThat(resultDto1).isEqualTo(resultDto2);
+    TestUtils.checkEqualHashAndToString(resultDto1, resultDto2);
+
     resultDto2.setValue("Value2");
-    assertThat(resultDto1).isNotEqualTo(resultDto2);
+    TestUtils.checkNotEqualHashAndToString(resultDto1, resultDto2);
+
     resultDto1.setValue(null);
-    assertThat(resultDto1).isNotEqualTo(resultDto2);
+    TestUtils.checkNotEqualHashAndToString(resultDto1, resultDto2);
   }
 }
