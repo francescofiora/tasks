@@ -13,7 +13,6 @@ import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
 import it.francescofiora.tasks.taskapi.web.errors.BadRequestAlertException;
-import it.francescofiora.tasks.taskapi.web.util.HeaderUtil;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.validation.Valid;
@@ -153,7 +152,6 @@ public class TasksApi extends AbstractApi {
       example = "1") @PathVariable Long id) throws URISyntaxException {
     log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
-    return ResponseEntity.noContent()
-        .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, String.valueOf(id))).build();
+    return deleteResponse(id);
   }
 }

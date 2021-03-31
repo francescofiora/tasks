@@ -43,7 +43,7 @@ public class NopeTaskletTest {
   private TaskService taskService;
 
   @Test
-  void test() throws Exception {
+  void testNopeTasklet() throws Exception {
     Map<String, Object> map = new HashMap<>();
     Task task = new Task();
     task.setId(ID);

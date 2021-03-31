@@ -1,5 +1,7 @@
 package it.francescofiora.tasks.taskapi.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import it.francescofiora.tasks.taskapi.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +11,10 @@ public class ResultTest {
   public void equalsVerifier() throws Exception {
     Result result1 = new Result();
     result1.setValue("Result1");
+
+    assertThat(result1.equals(null)).isFalse();
+    assertThat(result1.equals(new Object())).isFalse();
+
     Result result2 = new Result();
     result2.setValue(result1.getValue());
     TestUtils.checkEqualHashAndToString(result1, result2);

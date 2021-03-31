@@ -19,11 +19,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MvcResult;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = TaskExecutorApi.class)
+@TestPropertySource(locations = {"classpath:application_test.properties"})
 public class TaskExecutorApiTest extends AbstractTestApi {
   private static final Long ID = 1L;
   private static final String TASKS_URI = "/api/tasks";

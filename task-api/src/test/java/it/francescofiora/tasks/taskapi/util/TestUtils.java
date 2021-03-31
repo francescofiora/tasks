@@ -11,6 +11,8 @@ import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.domain.Parameter;
 import it.francescofiora.tasks.taskapi.domain.Result;
 import it.francescofiora.tasks.taskapi.domain.Task;
+import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
+import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -131,6 +133,31 @@ public final class TestUtils {
     parameter.setName(name);
     parameter.setValue(value);
     return parameter;
+  }
+
+  /**
+   * create NewTaskDto.
+   *
+   * @return NewTaskDto
+   */
+  public static NewTaskDto createNewTaskDto() {
+    NewTaskDto taskDto = new NewTaskDto();
+    taskDto.setDescription("Description");
+    taskDto.setType(TaskType.LONG);
+    taskDto.getParameters().add(createParameterDto());
+    return taskDto;
+  }
+
+  /**
+   * create ParameterDto.
+   *
+   * @return ParameterDto
+   */
+  public static ParameterDto createParameterDto() {
+    ParameterDto parameterDto = new ParameterDto();
+    parameterDto.setName("Name");
+    parameterDto.setValue("Value");
+    return parameterDto;
   }
 
   /**

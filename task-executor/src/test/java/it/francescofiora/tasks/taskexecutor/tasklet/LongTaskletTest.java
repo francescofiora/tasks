@@ -43,7 +43,7 @@ public class LongTaskletTest {
   private TaskService taskService;
 
   @Test
-  void test() throws Exception {
+  void testLongTasklet() throws Exception {
     Map<String, Object> map = new HashMap<>();
     Task task = new Task();
     task.setId(ID);
