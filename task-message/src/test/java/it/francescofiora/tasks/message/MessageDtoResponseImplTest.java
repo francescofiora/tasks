@@ -12,11 +12,15 @@ import com.openpojo.validation.test.impl.SetterTester;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.util.DtoEqualsTester;
+import it.francescofiora.tasks.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
 public class MessageDtoResponseImplTest {
 
+  private static final Long ID = 1L;
+  private static final TaskType TASK_TYPE_LONG = TaskType.LONG;
   private static final String RESULT = "Result";
+  private static final TaskStatus STATUS_TERMINATED = TaskStatus.TERMINATED;
 
   @Test
   public void testDtoStructureAndBehavior() {
@@ -36,22 +40,21 @@ public class MessageDtoResponseImplTest {
 
   @Test
   public void testBuilder() {
-    MessageDtoResponseImpl request1 = new MessageDtoResponseImpl();
-    request1.setTaskId(1L);
-    request1.setType(TaskType.LONG);
-    request1.setResult(RESULT);
-    request1.setStatus(TaskStatus.TERMINATED);
+    MessageDtoResponseImpl response1 = new MessageDtoResponseImpl();
+    response1.setTaskId(ID);
+    response1.setType(TASK_TYPE_LONG);
+    response1.setResult(RESULT);
+    response1.setStatus(STATUS_TERMINATED);
 
-    MessageDtoResponseImpl request2 = buildRequest(request1.getTaskId(), request1.getType(),
-        request1.getResult(), request1.getStatus());
+    MessageDtoResponseImpl response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
 
-    assertThat(request2.getTaskId()).isEqualTo(request1.getTaskId());
-    assertThat(request2.getType()).isEqualTo(request1.getType());
-    assertThat(request2.getResult()).isEqualTo(request1.getResult());
-    assertThat(request2.getStatus()).isEqualTo(request1.getStatus());
+    assertThat(response2.getTaskId()).isEqualTo(response1.getTaskId());
+    assertThat(response2.getType()).isEqualTo(response1.getType());
+    assertThat(response2.getResult()).isEqualTo(response1.getResult());
+    assertThat(response2.getStatus()).isEqualTo(response1.getStatus());
   }
 
-  private MessageDtoResponseImpl buildRequest(Long taskId, TaskType type, String result,
+  private MessageDtoResponseImpl buildResponse(Long taskId, TaskType type, String result,
       TaskStatus status) {
     // @formatter:off
     return new MessageDtoResponseImpl()
@@ -64,17 +67,14 @@ public class MessageDtoResponseImplTest {
 
   @Test
   public void equalsVerifier() throws Exception {
-    MessageDtoResponseImpl request1 =
-        buildRequest(1L, TaskType.LONG, RESULT, TaskStatus.TERMINATED);
+    MessageDtoResponseImpl response1 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
+    MessageDtoResponseImpl response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
+    TestUtils.checkEqualHashAndToString(response1, response2);
 
-    MessageDtoResponseImpl request2 = new MessageDtoResponseImpl();
-    request2.setTaskId(request1.getTaskId());
-    assertThat(request1).isEqualTo(request2);
+    response2.setTaskId(2L);
+    TestUtils.checkNotEqualHashAndToString(response1, response2);
 
-    request2.setTaskId(2L);
-    assertThat(request1).isNotEqualTo(request2);
-
-    request1.setTaskId(null);
-    assertThat(request1).isNotEqualTo(request2);
+    response1.setTaskId(null);
+    TestUtils.checkNotEqualHashAndToString(response1, response2);
   }
 }

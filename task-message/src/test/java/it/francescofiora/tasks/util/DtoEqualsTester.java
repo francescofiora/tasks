@@ -13,6 +13,9 @@ public class DtoEqualsTester implements Rule {
     if (pojoClass.isConcrete()) {
       try {
         equalsVerifier(pojoClass.getClazz());
+        if (pojoClass.extendz(DtoIdentifier.class)) {
+          dtoIdentifierVerifier(pojoClass.getClazz());
+        }
       } catch (Exception e) {
         Assertions.fail(e.getMessage());
       }
@@ -34,5 +37,24 @@ public class DtoEqualsTester implements Rule {
 
     // Test hashCode
     assertThat(dtoObj1.hashCode()).isEqualTo(dtoObj2.hashCode());
+  }
+
+  private <T> void dtoIdentifierVerifier(Class<T> clazz) throws Exception {
+    DtoIdentifier dtoObj1 = (DtoIdentifier) clazz.getConstructor().newInstance();
+    dtoObj1.setId(1L);
+    assertThat(dtoObj1.equals(null)).isFalse();
+    assertThat(dtoObj1.equals(new Object())).isFalse();
+
+    DtoIdentifier dtoObj2 = (DtoIdentifier) clazz.getConstructor().newInstance();
+    assertThat(dtoObj1.equals(dtoObj2)).isFalse();
+
+    dtoObj2.setId(2L);
+    TestUtils.checkNotEqualHashAndToString(dtoObj1, dtoObj2);
+
+    dtoObj2.setId(dtoObj1.getId());
+    TestUtils.checkEqualHashAndToString(dtoObj1, dtoObj2);
+
+    dtoObj1.setId(null);
+    TestUtils.checkNotEqualHashAndToString(dtoObj1, dtoObj2);
   }
 }

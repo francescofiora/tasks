@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class MessageDtoImpl implements MessageDto {
+public abstract class AbstractMessageDto implements MessageDto {
 
   @NotNull
   private Long taskId;

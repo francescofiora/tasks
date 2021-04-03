@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public final class MessageDtoResponseImpl extends MessageDtoImpl
+public final class MessageDtoResponseImpl extends AbstractMessageDto
     implements MessageDtoResponse, Serializable {
 
   private static final long serialVersionUID = 1L;

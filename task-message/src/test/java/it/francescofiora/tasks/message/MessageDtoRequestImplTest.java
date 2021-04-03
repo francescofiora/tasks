@@ -11,6 +11,7 @@ import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.util.DtoEqualsTester;
+import it.francescofiora.tasks.util.TestUtils;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,12 @@ public class MessageDtoRequestImplTest {
 
   private static final String KEY = "Key";
   private static final String VALUE = "Value";
+
+  private static final Long ID = 1L;
+  private static final TaskType TASK_TYPE = TaskType.LONG;
+
+  private static final String KEY2 = "SecondKey";
+  private static final String VALUE2 = "SecondValue";
 
   @Test
   public void testDtoStructureAndBehavior() {
@@ -37,17 +44,13 @@ public class MessageDtoRequestImplTest {
 
   @Test
   public void testBuilder() {
-    MessageDtoRequestImpl request1 = new MessageDtoRequestImpl();
-    request1.setTaskId(1L);
-    request1.setType(TaskType.LONG);
-    request1.getParameters().put(KEY, VALUE);
+    MessageDtoRequestImpl request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
 
-    MessageDtoRequestImpl request2 = buildRequest(request1.getTaskId(), request1.getType(), KEY,
-        request1.getParameters().get(KEY));
-
-    assertThat(request2.getTaskId()).isEqualTo(request1.getTaskId());
-    assertThat(request2.getType()).isEqualTo(request1.getType());
-    assertThat(request2.getParameters()).isEqualTo(request1.getParameters());
+    assertThat(request2.getTaskId()).isEqualTo(ID);
+    assertThat(request2.getType()).isEqualTo(TASK_TYPE);
+    assertThat(request2.getParameters())
+      .hasSize(1)
+      .containsEntry(KEY, VALUE);
   }
 
   private MessageDtoRequestImpl buildRequest(Long taskId, TaskType type, String parKey,
@@ -62,25 +65,32 @@ public class MessageDtoRequestImplTest {
 
   @Test
   public void equalsVerifier() throws Exception {
-    MessageDtoRequestImpl request1 = buildRequest(1L, TaskType.LONG, KEY, VALUE);
-
-    MessageDtoRequestImpl request2 = new MessageDtoRequestImpl();
-    request2.setTaskId(request1.getTaskId());
-    assertThat(request1).isEqualTo(request2);
+    MessageDtoRequestImpl request1 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
+    MessageDtoRequestImpl request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
+    TestUtils.checkEqualHashAndToString(request1, request2);
 
     request2.setTaskId(2L);
-    assertThat(request1).isNotEqualTo(request2);
+    TestUtils.checkNotEqualHashAndToString(request1, request2);
 
     request1.setTaskId(null);
-    assertThat(request1).isNotEqualTo(request2);
+    TestUtils.checkNotEqualHashAndToString(request1, request2);
   }
 
   @Test
   public void addParameters() throws Exception {
     // @formatter:off
     MessageDtoRequest request = new MessageDtoRequestImpl()
-        .addParameters(Collections.singletonMap(KEY, VALUE));
+        .addParameters(null)
+        .addParameters(Collections.singletonMap(KEY, VALUE))
+        .addParameters(Collections.emptyMap())
+        .addParameters(Collections.singletonMap(KEY2, VALUE2));
     // @formatter:on
-    assertThat(request.getParameters()).containsEntry(KEY, VALUE);
+
+    // @formatter:off
+    assertThat(request.getParameters())
+      .hasSize(2)
+      .containsEntry(KEY, VALUE)
+      .containsEntry(KEY2, VALUE2);
+    // @formatter:on
   }
 }

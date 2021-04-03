@@ -31,6 +31,7 @@ public class DtoUtilsTest {
     assertThat(DtoUtils.equals(dtoObj1, dtoObj1)).isTrue();
     assertThat(DtoUtils.equals(dtoObj1, null)).isFalse();
     assertThat(DtoUtils.equals(dtoObj1, new Object())).isFalse();
+    assertThat(DtoUtils.equals(null, dtoObj2)).isFalse();
   }
 
   @Test
