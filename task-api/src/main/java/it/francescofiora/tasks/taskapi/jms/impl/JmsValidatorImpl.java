@@ -3,8 +3,9 @@ package it.francescofiora.tasks.taskapi.jms.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
-import it.francescofiora.tasks.taskapi.jms.JmsEvent;
 import it.francescofiora.tasks.taskapi.jms.JmsValidator;
+import it.francescofiora.tasks.taskapi.jms.errors.JmsException;
+import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ public class JmsValidatorImpl implements JmsValidator {
   }
 
   @Override
-  public JmsEvent validate(Object obj) {
+  public JmsMessage validate(Object obj) {
     if (obj instanceof ActiveMQTextMessage) {
       ActiveMQTextMessage txtMessage = (ActiveMQTextMessage) obj;
 
@@ -31,13 +32,13 @@ public class JmsValidatorImpl implements JmsValidator {
         response = mapper.readValue(txtMessage.getText(), MessageDtoResponseImpl.class);
       } catch (Exception e) {
         log.error(e.getMessage());
-        throw new RuntimeException(e.getMessage());
+        throw new JmsException(e.getMessage(), e);
       }
 
-      return new JmsEvent(response, txtMessage.getJMSMessageID(), txtMessage.getTimestamp());
+      return new JmsMessage(response, txtMessage.getJMSMessageID(), txtMessage.getTimestamp());
     }
 
-    throw new RuntimeException(obj + " not valid");
+    throw new JmsException(obj + " not valid");
   }
 
 }

@@ -1,7 +1,7 @@
 package it.francescofiora.tasks.taskapi.jms.impl;
 
-import it.francescofiora.tasks.taskapi.jms.JmsEvent;
 import it.francescofiora.tasks.taskapi.jms.StrategyManager;
+import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
 import it.francescofiora.tasks.taskapi.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +19,10 @@ public class StrategyManagerImpl implements StrategyManager {
   }
 
   @Override
-  public void exec(JmsEvent event) {
-    log.info("Response - message: " + event.getJmsMessageId() + "; task: "
-        + event.getResponse().getTaskId());
-    taskService.response(event.getResponse());
+  public void exec(JmsMessage message) {
+    log.info("Response - message: " + message.getJmsMessageId() + "; task: "
+        + message.getResponse().getTaskId());
+    taskService.response(message.getResponse());
   }
 
 }

@@ -1,10 +1,10 @@
 package it.francescofiora.tasks.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.validation.rule.Rule;
-import org.junit.jupiter.api.Assertions;
 
 public class DtoEqualsTester implements Rule {
 
@@ -17,7 +17,7 @@ public class DtoEqualsTester implements Rule {
           dtoIdentifierVerifier(pojoClass.getClazz());
         }
       } catch (Exception e) {
-        Assertions.fail(e.getMessage());
+        fail(e.getMessage());
       }
     }
   }

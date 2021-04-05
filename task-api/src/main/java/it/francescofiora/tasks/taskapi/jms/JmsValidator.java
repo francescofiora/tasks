@@ -1,6 +1,8 @@
 package it.francescofiora.tasks.taskapi.jms;
 
+import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
+
 public interface JmsValidator {
 
-  JmsEvent validate(Object obj);
+  JmsMessage validate(Object obj);
 }

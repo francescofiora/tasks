@@ -6,7 +6,8 @@ import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.taskapi.domain.Parameter;
 import it.francescofiora.tasks.taskapi.domain.Result;
 import it.francescofiora.tasks.taskapi.domain.Task;
-import it.francescofiora.tasks.taskapi.jms.TaskExecutor;
+import it.francescofiora.tasks.taskapi.jms.JmsProducer;
+import it.francescofiora.tasks.taskapi.jms.errors.JmsException;
 import it.francescofiora.tasks.taskapi.repository.TaskRepository;
 import it.francescofiora.tasks.taskapi.service.SequenceGeneratorService;
 import it.francescofiora.tasks.taskapi.service.TaskService;
@@ -40,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
   private final NewTaskMapper newtaskMapper;
   private final UpdatableTaskDtoTaskMapper updatableTaskDtoTaskMapper;
 
-  private final TaskExecutor taskExecutor;
+  private final JmsProducer jmsProducer;
 
   /**
    * Constructor.
@@ -50,17 +51,17 @@ public class TaskServiceImpl implements TaskService {
    * @param newtaskMapper NewTaskMapper
    * @param updatableTaskDtoTaskMapper UpdatableTaskDtoTaskMapper
    * @param sequenceGenerator SequenceGeneratorService
-   * @param taskExecutor TaskExecutor
+   * @param jmsProducer JmsProducer
    */
   public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper,
       NewTaskMapper newtaskMapper, UpdatableTaskDtoTaskMapper updatableTaskDtoTaskMapper,
-      SequenceGeneratorService sequenceGenerator, TaskExecutor taskExecutor) {
+      SequenceGeneratorService sequenceGenerator, JmsProducer jmsProducer) {
     this.taskRepository = taskRepository;
     this.taskMapper = taskMapper;
     this.newtaskMapper = newtaskMapper;
     this.updatableTaskDtoTaskMapper = updatableTaskDtoTaskMapper;
     this.sequenceGenerator = sequenceGenerator;
-    this.taskExecutor = taskExecutor;
+    this.jmsProducer = jmsProducer;
   }
 
   @Override
@@ -77,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
   private void send(Task task) {
     try {
       // @formatter:off
-      taskExecutor.send(new MessageDtoRequestImpl()
+      jmsProducer.send(new MessageDtoRequestImpl()
           .taskId(task.getId())
           .type(task.getType())
           .addParameters(task.getParameters().stream()
@@ -129,7 +130,7 @@ public class TaskServiceImpl implements TaskService {
 
     Optional<Task> taskOpt = taskRepository.findById(response.getTaskId());
     if (!taskOpt.isPresent()) {
-      throw new RuntimeException("Not found!");
+      throw new JmsException("Not found!");
     }
     Task task = taskOpt.get();
     task.setStatus(response.getStatus());

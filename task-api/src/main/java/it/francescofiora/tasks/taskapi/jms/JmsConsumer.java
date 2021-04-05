@@ -1,12 +1,13 @@
 package it.francescofiora.tasks.taskapi.jms;
 
+import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskListener {
+public class JmsConsumer {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -20,8 +21,7 @@ public class TaskListener {
    * @param validator       JmsValidator
    * @param strategyManager StrategyManager
    */
-  public TaskListener(JmsValidator validator, StrategyManager strategyManager) {
-    super();
+  public JmsConsumer(JmsValidator validator, StrategyManager strategyManager) {
     this.validator = validator;
     this.strategyManager = strategyManager;
   }
@@ -33,13 +33,13 @@ public class TaskListener {
    */
   @JmsListener(destination = "${activemq.queue.response:QUEUE_RESPONSE}")
   public void receiveMessage(Object obj) {
-    log.info("Receiver Message " + obj);
+    log.info("Message received: " + obj);
 
-    JmsEvent event = validator.validate(obj);
-    log.debug("Validated Message " + event);
+    JmsMessage message = validator.validate(obj);
+    log.debug("Message validated: " + message);
 
-    strategyManager.exec(event);
-    log.debug("Executed Message " + event);
+    strategyManager.exec(message);
+    log.debug("Message executed: " + message);
   }
 
 }

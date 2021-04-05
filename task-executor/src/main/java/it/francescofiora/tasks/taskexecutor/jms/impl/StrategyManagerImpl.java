@@ -28,7 +28,6 @@ public class StrategyManagerImpl implements StrategyManager {
    * @param jobs        Job[]
    */
   public StrategyManagerImpl(JobLauncher jobLauncher, Job[] jobs) {
-    super();
     this.jobLauncher = jobLauncher;
     for (Job job : jobs) {
       map.put(job.getName(), job);

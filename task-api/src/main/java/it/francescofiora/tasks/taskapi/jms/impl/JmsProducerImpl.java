@@ -1,7 +1,7 @@
 package it.francescofiora.tasks.taskapi.jms.impl;
 
 import it.francescofiora.tasks.message.MessageDtoRequest;
-import it.francescofiora.tasks.taskapi.jms.TaskExecutor;
+import it.francescofiora.tasks.taskapi.jms.JmsProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskExecutorImpl implements TaskExecutor {
+public class JmsProducerImpl implements JmsProducer {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -18,7 +18,7 @@ public class TaskExecutorImpl implements TaskExecutor {
 
   private final JmsTemplate jmsTemplate;
 
-  public TaskExecutorImpl(JmsTemplate jmsTemplate) {
+  public JmsProducerImpl(JmsTemplate jmsTemplate) {
     this.jmsTemplate = jmsTemplate;
   }
 

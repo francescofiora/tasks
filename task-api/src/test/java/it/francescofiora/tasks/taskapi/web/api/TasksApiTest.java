@@ -7,12 +7,12 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.service.TaskService;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
+import it.francescofiora.tasks.taskapi.util.TestUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +42,7 @@ public class TasksApiTest extends AbstractTestApi {
 
   @Test
   public void testCreateTask() throws Exception {
-    NewTaskDto newTaskDto = getNewTaskDto();
+    NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
 
     TaskDto taskDto = new TaskDto();
     taskDto.setId(ID);
@@ -55,69 +55,68 @@ public class TasksApiTest extends AbstractTestApi {
   @Test
   public void testCreateTaskBadRequest() throws Exception {
     // description
-    NewTaskDto newTaskDto = getNewTaskDto();
+    NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.setDescription(null);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
+    newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.setDescription("");
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
+    newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.setDescription("  ");
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
     // type
-    newTaskDto = getNewTaskDto();
+    newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.setType(null);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
     // parameters
-    newTaskDto = getNewTaskDto();
+    newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.setParameters(null);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
+    newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.getParameters().clear();
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
+    newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.getParameters().add(new ParameterDto());
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
-    ParameterDto parameterDto = getParameterDto();
+    newTaskDto = TestUtils.createNewTaskDto();
+    ParameterDto parameterDto = TestUtils.createParameterDto();
     parameterDto.setName("");
     newTaskDto.getParameters().add(parameterDto);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-
-    newTaskDto = getNewTaskDto();
-    parameterDto = getParameterDto();
+    newTaskDto = TestUtils.createNewTaskDto();
+    parameterDto = TestUtils.createParameterDto();
     parameterDto.setName("  ");
     newTaskDto.getParameters().add(parameterDto);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
-    parameterDto = getParameterDto();
+    newTaskDto = TestUtils.createNewTaskDto();
+    parameterDto = TestUtils.createParameterDto();
     parameterDto.setName(null);
     newTaskDto.getParameters().add(parameterDto);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
-    parameterDto = getParameterDto();
+    newTaskDto = TestUtils.createNewTaskDto();
+    parameterDto = TestUtils.createParameterDto();
     parameterDto.setValue("");
     newTaskDto.getParameters().add(parameterDto);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
-    parameterDto = getParameterDto();
+    newTaskDto = TestUtils.createNewTaskDto();
+    parameterDto = TestUtils.createParameterDto();
     parameterDto.setValue("  ");
     newTaskDto.getParameters().add(parameterDto);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
-    newTaskDto = getNewTaskDto();
-    parameterDto = getParameterDto();
+    newTaskDto = TestUtils.createNewTaskDto();
+    parameterDto = TestUtils.createParameterDto();
     parameterDto.setValue(null);
     newTaskDto.getParameters().add(parameterDto);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
@@ -126,57 +125,27 @@ public class TasksApiTest extends AbstractTestApi {
   @Test
   public void testPatchTaskBadRequest() throws Exception {
     // id
-    UpdatableTaskDto taskDto = getUpdatableTaskDto();
-    taskDto.setId(null);
+    UpdatableTaskDto taskDto = TestUtils.createUpdatableTaskDto(null);
     performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isBadRequest());
 
     // description
-    taskDto = getUpdatableTaskDto();
+    taskDto = TestUtils.createUpdatableTaskDto(ID);
     taskDto.setDescription(null);
     performPatch(TASKS_ID_URI, taskDto.getId(), taskDto).andExpect(status().isBadRequest());
 
-    taskDto = getUpdatableTaskDto();
+    taskDto = TestUtils.createUpdatableTaskDto(ID);
     taskDto.setDescription("");
     performPatch(TASKS_ID_URI, taskDto.getId(), taskDto).andExpect(status().isBadRequest());
 
-    taskDto = getUpdatableTaskDto();
+    taskDto = TestUtils.createUpdatableTaskDto(ID);
     taskDto.setDescription("  ");
     performPatch(TASKS_ID_URI, taskDto.getId(), taskDto).andExpect(status().isBadRequest());
   }
 
   @Test
   public void testPatchTask() throws Exception {
-    UpdatableTaskDto taskDto = getUpdatableTaskDto();
-    performPatch(TASKS_ID_URI, taskDto.getId(), taskDto).andExpect(status().isOk());
-  }
-
-  private UpdatableTaskDto getUpdatableTaskDto() {
-    UpdatableTaskDto taskDto = new UpdatableTaskDto();
-    taskDto.setId(ID);
-    taskDto.setDescription("Description II");
-    return taskDto;
-  }
-
-  private void fillTask(NewTaskDto taskDto) {
-    taskDto.setDescription("Description");
-    taskDto.setType(TaskType.SHORT);
-    ParameterDto parameterDto = new ParameterDto();
-    parameterDto.setName("Name");
-    parameterDto.setValue("Value");
-    taskDto.getParameters().add(parameterDto);
-  }
-
-  private NewTaskDto getNewTaskDto() {
-    NewTaskDto newTaskDto = new NewTaskDto();
-    fillTask(newTaskDto);
-    return newTaskDto;
-  }
-
-  private ParameterDto getParameterDto() {
-    ParameterDto parameterDto = new ParameterDto();
-    parameterDto.setName("Paramenter");
-    parameterDto.setValue("Par Value");
-    return parameterDto;
+    UpdatableTaskDto taskDto = TestUtils.createUpdatableTaskDto(ID);
+    performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isOk());
   }
 
   @Test
