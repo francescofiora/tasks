@@ -38,16 +38,16 @@ public abstract class AbstractApi {
   }
 
   /**
-   * Create a ResponseEntity of a PUT action.
+   * Create a ResponseEntity of a PATCH action.
    *
    * @param id the id of the resource updated
    * @return ResponseEntity
    */
-  protected ResponseEntity<Void> putResponse(final Long id) {
+  protected ResponseEntity<Void> patchResponse(final Long id) {
     // @formatter:off
     return ResponseEntity
         .ok()
-        .headers(HeaderUtil.createEntityUpdateAlert(entityName, String.valueOf(id)))
+        .headers(HeaderUtil.createEntityPatchAlert(entityName, String.valueOf(id)))
         .build();
     // @formatter:on
   }

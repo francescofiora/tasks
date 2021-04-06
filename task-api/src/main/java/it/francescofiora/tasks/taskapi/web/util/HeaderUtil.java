@@ -38,8 +38,8 @@ public interface HeaderUtil {
    * @param param the parameter
    * @return HttpHeaders
    */
-  static HttpHeaders createEntityUpdateAlert(String entityName, String param) {
-    return createAlert(entityName + ".updated", param);
+  static HttpHeaders createEntityPatchAlert(String entityName, String param) {
+    return createAlert(entityName + ".patched", param);
   }
 
   /**

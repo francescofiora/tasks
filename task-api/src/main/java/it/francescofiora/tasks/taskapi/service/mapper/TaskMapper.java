@@ -10,8 +10,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", uses = {})
 public interface TaskMapper {
 
-  Task toEntity(TaskDto taskDto);
-
   TaskDto toDto(Task entity);
   
   /**

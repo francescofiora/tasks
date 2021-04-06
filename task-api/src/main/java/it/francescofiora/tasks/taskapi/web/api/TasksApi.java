@@ -83,13 +83,14 @@ public class TasksApi extends AbstractApi {
   public ResponseEntity<Void> patchTask(
       @Parameter(description = "Task to update") @Valid @RequestBody UpdatableTaskDto taskDto,
       @Parameter(description = "The id of the task to update", required = true,
-      example = "1") @PathVariable("id") Long id) {
+          example = "1") @PathVariable("id") Long id) {
     log.debug("REST request to patch Task : {}", taskDto);
     if (!id.equals(taskDto.getId())) {
-      throw new BadRequestAlertException(ENTITY_NAME, "idnull", "Invalid id");
+      throw new BadRequestAlertException(ENTITY_NAME, String.valueOf(taskDto.getId()),
+          "Invalid id");
     }
     taskService.patch(taskDto);
-    return putResponse(id);
+    return patchResponse(id);
   }
 
   /**
@@ -98,8 +99,10 @@ public class TasksApi extends AbstractApi {
    * @param pageable the pagination information.
    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
    */
-  @Operation(summary = "Searches tasks", description = "By passing in the appropriate options, "
-      + "you can search for available tasks in the system", tags = {"task"})
+  @Operation(summary = "Searches tasks",
+      description = "By passing in the appropriate options, "
+          + "you can search for available tasks in the system",
+      tags = {"task"})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Search results matching criteria",
           content = @Content(
@@ -126,9 +129,8 @@ public class TasksApi extends AbstractApi {
       @ApiResponse(responseCode = "400", description = "Bad input parameter"),
       @ApiResponse(responseCode = "404", description = "not found")})
   @GetMapping("/tasks/{id}")
-  public ResponseEntity<TaskDto> getTask(@Parameter(
-      description = "id of the task to get", required = true,
-      example = "1") @PathVariable Long id) {
+  public ResponseEntity<TaskDto> getTask(@Parameter(description = "id of the task to get",
+      required = true, example = "1") @PathVariable Long id) {
     log.debug("REST request to get Task : {}", id);
     return getResponse(taskService.findOne(id), id);
   }
@@ -147,9 +149,8 @@ public class TasksApi extends AbstractApi {
       @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
       @ApiResponse(responseCode = "404", description = "not found")})
   @DeleteMapping("/tasks/{id}")
-  public ResponseEntity<Void> deleteTask(@Parameter(
-      description = "id of the task to delete", required = true,
-      example = "1") @PathVariable Long id) throws URISyntaxException {
+  public ResponseEntity<Void> deleteTask(@Parameter(description = "id of the task to delete",
+      required = true, example = "1") @PathVariable Long id) throws URISyntaxException {
     log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
     return deleteResponse(id);

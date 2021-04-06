@@ -128,6 +128,9 @@ public class TasksApiTest extends AbstractTestApi {
     UpdatableTaskDto taskDto = TestUtils.createUpdatableTaskDto(null);
     performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isBadRequest());
 
+    taskDto = TestUtils.createUpdatableTaskDto(2L);
+    performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isBadRequest());
+
     // description
     taskDto = TestUtils.createUpdatableTaskDto(ID);
     taskDto.setDescription(null);
