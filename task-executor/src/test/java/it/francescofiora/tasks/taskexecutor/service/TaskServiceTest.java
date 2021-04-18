@@ -3,19 +3,25 @@ package it.francescofiora.tasks.taskexecutor.service;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyIterable;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import it.francescofiora.tasks.taskexecutor.domain.Parameter;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.repository.ParameterRepository;
 import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.service.impl.TaskServiceImpl;
 import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
+import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,10 +37,10 @@ public class TaskServiceTest {
 
   private TaskService taskService;
 
-  @MockBean
+  @Spy
   private ParameterRepository parameterRepositor;
 
-  @MockBean
+  @Spy
   private TaskRepository taskRepository;
 
   @MockBean
@@ -102,7 +108,20 @@ public class TaskServiceTest {
   void testDelete() throws Exception {
     Task task = new Task();
     task.setId(ID);
+    task.setParameters(Collections.singleton(new Parameter()));
     when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
+
     taskService.delete(ID);
+    verify(taskRepository).deleteById(eq(ID));
+    verify(parameterRepositor).deleteAll(eq(task.getParameters()));
+  }
+
+  @Test
+  void testDeleteNope() throws Exception {
+    when(taskRepository.findById(eq(ID))).thenReturn(Optional.empty());
+
+    taskService.delete(ID);
+    verify(taskRepository, times(0)).deleteById(eq(ID));
+    verify(parameterRepositor, times(0)).deleteAll(anyIterable());
   }
 }

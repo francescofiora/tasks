@@ -36,20 +36,20 @@ public class StrategyManagerImpl implements StrategyManager {
   }
 
   @Override
-  public void exec(JmsMessage event) {
-    final String type = event.getRequest().getType().name();
+  public void exec(JmsMessage message) {
+    final String type = message.getRequest().getType().name();
     Job job = map.containsKey(type) ? map.get(type) : map.get(JobType.NOPE.name());
 
     log.info("Executor - " + job.getName());
     try {
       JobParametersBuilder jobParametersBuilder = new JobParametersBuilder()
-          .addString(JmsParameters.JMS_MESSAGE_ID, event.getJmsMessageId())
+          .addString(JmsParameters.JMS_MESSAGE_ID, message.getJmsMessageId())
           .addString(JmsParameters.TASK_TYPE, type)
-          .addLong(JmsParameters.TASK_REF, event.getRequest().getTaskId())
-          .addLong(JmsParameters.MESSAGE_CREATED, event.getTimestamp())
+          .addLong(JmsParameters.TASK_REF, message.getRequest().getTaskId())
+          .addLong(JmsParameters.MESSAGE_CREATED, message.getTimestamp())
           .addString(JmsParameters.JOB_TYPE, job.getName());
 
-      event.getRequest().getParameters()
+      message.getRequest().getParameters()
           .forEach((key, value) -> jobParametersBuilder.addString(key, value));
 
       jobLauncher.run(job, jobParametersBuilder.toJobParameters());

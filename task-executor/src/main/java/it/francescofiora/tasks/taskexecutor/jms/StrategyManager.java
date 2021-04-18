@@ -4,5 +4,5 @@ import it.francescofiora.tasks.taskexecutor.jms.message.JmsMessage;
 
 public interface StrategyManager {
 
-  void exec(JmsMessage event);
+  void exec(JmsMessage message);
 }

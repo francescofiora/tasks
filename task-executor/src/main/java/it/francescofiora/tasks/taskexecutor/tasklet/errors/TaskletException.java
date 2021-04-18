@@ -7,8 +7,4 @@ public class TaskletException extends RuntimeException {
   public TaskletException(String message) {
     super(message);
   }
-
-  public TaskletException(String message, Throwable cause) {
-    super(message, cause);
-  }
 }

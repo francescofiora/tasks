@@ -31,7 +31,21 @@ public final class TestUtils {
         .addParameter("Key", "Value");
     // @formatter:on
   }
-  
+
+  /**
+   * create MessageDtoRequest with NEW_TYPE.
+   *
+   * @return MessageDtoRequest
+   */
+  public static MessageDtoRequest createMessageDtoRequestNewType() {
+    // @formatter:off
+    return new MessageDtoRequestImpl()
+        .taskId(1L)
+        .type(TaskType.NEW_TYPE)
+        .addParameter("Key", "Value");
+    // @formatter:on
+  }
+
   /**
    * create MessageDtoResponse.
    *
@@ -47,7 +61,6 @@ public final class TestUtils {
     // @formatter:on
   }
 
-  
   /**
    * create Short Task 1.
    *
@@ -104,7 +117,6 @@ public final class TestUtils {
         .result("Result3");
     // @formatter:on
   }
-
 
   /**
    * compare if expected Task and actual Task have same data.
