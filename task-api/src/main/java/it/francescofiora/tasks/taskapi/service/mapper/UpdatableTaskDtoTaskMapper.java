@@ -12,17 +12,10 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring", uses = {})
 public interface UpdatableTaskDtoTaskMapper {
 
-  @Mapping(target = "type", ignore = true)
-  @Mapping(target = "status", ignore = true)
-  @Mapping(target = "result", ignore = true)
-  @Mapping(target = "parameters", ignore = true)
-  Task toEntity(UpdatableTaskDto taskDto);
-
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "type", ignore = true)
   @Mapping(target = "status", ignore = true)
   @Mapping(target = "result", ignore = true)
   @Mapping(target = "parameters", ignore = true)
   void updateEntityFromDto(UpdatableTaskDto taskDto, @MappingTarget Task task);
-
 }

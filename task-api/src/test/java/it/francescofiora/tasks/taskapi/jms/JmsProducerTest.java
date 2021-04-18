@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.francescofiora.tasks.message.MessageDto;
 import it.francescofiora.tasks.message.MessageDtoRequest;
 import it.francescofiora.tasks.message.MessageDtoRequestImpl;
-import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.jms.impl.JmsProducerImpl;
 import it.francescofiora.tasks.taskapi.util.TaskTestListener;
+import it.francescofiora.tasks.taskapi.util.TestUtils;
 import java.util.concurrent.TimeUnit;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -43,13 +43,7 @@ public class JmsProducerTest {
   public void testSend() throws Exception {
     Long count = listener.getLatch().getCount();
 
-    // @formatter:off
-    MessageDtoRequest request =
-        new MessageDtoRequestImpl()
-        .taskId(1L)
-        .type(TaskType.LONG)
-        .addParameter("Key", "Value");
-    // @formatter:on
+    MessageDtoRequest request = TestUtils.createMessageDtoRequest();
     jmsProducer.send(request);
 
     listener.getLatch().await(10000, TimeUnit.MILLISECONDS);

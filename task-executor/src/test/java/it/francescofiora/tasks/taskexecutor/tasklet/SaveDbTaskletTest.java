@@ -31,10 +31,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {SaveDbTaskletTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)
+@TestPropertySource(locations = {"classpath:application_test.properties"})
 public class SaveDbTaskletTest {
 
   private static final Long ID = 1L;

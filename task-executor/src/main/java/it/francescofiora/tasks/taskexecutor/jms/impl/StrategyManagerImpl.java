@@ -1,8 +1,9 @@
 package it.francescofiora.tasks.taskexecutor.jms.impl;
 
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
-import it.francescofiora.tasks.taskexecutor.jms.JmsEvent;
 import it.francescofiora.tasks.taskexecutor.jms.StrategyManager;
+import it.francescofiora.tasks.taskexecutor.jms.errors.JmsException;
+import it.francescofiora.tasks.taskexecutor.jms.message.JmsMessage;
 import it.francescofiora.tasks.taskexecutor.tasklet.JmsParameters;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class StrategyManagerImpl implements StrategyManager {
   }
 
   @Override
-  public void exec(JmsEvent event) {
+  public void exec(JmsMessage event) {
     final String type = event.getRequest().getType().name();
     Job job = map.containsKey(type) ? map.get(type) : map.get(JobType.NOPE.name());
 
@@ -54,7 +55,7 @@ public class StrategyManagerImpl implements StrategyManager {
       jobLauncher.run(job, jobParametersBuilder.toJobParameters());
     } catch (Exception e) {
       log.error(e.getMessage());
-      throw new RuntimeException(e.getMessage());
+      throw new JmsException(e.getMessage(), e);
     }
   }
 }

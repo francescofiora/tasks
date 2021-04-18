@@ -1,11 +1,11 @@
 package it.francescofiora.tasks.taskexecutor.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.validation.rule.Rule;
 import it.francescofiora.tasks.taskexecutor.domain.DomainIdentifier;
-import org.junit.jupiter.api.Assertions;
 
 public class PojoEqualsTester implements Rule {
 
@@ -18,7 +18,7 @@ public class PojoEqualsTester implements Rule {
           domainIdentifierVerifier(pojoClass.getClazz());
         }
       } catch (Exception e) {
-        Assertions.fail(e.getMessage());
+        fail(e.getMessage());
       }
     }
   }
@@ -50,12 +50,12 @@ public class PojoEqualsTester implements Rule {
     assertThat(domainObj1.equals(domainObj2)).isFalse();
 
     domainObj2.setId(2L);
-    assertThat(domainObj1.equals(domainObj2)).isFalse();
+    TestUtils.checkNotEqualHashAndToString(domainObj1, domainObj2);
 
     domainObj2.setId(domainObj1.getId());
-    assertThat(domainObj1.equals(domainObj2)).isTrue();
+    TestUtils.checkEqualHashAndToString(domainObj1, domainObj2);
 
     domainObj1.setId(null);
-    assertThat(domainObj1.equals(domainObj2)).isFalse();
+    TestUtils.checkNotEqualHashAndToString(domainObj1, domainObj2);
   }
 }

@@ -1,18 +1,15 @@
-package it.francescofiora.tasks.taskapi.jms;
+package it.francescofiora.tasks.taskexecutor.jms;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.francescofiora.tasks.message.MessageDto;
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
-import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
-import java.util.Date;
+import it.francescofiora.tasks.taskexecutor.jms.impl.JmsProducerImpl;
+import it.francescofiora.tasks.taskexecutor.util.TaskTestListener;
+import it.francescofiora.tasks.taskexecutor.util.TestUtils;
+import java.util.concurrent.TimeUnit;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQTextMessage;
@@ -34,26 +31,29 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class JmsConsumerTest {
-
-  private static final MessageDtoResponse MSG_SENT = new MessageDtoResponseImpl().taskId(1L);
-
-  @Value("${activemq.queue.response:QUEUE_RESPONSE}")
-  private String destination;
-
-  private static final JmsMessage MSG_VALIDATED =
-      new JmsMessage(MSG_SENT, "ID", new Date().getTime());
+public class JmsProducerTest {
 
   @Autowired
-  private JmsTemplate template;
+  private JmsProducer jmsProducer;
 
   @Autowired
-  private StrategyManager strategyManager;
+  private TaskTestListener listener;
 
   @Test
-  public void testReceiveMessage() throws Exception {
-    template.convertAndSend(destination, MSG_SENT);
-    verify(strategyManager, timeout(1000)).exec(eq(MSG_VALIDATED));
+  public void testSend() throws Exception {
+    Long count = listener.getLatch().getCount();
+
+    MessageDtoResponse response = TestUtils.createMessageDtoResponse();
+    jmsProducer.send(response);
+
+    listener.getLatch().await(10000, TimeUnit.MILLISECONDS);
+
+    assertThat(listener.getLatch().getCount()).isEqualTo(count - 1);
+
+    ActiveMQTextMessage message = (ActiveMQTextMessage) listener.getObj();
+    MessageDtoResponse actual =
+        new ObjectMapper().readValue(message.getText(), MessageDtoResponseImpl.class);
+    assertThat(actual).isEqualTo(response);
   }
 
   @TestConfiguration
@@ -93,20 +93,15 @@ public class JmsConsumerTest {
     }
 
     @Bean
-    public StrategyManager strategyManager() {
-      return spy(mock(StrategyManager.class));
+    public JmsProducer jmsProducer(JmsTemplate jmsTemplate) {
+      return new JmsProducerImpl(jmsTemplate);
     }
 
     @Bean
-    public JmsValidator validator() {
-      JmsValidator validator = mock(JmsValidator.class);
-      when(validator.validate(any(ActiveMQTextMessage.class))).thenReturn(MSG_VALIDATED);
-      return validator;
+    public TaskTestListener taskTestListener() {
+      return new TaskTestListener();
     }
 
-    @Bean
-    public JmsConsumer jmsConsumer(JmsValidator validator, StrategyManager strategyManager) {
-      return new JmsConsumer(validator, strategyManager);
-    }
   }
+
 }

@@ -10,17 +10,6 @@ public interface HeaderUtil {
   String X_PARAMS = "X-params";
 
   /**
-   * Create Entity Creation Alert.
-   *
-   * @param entityName the entity name
-   * @param param the parameter
-   * @return HttpHeaders
-   */
-  static HttpHeaders createEntityCreationAlert(String entityName, String param) {
-    return createAlert(entityName + ".created", param);
-  }
-
-  /**
    * Create Entity Get Alert.
    *
    * @param entityName the entity name
@@ -29,17 +18,6 @@ public interface HeaderUtil {
    */
   static HttpHeaders createEntityGetAlert(String entityName, String param) {
     return createAlert(entityName + ".get", param);
-  }
-
-  /**
-   * Create Entity Update Alert.
-   *
-   * @param entityName the entity name
-   * @param param the parameter
-   * @return HttpHeaders
-   */
-  static HttpHeaders createEntityUpdateAlert(String entityName, String param) {
-    return createAlert(entityName + ".updated", param);
   }
 
   /**

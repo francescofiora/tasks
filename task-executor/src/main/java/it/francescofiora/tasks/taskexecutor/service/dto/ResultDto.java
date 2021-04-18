@@ -23,7 +23,6 @@ public class ResultDto implements Serializable {
   }
   
   public ResultDto(String value) {
-    super();
     this.value = value;
   }
 

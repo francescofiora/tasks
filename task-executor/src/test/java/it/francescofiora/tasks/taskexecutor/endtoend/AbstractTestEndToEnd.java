@@ -1,8 +1,8 @@
-package it.francescofiora.tasks.taskapi.endtoend;
+package it.francescofiora.tasks.taskexecutor.endtoend;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import it.francescofiora.tasks.taskapi.web.util.HeaderUtil;
+import it.francescofiora.tasks.taskexecutor.web.util.HeaderUtil;
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ public class AbstractTestEndToEnd {
   private String password;
 
   private String getPath(String path) {
-    return "http://localhost:" + randomServerPort + "/tasks-api" + path;
+    return "http://localhost:" + randomServerPort + "/tasks-executor" + path;
   }
 
   protected void testUnauthorized(String path) throws Exception {
@@ -70,33 +70,10 @@ public class AbstractTestEndToEnd {
     return restTemplate.exchange(getPath(path), HttpMethod.DELETE, request, Void.class);
   }
 
-  protected <T> ResponseEntity<Void> performPost(String path, T body) throws Exception {
-    HttpEntity<T> request = new HttpEntity<>(body, createHttpHeaders());
-    return restTemplate.postForEntity(new URI(getPath(path)), request, Void.class);
-  }
-
   private void checkHeaders(HttpHeaders headers, String alert, String param) {
     assertThat(headers).containsKeys(HeaderUtil.X_ALERT, HeaderUtil.X_PARAMS);
     assertThat(headers.get(HeaderUtil.X_ALERT)).contains(alert);
     assertThat(headers.get(HeaderUtil.X_PARAMS)).contains(param);
-  }
-
-  protected <T> Long createAndReturnId(String path, T body, String alert) throws Exception {
-    ResponseEntity<Void> result = performPost(path, body);
-    assertThat(result.getHeaders()).containsKeys(HeaderUtil.X_ALERT, HttpHeaders.LOCATION,
-        HeaderUtil.X_PARAMS);
-    assertThat(result.getHeaders().get(HeaderUtil.X_ALERT)).contains(alert);
-    assertThat(result.getHeaders().get(HeaderUtil.X_PARAMS)).isNotEmpty();
-    Long id = getIdFormHttpHeaders(result.getHeaders());
-    checkHeaders(result.getHeaders(), alert, String.valueOf(id));
-    return id;
-  }
-
-  protected <T> void assertCreateBadRequest(String path, T body, String alert, String param)
-      throws Exception {
-    ResponseEntity<Void> result = performPost(path, body);
-    checkHeadersError(result.getHeaders(), alert, param);
-    assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
   private void checkHeadersError(HttpHeaders headers, String alert, String param) {
@@ -151,11 +128,6 @@ public class AbstractTestEndToEnd {
     ResponseEntity<Void> result = performDelete(path);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     checkHeaders(result.getHeaders(), alert, param);
-  }
-
-  protected Long getIdFormHttpHeaders(HttpHeaders headers) {
-    String url = headers.get(HttpHeaders.LOCATION).get(0);
-    return Long.valueOf(url.substring(url.lastIndexOf('/') + 1));
   }
 
   private HttpHeaders createHttpHeaders() {

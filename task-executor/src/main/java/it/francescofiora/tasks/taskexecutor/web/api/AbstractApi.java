@@ -3,8 +3,6 @@ package it.francescofiora.tasks.taskexecutor.web.api;
 import it.francescofiora.tasks.taskexecutor.web.errors.NotFoundAlertException;
 import it.francescofiora.tasks.taskexecutor.web.util.HeaderUtil;
 import it.francescofiora.tasks.taskexecutor.web.util.PaginationUtil;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -17,39 +15,6 @@ public abstract class AbstractApi {
 
   public AbstractApi(String entityName) {
     this.entityName = entityName;
-  }
-
-  /**
-   * Create a ResponseEntity of a POST action.
-   *
-   * @param path the path
-   * @param id the id of the resource created
-   * @return ResponseEntity
-   * @throws URISyntaxException if the Location URI syntax is incorrect
-   */
-  protected ResponseEntity<Void> postResponse(final String path, final Long id)
-      throws URISyntaxException {
-    // @formatter:off
-    return ResponseEntity
-        .created(new URI(path))
-        .headers(HeaderUtil.createEntityCreationAlert(entityName, String.valueOf(id)))
-        .build();
-    // @formatter:on
-  }
-
-  /**
-   * Create a ResponseEntity of a PUT action.
-   *
-   * @param id the id of the resource updated
-   * @return ResponseEntity
-   */
-  protected ResponseEntity<Void> putResponse(final Long id) {
-    // @formatter:off
-    return ResponseEntity
-        .ok()
-        .headers(HeaderUtil.createEntityUpdateAlert(entityName, String.valueOf(id)))
-        .build();
-    // @formatter:on
   }
 
   /**

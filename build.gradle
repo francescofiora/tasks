@@ -15,56 +15,55 @@ allprojects {
   targetCompatibility = 1.8
 }
 
-
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'eclipse-wtp'
-    apply plugin: 'checkstyle'
-    apply plugin: 'jacoco'
+  apply plugin: 'java'
+  apply plugin: 'eclipse-wtp'
+  apply plugin: 'checkstyle'
+  apply plugin: 'jacoco'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
 
-    group = rootProject.group
-    version = rootProject.version
+  group = rootProject.group
+  version = rootProject.version
     
-    tasks.withType(JavaCompile) {
-      options.compilerArgs = [
-         '-Amapstruct.defaultComponentModel=spring'
-      ]
-    }
+  tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+       '-Amapstruct.defaultComponentModel=spring'
+    ]
+  }
 
-    checkstyle {
-      toolVersion property('checkstyle.version')
-      configFile  rootProject.file("config/checkstyle/checkstyle.xml")
-      configProperties = [
-           'checkstyle.cache.file': "${buildDir}/checkstyle.cache",
-      ]
+  checkstyle {
+    toolVersion property('checkstyle.version')
+    configFile  rootProject.file("config/checkstyle/checkstyle.xml")
+    configProperties = [
+         'checkstyle.cache.file': "${buildDir}/checkstyle.cache",
+    ]
+  }
+  tasks.withType(Checkstyle) {
+    reports {
+      xml.enabled = false
+      html.enabled = true
     }
-    tasks.withType(Checkstyle) {
-      reports {
-        xml.enabled = false
-        html.enabled = true
-      }
-    }
-    checkstyleMain {
-      source ='src/main/java'
-    }
+  }
+  checkstyleMain {
+    source ='src/main/java'
+  }
 
-    test {
-      useJUnitPlatform()
-      finalizedBy jacocoTestReport
-    }
+  test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+  }
 
-    jacocoTestReport {
-      dependsOn test
-    }
+  jacocoTestReport {
+    dependsOn test
+  }
 
-    task cleanResources(type: Delete) {
-      delete "build/resources"
-    }
+  task cleanResources(type: Delete) {
+    delete "build/resources"
+  }
 }
 
 wrapper {
-    gradleVersion = "6.3"
+  gradleVersion = "6.3"
 }

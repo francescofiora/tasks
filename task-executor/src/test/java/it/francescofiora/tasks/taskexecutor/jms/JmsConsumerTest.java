@@ -1,4 +1,4 @@
-package it.francescofiora.tasks.taskapi.jms;
+package it.francescofiora.tasks.taskexecutor.jms;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -9,9 +9,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import it.francescofiora.tasks.message.MessageDto;
-import it.francescofiora.tasks.message.MessageDtoResponse;
-import it.francescofiora.tasks.message.MessageDtoResponseImpl;
-import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
+import it.francescofiora.tasks.message.MessageDtoRequest;
+import it.francescofiora.tasks.message.MessageDtoRequestImpl;
+import it.francescofiora.tasks.taskexecutor.jms.message.JmsMessage;
 import java.util.Date;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -36,9 +36,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @TestPropertySource(locations = {"classpath:application_test.properties"})
 public class JmsConsumerTest {
 
-  private static final MessageDtoResponse MSG_SENT = new MessageDtoResponseImpl().taskId(1L);
+  private static final MessageDtoRequest MSG_SENT = new MessageDtoRequestImpl().taskId(1L);
 
-  @Value("${activemq.queue.response:QUEUE_RESPONSE}")
+  @Value("${activemq.queue.request:QUEUE_REQUEST}")
   private String destination;
 
   private static final JmsMessage MSG_VALIDATED =

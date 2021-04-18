@@ -1,27 +1,27 @@
 package it.francescofiora.tasks.taskexecutor.service.dto;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import it.francescofiora.tasks.taskexecutor.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
 public class ParameterDtoTest {
 
   @Test
   public void dtoEqualsVerifier() throws Exception {
-    ParameterDto parameterDto1 = new ParameterDto();
-    parameterDto1.setName("Name1");
-    parameterDto1.setValue("Value1");
-    ParameterDto parameterDto2 = new ParameterDto();
-    assertThat(parameterDto1).isNotEqualTo(parameterDto2);
-    parameterDto2.setName(parameterDto1.getName());
-    parameterDto2.setValue(parameterDto1.getValue());
-    assertThat(parameterDto1).isEqualTo(parameterDto2);
-    parameterDto2.setName("Name2");
-    parameterDto2.setValue("Value2");
-    assertThat(parameterDto1).isNotEqualTo(parameterDto2);
+    ParameterDto parameterDto1 = TestUtils.createParameterDto();
+    ParameterDto parameterDto2 = TestUtils.createParameterDto();
+    TestUtils.checkEqualHashAndToString(parameterDto1, parameterDto2);
+
+    parameterDto1.setName("Name2");
+    TestUtils.checkNotEqualHashAndToString(parameterDto1, parameterDto2);
+
     parameterDto1.setName(null);
+    TestUtils.checkNotEqualHashAndToString(parameterDto1, parameterDto2);
+
+    parameterDto1 = TestUtils.createParameterDto();
+    parameterDto1.setValue("Value2");
+    TestUtils.checkNotEqualHashAndToString(parameterDto1, parameterDto2);
+
     parameterDto1.setValue(null);
-    assertThat(parameterDto1).isNotEqualTo(parameterDto2);
+    TestUtils.checkNotEqualHashAndToString(parameterDto1, parameterDto2);
   }
-  
 }

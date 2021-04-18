@@ -7,7 +7,7 @@ import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
-import it.francescofiora.tasks.taskexecutor.jms.TaskResponder;
+import it.francescofiora.tasks.taskexecutor.jms.JmsProducer;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -30,10 +30,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {SendMsgTaskletTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)
+@TestPropertySource(locations = {"classpath:application_test.properties"})
 public class SendMsgTaskletTest {
 
   private static final Long TASK_REF = 10L;
@@ -42,7 +44,7 @@ public class SendMsgTaskletTest {
   private JobLauncherTestUtils jobLauncherTestUtils;
 
   @SpyBean
-  private TaskResponder taskResponder;
+  private JmsProducer jmsProducer;
 
   private Task createTask() {
     return new Task().taskRef(TASK_REF).status(TaskStatus.IN_PROGRESS)
@@ -60,7 +62,7 @@ public class SendMsgTaskletTest {
     assertThat(jobExecution).isNotNull();
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
     
-    Mockito.verify(taskResponder).send(Mockito.any(MessageDtoResponse.class));
+    Mockito.verify(jmsProducer).send(Mockito.any(MessageDtoResponse.class));
   }
 
   @Configuration
@@ -68,7 +70,7 @@ public class SendMsgTaskletTest {
   static class BatchConfiguration {
 
     @MockBean
-    private TaskResponder taskResponder;
+    private JmsProducer jmsProducer;
 
     @MockBean
     private SaveDbTasklet saveDbTasklet;

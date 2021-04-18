@@ -24,5 +24,4 @@ public class ParameterRepositoryTest extends AbstractTestRepository {
     opt = parameterRepository.findById(expected.getId());
     assertThat(opt).isNotPresent();
   }
-
 }

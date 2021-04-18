@@ -1,6 +1,10 @@
 package it.francescofiora.tasks.taskexecutor.service;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.repository.ParameterRepository;
@@ -8,12 +12,10 @@ import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.service.impl.TaskServiceImpl;
 import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
-import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -47,7 +49,7 @@ public class TaskServiceTest {
   void testCreate() throws Exception {
     Task task = new Task();
     task.setId(ID);
-    Mockito.when(taskRepository.save(Mockito.any(Task.class))).thenReturn(task);
+    when(taskRepository.save(any(Task.class))).thenReturn(task);
 
     Task actual = taskService.save(task);
     assertThat(actual.getId()).isEqualTo(ID);
@@ -57,7 +59,7 @@ public class TaskServiceTest {
   void testFindByTaskRef() throws Exception {
     Task task = new Task();
     task.setId(ID);
-    Mockito.when(taskRepository.findByTaskRef(TASK_REF)).thenReturn(Optional.of(task));
+    when(taskRepository.findByTaskRef(TASK_REF)).thenReturn(Optional.of(task));
 
     Optional<Task> opt = taskService.findByTaskRef(TASK_REF);
     assertThat(opt).isPresent();
@@ -67,10 +69,10 @@ public class TaskServiceTest {
   @Test
   void testFindAll() throws Exception {
     Task task = new Task();
-    Mockito.when(taskRepository.findAll(Mockito.any(Pageable.class)))
-        .thenReturn(new PageImpl<Task>(Collections.singletonList(task)));
+    when(taskRepository.findAll(any(Pageable.class)))
+        .thenReturn(new PageImpl<Task>(singletonList(task)));
     TaskExecutorDto expected = new TaskExecutorDto();
-    Mockito.when(taskMapper.toDto(Mockito.any(Task.class))).thenReturn(expected);
+    when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
     Pageable pageable = PageRequest.of(1, 1);
     Page<TaskExecutorDto> page = taskService.findAll(pageable);
     assertThat(page.getContent().get(0)).isEqualTo(expected);
@@ -86,9 +88,9 @@ public class TaskServiceTest {
   void testFindOne() throws Exception {
     Task task = new Task();
     task.setId(ID);
-    Mockito.when(taskRepository.findById(Mockito.eq(task.getId()))).thenReturn(Optional.of(task));
+    when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
     TaskExecutorDto expected = new TaskExecutorDto();
-    Mockito.when(taskMapper.toDto(Mockito.any(Task.class))).thenReturn(expected);
+    when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
 
     Optional<TaskExecutorDto> taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isPresent();
@@ -98,7 +100,9 @@ public class TaskServiceTest {
 
   @Test
   void testDelete() throws Exception {
+    Task task = new Task();
+    task.setId(ID);
+    when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
     taskService.delete(ID);
   }
-
 }

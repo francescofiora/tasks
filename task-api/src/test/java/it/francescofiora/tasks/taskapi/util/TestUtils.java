@@ -2,6 +2,8 @@ package it.francescofiora.tasks.taskapi.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import it.francescofiora.tasks.message.MessageDtoRequest;
+import it.francescofiora.tasks.message.MessageDtoRequestImpl;
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
@@ -118,6 +120,20 @@ public final class TestUtils {
     task.setResult(new Result("result 3"));
     task.getParameters().add(createParameter("par", "value"));
     return task;
+  }
+
+  /**
+   * create MessageDtoRequest.
+   *
+   * @return MessageDtoRequest
+   */
+  public static MessageDtoRequest createMessageDtoRequest() {
+    // @formatter:off
+    return new MessageDtoRequestImpl()
+        .taskId(1L)
+        .type(TaskType.LONG)
+        .addParameter("Key", "Value");
+    // @formatter:on
   }
 
   /**

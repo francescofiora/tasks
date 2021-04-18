@@ -5,6 +5,7 @@ import it.francescofiora.tasks.taskexecutor.domain.Parameter;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
+import it.francescofiora.tasks.taskexecutor.tasklet.errors.TaskletException;
 import java.sql.Timestamp;
 import java.util.Map;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class SaveDbTasklet extends AbstractTasklet {
     if (taskOpt.isPresent()) {
       task = taskOpt.get();
       if (TaskStatus.IN_PROGRESS.equals(task.getStatus())) {
-        throw new RuntimeException("Task already in progress");
+        throw new TaskletException("Task already in progress");
       }
     } else {
       task = new Task().taskRef(getTaskRef(jobParameters));

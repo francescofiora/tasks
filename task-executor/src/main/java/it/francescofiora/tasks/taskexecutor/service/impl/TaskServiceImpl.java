@@ -34,7 +34,6 @@ public class TaskServiceImpl implements TaskService {
    */
   public TaskServiceImpl(TaskRepository taskRepository, ParameterRepository parameterRepositor,
       TaskMapper taskMapper) {
-    super();
     this.taskRepository = taskRepository;
     this.parameterRepositor = parameterRepositor;
     this.taskMapper = taskMapper;

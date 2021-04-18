@@ -3,6 +3,7 @@ package it.francescofiora.tasks.taskapi.endtoend;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
+import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
 import java.util.Optional;
@@ -26,8 +27,18 @@ public class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   private static final String ALERT_CREATED = "TaskDto.created";
   private static final String ALERT_DELETED = "TaskDto.deleted";
   private static final String ALERT_GET = "TaskDto.get";
-  private static final String ALERT_BAD_REQUEST = "TaskDto.badRequest";
+  private static final String ALERT_BAD_REQUEST = "NewTaskDto.badRequest";
   private static final String ALERT_NOT_FOUND = "TaskDto.notFound";
+
+  private static final String PARAM_PAGE_20 = "0 20";
+  private static final String PARAM_NOT_VALID_LONG =
+      "'id' should be a valid 'Long' and '999999999999999999999999' isn't";
+
+  private static final String PARAM_DESCRIPTION_NOT_BLANK = "[newTaskDto.description - NotBlank]";
+  private static final String PARAM_PARAMETERS_NOT_EMPTY = "[newTaskDto.parameters - NotEmpty]";
+  private static final String PARAM_VALUE_NOT_EMPTY = "[newTaskDto.parameters[].value - NotBlank]";
+  private static final String PARAM_NAME_NOT_EMPTY = "[newTaskDto.parameters[].name - NotBlank]";
+  private static final String PARAM_TYPE_NOT_EMPTY = "[newTaskDto.type - NotNull]";
 
   @Test
   public void testAuth() throws Exception {
@@ -37,31 +48,85 @@ public class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   @Test
   public void testCreateTask() throws Exception {
     NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
-    Long taskId = createAndReturnId(TASKS_URI, newTaskDto, ALERT_CREATED);
+    Long id = createAndReturnId(TASKS_URI, newTaskDto, ALERT_CREATED);
 
-    final String tasksIdUri = String.format(TASKS_ID_URI, taskId);
+    final String tasksIdUri = String.format(TASKS_ID_URI, id);
 
-    TaskDto taskDto = get(tasksIdUri, TaskDto.class, ALERT_GET);
+    TaskDto taskDto = get(tasksIdUri, TaskDto.class, ALERT_GET, String.valueOf(id));
     assertThat(taskDto.getDescription()).isEqualTo(taskDto.getDescription());
-    assertThat(taskDto.getId()).isEqualTo(taskId);
+    assertThat(taskDto.getId()).isEqualTo(id);
     assertThat(taskDto.getType()).isEqualTo(newTaskDto.getType());
 
-    TaskDto[] taskDtoArr = get(TASKS_URI, PageRequest.of(1, 1), TaskDto[].class, ALERT_GET);
+    TaskDto[] taskDtoArr =
+        get(TASKS_URI, PageRequest.of(1, 1), TaskDto[].class, ALERT_GET, PARAM_PAGE_20);
     assertThat(taskDtoArr).isNotEmpty();
     Optional<TaskDto> option =
-        Stream.of(taskDtoArr).filter(task -> task.getId().equals(taskId)).findAny();
+        Stream.of(taskDtoArr).filter(task -> task.getId().equals(id)).findAny();
     assertThat(option).isPresent();
     assertThat(option.get()).isEqualTo(taskDto);
 
-    delete(tasksIdUri, ALERT_DELETED);
+    delete(tasksIdUri, ALERT_DELETED, String.valueOf(id));
 
-    assertGetNotFound(tasksIdUri, TaskDto.class, ALERT_NOT_FOUND);
+    assertGetNotFound(tasksIdUri, TaskDto.class, ALERT_NOT_FOUND, String.valueOf(id));
   }
 
+  @Test
+  public void testBadRequest() throws Exception {
+    NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
+
+    // description
+    newTaskDto.setDescription(null);
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_DESCRIPTION_NOT_BLANK);
+
+    newTaskDto.setDescription("");
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_DESCRIPTION_NOT_BLANK);
+
+    newTaskDto.setDescription("  ");
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_DESCRIPTION_NOT_BLANK);
+
+    // type
+    newTaskDto = TestUtils.createNewTaskDto();
+    newTaskDto.setType(null);
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_TYPE_NOT_EMPTY);
+
+    // parameters
+    newTaskDto = TestUtils.createNewTaskDto();
+    newTaskDto.setParameters(null);
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_PARAMETERS_NOT_EMPTY);
+
+    newTaskDto = TestUtils.createNewTaskDto();
+    newTaskDto.getParameters().clear();
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_PARAMETERS_NOT_EMPTY);
+
+    // value
+    newTaskDto = TestUtils.createNewTaskDto();
+    ParameterDto param = new ParameterDto();
+    param.setName("NewName");
+    newTaskDto.getParameters().add(param);
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_VALUE_NOT_EMPTY);
+
+    param.setValue("");
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_VALUE_NOT_EMPTY);
+
+    param.setValue("  ");
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_VALUE_NOT_EMPTY);
+
+    // name
+    param.setValue("Value");
+    param.setName(null);
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_NAME_NOT_EMPTY);
+
+    param.setName("");
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_NAME_NOT_EMPTY);
+
+    param.setName("  ");
+    assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_NAME_NOT_EMPTY);
+  }
 
   @Test
   public void testGetTaskBadRequest() throws Exception {
-    assertGetBadRequest(TASKS_URI + "/999999999999999999999999", String.class, "id.badRequest");
+    assertGetBadRequest(TASKS_URI + "/999999999999999999999999", String.class, "id.badRequest",
+        PARAM_NOT_VALID_LONG);
   }
 
 }

@@ -1,11 +1,11 @@
 package it.francescofiora.tasks.taskexecutor.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.validation.rule.Rule;
 import it.francescofiora.tasks.util.DtoIdentifier;
-import org.junit.jupiter.api.Assertions;
 
 public class DtoEqualsTester implements Rule {
 
@@ -18,7 +18,7 @@ public class DtoEqualsTester implements Rule {
           dtoIdentifierVerifier(pojoClass.getClazz());
         }
       } catch (Exception e) {
-        Assertions.fail(e.getMessage());
+        fail(e.getMessage());
       }
     }
   }
@@ -50,12 +50,12 @@ public class DtoEqualsTester implements Rule {
     assertThat(dtoObj1.equals(dtoObj2)).isFalse();
 
     dtoObj2.setId(2L);
-    assertThat(dtoObj1.equals(dtoObj2)).isFalse();
+    TestUtils.checkNotEqualHashAndToString(dtoObj1, dtoObj2);
 
     dtoObj2.setId(dtoObj1.getId());
-    assertThat(dtoObj1.equals(dtoObj2)).isTrue();
+    TestUtils.checkEqualHashAndToString(dtoObj1, dtoObj2);
 
     dtoObj1.setId(null);
-    assertThat(dtoObj1.equals(dtoObj2)).isFalse();
+    TestUtils.checkNotEqualHashAndToString(dtoObj1, dtoObj2);
   }
 }

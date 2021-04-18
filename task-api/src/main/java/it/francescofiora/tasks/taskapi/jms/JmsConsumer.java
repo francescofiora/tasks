@@ -33,7 +33,7 @@ public class JmsConsumer {
    */
   @JmsListener(destination = "${activemq.queue.response:QUEUE_RESPONSE}")
   public void receiveMessage(Object obj) {
-    log.info("Message received: " + obj);
+    log.debug("Message received: " + obj);
 
     JmsMessage message = validator.validate(obj);
     log.debug("Message validated: " + message);
