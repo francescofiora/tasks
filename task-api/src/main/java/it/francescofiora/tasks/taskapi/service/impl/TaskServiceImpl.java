@@ -14,9 +14,7 @@ import it.francescofiora.tasks.taskapi.service.TaskService;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
-import it.francescofiora.tasks.taskapi.service.mapper.NewTaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.TaskMapper;
-import it.francescofiora.tasks.taskapi.service.mapper.UpdatableTaskDtoTaskMapper;
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,8 +36,6 @@ public class TaskServiceImpl implements TaskService {
   private final TaskRepository taskRepository;
 
   private final TaskMapper taskMapper;
-  private final NewTaskMapper newtaskMapper;
-  private final UpdatableTaskDtoTaskMapper updatableTaskDtoTaskMapper;
 
   private final JmsProducer jmsProducer;
 
@@ -48,18 +44,13 @@ public class TaskServiceImpl implements TaskService {
    *
    * @param taskRepository TaskRepository
    * @param taskMapper TaskMapper
-   * @param newtaskMapper NewTaskMapper
-   * @param updatableTaskDtoTaskMapper UpdatableTaskDtoTaskMapper
    * @param sequenceGenerator SequenceGeneratorService
    * @param jmsProducer JmsProducer
    */
   public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper,
-      NewTaskMapper newtaskMapper, UpdatableTaskDtoTaskMapper updatableTaskDtoTaskMapper,
       SequenceGeneratorService sequenceGenerator, JmsProducer jmsProducer) {
     this.taskRepository = taskRepository;
     this.taskMapper = taskMapper;
-    this.newtaskMapper = newtaskMapper;
-    this.updatableTaskDtoTaskMapper = updatableTaskDtoTaskMapper;
     this.sequenceGenerator = sequenceGenerator;
     this.jmsProducer = jmsProducer;
   }
@@ -67,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public TaskDto create(NewTaskDto taskDto) {
     log.debug("Request to create Task : {}", taskDto);
-    Task task = newtaskMapper.toEntity(taskDto);
+    Task task = taskMapper.toEntity(taskDto);
     task.setId(sequenceGenerator.generateSequence(Task.SEQUENCE_NAME));
     task = taskRepository.save(task);
 
@@ -102,7 +93,7 @@ public class TaskServiceImpl implements TaskService {
       throw new NotFoundAlertException(ENTITY_NAME, id, ENTITY_NAME + " not found with id " + id);
     }
     Task task = taskOpt.get();
-    updatableTaskDtoTaskMapper.updateEntityFromDto(taskDto, task);
+    taskMapper.updateEntityFromDto(taskDto, task);
     taskRepository.save(task);
   }
 

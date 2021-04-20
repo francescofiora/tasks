@@ -22,7 +22,7 @@ public class DtoUtilsTest {
   }
 
   @Test
-  public void equalsVerifier() {
+  void equalsVerifier() {
     DummyDto dtoObj1 = new DummyDto();
     DummyDto dtoObj2 = new DummyDto();
 
@@ -35,7 +35,7 @@ public class DtoUtilsTest {
   }
 
   @Test
-  public void dtoIdentifierVerifier() {
+  void dtoIdentifierVerifier() {
     DtoIdentifier domainObj1 = new DummyDto();
     domainObj1.setId(1L);
     assertThat(DtoUtils.equals(domainObj1, null)).isFalse();

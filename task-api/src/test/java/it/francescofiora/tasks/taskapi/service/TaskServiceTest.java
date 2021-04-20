@@ -24,10 +24,8 @@ import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
 import it.francescofiora.tasks.taskapi.service.impl.TaskServiceImpl;
-import it.francescofiora.tasks.taskapi.service.mapper.NewTaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.TaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.TaskMapperImpl;
-import it.francescofiora.tasks.taskapi.service.mapper.UpdatableTaskDtoTaskMapper;
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,12 +56,6 @@ public class TaskServiceTest {
   private TaskMapper taskMapper;
 
   @MockBean
-  private NewTaskMapper newtaskMapper;
-
-  @MockBean
-  private UpdatableTaskDtoTaskMapper updatableTaskDtoTaskMapper;
-
-  @MockBean
   private JmsProducer jmsProducer;
 
   private JmsProducer spyJmsProducer;
@@ -74,14 +66,14 @@ public class TaskServiceTest {
   @BeforeEach
   public void setUp() {
     spyJmsProducer = spy(jmsProducer);
-    taskService = new TaskServiceImpl(taskRepository, taskMapper, newtaskMapper,
-        updatableTaskDtoTaskMapper, sequenceGenerator, spyJmsProducer);
+    taskService =
+        new TaskServiceImpl(taskRepository, taskMapper, sequenceGenerator, spyJmsProducer);
   }
 
   @Test
   void testCreate() throws Exception {
     Task task = new Task();
-    when(newtaskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
+    when(taskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
 
     when(taskRepository.save(any(Task.class))).thenReturn(task);
 
@@ -98,7 +90,7 @@ public class TaskServiceTest {
   @Test
   void testSendError() throws Exception {
     Task task = new Task();
-    when(newtaskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
+    when(taskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
 
     when(taskRepository.save(any(Task.class))).thenReturn(task);
 
@@ -107,7 +99,7 @@ public class TaskServiceTest {
         .send(any(MessageDtoRequest.class));
 
     TaskService taskServiceErr = new TaskServiceImpl(taskRepository, new TaskMapperImpl(),
-        newtaskMapper, updatableTaskDtoTaskMapper, sequenceGenerator, jmsProducerErr);
+        sequenceGenerator, jmsProducerErr);
 
     TaskDto actual = taskServiceErr.create(new NewTaskDto());
     assertThat(actual.getResult().getValue()).isEqualTo(ERROR_MSG);

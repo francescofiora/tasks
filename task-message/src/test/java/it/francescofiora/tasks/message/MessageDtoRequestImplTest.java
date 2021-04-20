@@ -27,7 +27,7 @@ public class MessageDtoRequestImplTest {
   private static final String VALUE2 = "SecondValue";
 
   @Test
-  public void testDtoStructureAndBehavior() {
+  void testDtoStructureAndBehavior() {
     // @formatter:off
     Validator validator = ValidatorBuilder
         .create()
@@ -43,7 +43,7 @@ public class MessageDtoRequestImplTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     MessageDtoRequestImpl request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
 
     assertThat(request2.getTaskId()).isEqualTo(ID);
@@ -64,7 +64,7 @@ public class MessageDtoRequestImplTest {
   }
 
   @Test
-  public void equalsVerifier() throws Exception {
+  void equalsVerifier() throws Exception {
     MessageDtoRequestImpl request1 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
     MessageDtoRequestImpl request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
     TestUtils.checkEqualHashAndToString(request1, request2);
@@ -77,7 +77,7 @@ public class MessageDtoRequestImplTest {
   }
 
   @Test
-  public void addParameters() throws Exception {
+  void addParameters() throws Exception {
     // @formatter:off
     MessageDtoRequest request = new MessageDtoRequestImpl()
         .addParameters(null)

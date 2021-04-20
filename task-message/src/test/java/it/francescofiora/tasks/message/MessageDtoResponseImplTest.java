@@ -23,7 +23,7 @@ public class MessageDtoResponseImplTest {
   private static final TaskStatus STATUS_TERMINATED = TaskStatus.TERMINATED;
 
   @Test
-  public void testDtoStructureAndBehavior() {
+  void testDtoStructureAndBehavior() {
     // @formatter:off
     Validator validator = ValidatorBuilder
         .create()
@@ -39,7 +39,7 @@ public class MessageDtoResponseImplTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     MessageDtoResponseImpl response1 = new MessageDtoResponseImpl();
     response1.setTaskId(ID);
     response1.setType(TASK_TYPE_LONG);
@@ -66,7 +66,7 @@ public class MessageDtoResponseImplTest {
   }
 
   @Test
-  public void equalsVerifier() throws Exception {
+  void equalsVerifier() throws Exception {
     MessageDtoResponseImpl response1 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
     MessageDtoResponseImpl response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
     TestUtils.checkEqualHashAndToString(response1, response2);
