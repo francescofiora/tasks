@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class ResultTest {
 
   @Test
-  public void equalsVerifier() throws Exception {
+  void equalsVerifier() throws Exception {
     Result result1 = new Result();
     result1.setValue("Result1");
 

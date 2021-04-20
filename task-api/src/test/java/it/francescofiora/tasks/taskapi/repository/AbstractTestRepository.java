@@ -23,7 +23,7 @@ public abstract class AbstractTestRepository {
   private SequenceGeneratorService sequenceGenerator;
   
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     sequenceGenerator = new SequenceGeneratorServiceImpl(mongoOperations);
   }
   

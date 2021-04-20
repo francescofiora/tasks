@@ -47,7 +47,7 @@ public class TaskServiceTest {
   private TaskMapper taskMapper;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     taskService = new TaskServiceImpl(taskRepository, parameterRepositor, taskMapper);
   }
 
@@ -85,7 +85,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testFindOneNotFound() throws Exception {
+  void testFindOneNotFound() throws Exception {
     Optional<TaskExecutorDto> taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isNotPresent();
   }

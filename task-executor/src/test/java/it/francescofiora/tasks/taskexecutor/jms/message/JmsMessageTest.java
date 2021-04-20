@@ -18,7 +18,7 @@ public class JmsMessageTest {
   private static final MessageDtoRequest REQUEST = TestUtils.createMessageDtoRequest();
 
   @Test
-  public void testDtoStructureAndBehavior() {
+  void testDtoStructureAndBehavior() {
     // @formatter:off
     Validator validator = ValidatorBuilder
         .create()
@@ -31,7 +31,7 @@ public class JmsMessageTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     JmsMessage message = new JmsMessage(REQUEST, ID, TIMESTAMP);
 
     assertThat(message.getJmsMessageId()).isEqualTo(ID);
@@ -40,7 +40,7 @@ public class JmsMessageTest {
   }
 
   @Test
-  public void equalsVerifier() throws Exception {
+  void equalsVerifier() throws Exception {
     JmsMessage message1 = new JmsMessage(REQUEST, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message1);
     assertThat(message1.equals(null)).isFalse();

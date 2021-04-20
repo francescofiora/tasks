@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class DatabaseSequenceTest {
 
   @Test
-  public void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() throws Exception {
     DatabaseSequence dbSequence1 = new DatabaseSequence();
     dbSequence1.setId("ID1");
 

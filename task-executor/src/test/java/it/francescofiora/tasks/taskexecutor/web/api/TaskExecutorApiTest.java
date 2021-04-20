@@ -36,7 +36,7 @@ public class TaskExecutorApiTest extends AbstractTestApi {
   private TaskService taskService;
 
   @Test
-  public void testGetAllTasks() throws Exception {
+  void testGetAllTasks() throws Exception {
     Pageable pageable = PageRequest.of(1, 1);
     TaskExecutorDto expected = new TaskExecutorDto();
     expected.setId(ID);
@@ -50,7 +50,7 @@ public class TaskExecutorApiTest extends AbstractTestApi {
   }
 
   @Test
-  public void testGetTask() throws Exception {
+  void testGetTask() throws Exception {
     TaskExecutorDto expected = new TaskExecutorDto();
     expected.setId(ID);
     given(taskService.findOne(eq(ID))).willReturn(Optional.of(expected));
@@ -60,12 +60,12 @@ public class TaskExecutorApiTest extends AbstractTestApi {
   }
 
   @Test
-  public void testDeleteTask() throws Exception {
+  void testDeleteTask() throws Exception {
     performDelete(TASKS_ID_URI, ID).andExpect(status().isNoContent()).andReturn();
   }
 
   @Test
-  public void testWrongUri() throws Exception {
+  void testWrongUri() throws Exception {
     performGet(WRONG_URI).andExpect(status().isNotFound()).andReturn();
   }
 }

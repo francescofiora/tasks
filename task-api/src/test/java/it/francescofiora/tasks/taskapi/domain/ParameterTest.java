@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class ParameterTest {
 
   @Test
-  public void equalsVerifier() throws Exception {
+  void equalsVerifier() throws Exception {
     Parameter parameter1 = new Parameter();
     parameter1.setName("Name1");
 

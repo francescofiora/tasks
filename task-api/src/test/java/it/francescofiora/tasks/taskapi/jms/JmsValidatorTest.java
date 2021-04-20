@@ -29,12 +29,12 @@ public class JmsValidatorTest {
    * Set up.
    */
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     validator = new JmsValidatorImpl(mapper);
   }
 
   @Test
-  public void testValidate() throws Exception {
+  void testValidate() throws Exception {
     MessageDtoResponse response = TestUtils.createMessageDtoResponse();
     ActiveMQTextMessage amqMessage = new ActiveMQTextMessage();
     amqMessage.setJMSMessageID(ID);
@@ -49,7 +49,7 @@ public class JmsValidatorTest {
   }
 
   @Test
-  public void testValidateBadMessage() throws Exception {
+  void testValidateBadMessage() throws Exception {
     assertThrows(JmsException.class, () -> validator.validate(null));
     assertThrows(JmsException.class, () -> validator.validate(new Object()));
     assertThrows(JmsException.class, () -> validator.validate(new ActiveMQTextMessage()));

@@ -10,7 +10,7 @@ public class ResultDtoTest {
   private static final String VALUE = "Value";
 
   @Test
-  public void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() throws Exception {
     ResultDto resultDto1 = new ResultDto();
     resultDto1.setValue(VALUE);
     ResultDto resultDto2 = new ResultDto();
@@ -27,7 +27,7 @@ public class ResultDtoTest {
   }
 
   @Test
-  public void testConstructor() {
+  void testConstructor() {
     ResultDto result = new ResultDto(VALUE);
     assertThat(result.getValue()).isEqualTo(VALUE);
   }

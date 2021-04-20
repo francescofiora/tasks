@@ -51,7 +51,7 @@ public class JmsConsumerTest {
   private StrategyManager strategyManager;
 
   @Test
-  public void testReceiveMessage() throws Exception {
+  void testReceiveMessage() throws Exception {
     template.convertAndSend(destination, MSG_SENT);
     verify(strategyManager, timeout(1000)).exec(eq(MSG_VALIDATED));
   }

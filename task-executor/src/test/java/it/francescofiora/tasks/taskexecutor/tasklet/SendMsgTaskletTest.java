@@ -52,7 +52,7 @@ public class SendMsgTaskletTest {
   }
 
   @Test
-  public void testSaveDbTasklet() {
+  void testSaveDbTasklet() {
     Map<String, Object> map = new HashMap<>();
     map.put(SendMsgTasklet.TASK, createTask());
     ExecutionContext jobExecutionContext = new ExecutionContext(map);

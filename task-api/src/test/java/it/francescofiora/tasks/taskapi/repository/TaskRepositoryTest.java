@@ -17,7 +17,7 @@ public class TaskRepositoryTest extends AbstractTestRepository {
   private TaskRepository taskRepository;
   
   @Test
-  public void testCrud() throws Exception {
+  void testCrud() throws Exception {
     Task expected1 = TestUtils.createTask1(generateSequence(Task.SEQUENCE_NAME));
     Task expected2 = TestUtils.createTask2(generateSequence(Task.SEQUENCE_NAME));
     taskRepository.save(expected1);

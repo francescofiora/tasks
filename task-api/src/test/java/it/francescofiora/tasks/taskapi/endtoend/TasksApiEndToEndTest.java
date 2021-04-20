@@ -41,12 +41,12 @@ public class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   private static final String PARAM_TYPE_NOT_EMPTY = "[newTaskDto.type - NotNull]";
 
   @Test
-  public void testAuth() throws Exception {
+  void testAuth() throws Exception {
     testUnauthorized(TASKS_URI);
   }
 
   @Test
-  public void testCreateTask() throws Exception {
+  void testCreateTask() throws Exception {
     NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
     Long id = createAndReturnId(TASKS_URI, newTaskDto, ALERT_CREATED);
 
@@ -71,7 +71,7 @@ public class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   }
 
   @Test
-  public void testBadRequest() throws Exception {
+  void testBadRequest() throws Exception {
     NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
 
     // description
@@ -124,7 +124,7 @@ public class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   }
 
   @Test
-  public void testGetTaskBadRequest() throws Exception {
+  void testGetTaskBadRequest() throws Exception {
     assertGetBadRequest(TASKS_URI + "/999999999999999999999999", String.class, "id.badRequest",
         PARAM_NOT_VALID_LONG);
   }

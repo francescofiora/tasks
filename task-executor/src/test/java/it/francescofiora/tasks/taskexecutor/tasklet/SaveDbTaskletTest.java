@@ -51,7 +51,7 @@ public class SaveDbTaskletTest {
   private JobLauncherTestUtils jobLauncherTestUtils;
 
   @Test
-  public void testSaveDbTasklet() {
+  void testSaveDbTasklet() {
     Map<String, JobParameter> parameters = new HashMap<>();
     parameters.put(JmsParameters.TASK_REF, new JobParameter(TASK_REF));
     parameters.put(JmsParameters.MESSAGE_CREATED, new JobParameter(MESSAGE_CREATED));
@@ -70,7 +70,7 @@ public class SaveDbTaskletTest {
   }
 
   @Test
-  public void testTaskInProgress() {
+  void testTaskInProgress() {
     Map<String, JobParameter> parameters = new HashMap<>();
     parameters.put(JmsParameters.TASK_REF, new JobParameter(TASK_REF_IN_PROGRESS));
     parameters.put(JmsParameters.MESSAGE_CREATED, new JobParameter(MESSAGE_CREATED));

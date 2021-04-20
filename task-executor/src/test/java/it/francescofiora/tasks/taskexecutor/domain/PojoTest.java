@@ -22,14 +22,14 @@ public class PojoTest {
   private static final String POJO_PACKAGE = "it.francescofiora.tasks.taskexecutor.domain";
 
   @Test
-  public void ensureExpectedPojoCount() {
+  void ensureExpectedPojoCount() {
     List<PojoClass> pojoClasses =
         PojoClassFactory.getPojoClasses(POJO_PACKAGE, new FilterPackageInfo());
     Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT, pojoClasses.size());
   }
 
   @Test
-  public void testPojoStructureAndBehavior() {
+  void testPojoStructureAndBehavior() {
     Validator validator = ValidatorBuilder.create()
         .with(new GetterMustExistRule())
         .with(new SetterMustExistRule())

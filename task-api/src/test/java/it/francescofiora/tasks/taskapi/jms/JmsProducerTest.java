@@ -40,7 +40,7 @@ public class JmsProducerTest {
   private TaskTestListener listener;
 
   @Test
-  public void testSend() throws Exception {
+  void testSend() throws Exception {
     Long count = listener.getLatch().getCount();
 
     MessageDtoRequest request = TestUtils.createMessageDtoRequest();

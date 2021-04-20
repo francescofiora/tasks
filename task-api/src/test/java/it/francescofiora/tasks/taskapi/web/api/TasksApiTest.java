@@ -41,7 +41,7 @@ public class TasksApiTest extends AbstractTestApi {
   private TaskService taskService;
 
   @Test
-  public void testCreateTask() throws Exception {
+  void testCreateTask() throws Exception {
     NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
 
     TaskDto taskDto = new TaskDto();
@@ -53,7 +53,7 @@ public class TasksApiTest extends AbstractTestApi {
   }
 
   @Test
-  public void testCreateTaskBadRequest() throws Exception {
+  void testCreateTaskBadRequest() throws Exception {
     // description
     NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.setDescription(null);
@@ -123,7 +123,7 @@ public class TasksApiTest extends AbstractTestApi {
   }
 
   @Test
-  public void testPatchTaskBadRequest() throws Exception {
+  void testPatchTaskBadRequest() throws Exception {
     // id
     UpdatableTaskDto taskDto = TestUtils.createUpdatableTaskDto(null);
     performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isBadRequest());
@@ -146,13 +146,13 @@ public class TasksApiTest extends AbstractTestApi {
   }
 
   @Test
-  public void testPatchTask() throws Exception {
+  void testPatchTask() throws Exception {
     UpdatableTaskDto taskDto = TestUtils.createUpdatableTaskDto(ID);
     performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isOk());
   }
 
   @Test
-  public void testGetAllTasks() throws Exception {
+  void testGetAllTasks() throws Exception {
     Pageable pageable = PageRequest.of(1, 1);
     TaskDto expected = new TaskDto();
     expected.setId(ID);
@@ -166,7 +166,7 @@ public class TasksApiTest extends AbstractTestApi {
   }
 
   @Test
-  public void testGetTask() throws Exception {
+  void testGetTask() throws Exception {
     TaskDto expected = new TaskDto();
     expected.setId(ID);
     given(taskService.findOne(eq(ID))).willReturn(Optional.of(expected));
@@ -176,12 +176,12 @@ public class TasksApiTest extends AbstractTestApi {
   }
 
   @Test
-  public void testDeleteTask() throws Exception {
+  void testDeleteTask() throws Exception {
     performDelete(TASKS_ID_URI, ID).andExpect(status().isNoContent()).andReturn();
   }
 
   @Test
-  public void testWrongUri() throws Exception {
+  void testWrongUri() throws Exception {
     performGet(WRONG_URI).andExpect(status().isNotFound()).andReturn();
   }
 }

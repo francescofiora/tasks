@@ -64,7 +64,7 @@ public class TaskServiceTest {
    * Set up.
    */
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     spyJmsProducer = spy(jmsProducer);
     taskService =
         new TaskServiceImpl(taskRepository, taskMapper, sequenceGenerator, spyJmsProducer);
@@ -107,7 +107,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testPatchNotFound() throws Exception {
+  void testPatchNotFound() throws Exception {
     UpdatableTaskDto taskDto = new UpdatableTaskDto();
     assertThrows(NotFoundAlertException.class, () -> taskService.patch(taskDto));
   }
@@ -136,7 +136,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testFindOneNotFound() throws Exception {
+  void testFindOneNotFound() throws Exception {
     Optional<TaskDto> taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isNotPresent();
   }

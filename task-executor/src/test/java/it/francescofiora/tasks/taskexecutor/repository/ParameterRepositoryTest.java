@@ -13,7 +13,7 @@ public class ParameterRepositoryTest extends AbstractTestRepository {
   private ParameterRepository parameterRepository;
 
   @Test
-  public void testCrud() throws Exception {
+  void testCrud() throws Exception {
     Parameter expected = new Parameter().name("name").value("value");
     expected = parameterRepository.save(expected);
     

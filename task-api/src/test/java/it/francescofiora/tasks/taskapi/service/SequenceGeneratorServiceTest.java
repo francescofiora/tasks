@@ -31,7 +31,7 @@ public class SequenceGeneratorServiceTest {
    * Set up.
    */
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     sequenceGenerator = new SequenceGeneratorServiceImpl(mongoOperations);
   }
 

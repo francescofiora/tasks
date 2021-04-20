@@ -38,7 +38,7 @@ public class StrategyManagerTest {
    * Set up.
    */
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     jobLauncher = spy(mock(JobLauncher.class));
 
     jobLong = mock(Job.class);
@@ -54,7 +54,7 @@ public class StrategyManagerTest {
   }
 
   @Test
-  public void testExec() throws Exception {
+  void testExec() throws Exception {
     MessageDtoRequest request = TestUtils.createMessageDtoRequest();
     JmsMessage message = new JmsMessage(request, "ID", new Date().getTime());
 
@@ -63,7 +63,7 @@ public class StrategyManagerTest {
   }
 
   @Test
-  public void testExecNope() throws Exception {
+  void testExecNope() throws Exception {
     MessageDtoRequest request = TestUtils.createMessageDtoRequestNewType();
     JmsMessage message = new JmsMessage(request, "ID", new Date().getTime());
 
@@ -72,7 +72,7 @@ public class StrategyManagerTest {
   }
 
   @Test
-  public void testExecException() throws Exception {
+  void testExecException() throws Exception {
     when(jobLauncher.run(eq(jobLong), any(JobParameters.class))).thenThrow(new RuntimeException());
 
     MessageDtoRequest request = TestUtils.createMessageDtoRequest();

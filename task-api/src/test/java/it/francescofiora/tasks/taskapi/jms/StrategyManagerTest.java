@@ -27,13 +27,13 @@ public class StrategyManagerTest {
    * Set up.
    */
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     spyTaskService = spy(mock(TaskService.class));
     strategyManager = new StrategyManagerImpl(spyTaskService);
   }
 
   @Test
-  public void testExec() {
+  void testExec() {
     MessageDtoResponse response = new MessageDtoResponseImpl().taskId(1L);
     JmsMessage message = new JmsMessage(response, "ID", new Date().getTime());
     strategyManager.exec(message);

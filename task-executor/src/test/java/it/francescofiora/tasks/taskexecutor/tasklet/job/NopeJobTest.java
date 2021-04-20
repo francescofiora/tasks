@@ -61,7 +61,7 @@ public class NopeJobTest {
   }
 
   @Test
-  public void testTaskInProgress() throws Exception {
+  void testTaskInProgress() throws Exception {
     Map<String, JobParameter> parameters = new HashMap<>();
     parameters.put(JmsParameters.TASK_REF, new JobParameter(TASK_REF_IN_PROGRESS));
     parameters.put(JmsParameters.MESSAGE_CREATED, new JobParameter(MESSAGE_CREATED));
