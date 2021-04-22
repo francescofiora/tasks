@@ -1,4 +1,4 @@
-package it.francescofiora.tasks.taskapi.service.mapper;
+package it.francescofiora.tasks.taskexecutor.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,16 +14,7 @@ public class TaskMapperTest {
   }
 
   @Test
-  void testEntityFromId() {
-    Long id = 1L;
-    assertThat(taskMapper.fromId(id).getId()).isEqualTo(id);
-    assertThat(taskMapper.fromId(null)).isNull();
-  }
-
-  @Test
   void testNullObject() {
     assertThat(taskMapper.toDto(null)).isNull();
-
-    assertThat(taskMapper.toEntity(null)).isNull();
   }
 }
