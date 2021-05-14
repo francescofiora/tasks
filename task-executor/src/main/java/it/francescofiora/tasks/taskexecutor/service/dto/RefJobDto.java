@@ -27,9 +27,6 @@ public class RefJobDto implements Serializable, DtoIdentifier {
   @JsonProperty("jobName")
   private JobType jobName;
 
-  public RefJobDto() {
-  }
-
   @Override
   public int hashCode() {
     return Objects.hashCode(getId());

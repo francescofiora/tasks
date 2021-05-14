@@ -34,7 +34,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {NopeTaskletTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class NopeTaskletTest {
+class NopeTaskletTest {
 
   private static final Long ID = 1L;
 

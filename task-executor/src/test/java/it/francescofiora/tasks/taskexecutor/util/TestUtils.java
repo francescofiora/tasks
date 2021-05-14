@@ -14,16 +14,16 @@ import it.francescofiora.tasks.taskexecutor.service.dto.ParameterDto;
 import java.sql.Timestamp;
 
 /**
- * Utility class for testing.
+ * Utility for testing.
  */
-public final class TestUtils {
+public interface TestUtils {
 
   /**
    * create MessageDtoRequest.
    *
    * @return MessageDtoRequest
    */
-  public static MessageDtoRequest createMessageDtoRequest() {
+  static MessageDtoRequest createMessageDtoRequest() {
     // @formatter:off
     return new MessageDtoRequestImpl()
         .taskId(1L)
@@ -37,7 +37,7 @@ public final class TestUtils {
    *
    * @return MessageDtoRequest
    */
-  public static MessageDtoRequest createMessageDtoRequestNewType() {
+  static MessageDtoRequest createMessageDtoRequestNewType() {
     // @formatter:off
     return new MessageDtoRequestImpl()
         .taskId(1L)
@@ -51,7 +51,7 @@ public final class TestUtils {
    *
    * @return MessageDtoResponse
    */
-  public static MessageDtoResponse createMessageDtoResponse() {
+  static MessageDtoResponse createMessageDtoResponse() {
     // @formatter:off
     return new MessageDtoResponseImpl()
         .taskId(1L)
@@ -66,7 +66,7 @@ public final class TestUtils {
    *
    * @return Task
    */
-  public static Task createShortTask1() {
+  static Task createShortTask1() {
     // @formatter:off
     return new Task()
         .jmsMessageId("ABC")
@@ -85,7 +85,7 @@ public final class TestUtils {
    *
    * @return Task
    */
-  public static Task createShortTask2() {
+  static Task createShortTask2() {
     // @formatter:off
     return new Task()
         .jmsMessageId("FBC")
@@ -104,7 +104,7 @@ public final class TestUtils {
    *
    * @return Task
    */
-  public static Task createLongTask() {
+  static Task createLongTask() {
     // @formatter:off
     return new Task()
         .jmsMessageId("FWC")
@@ -125,7 +125,7 @@ public final class TestUtils {
    * @param actual Task
    * @return true if data are equal
    */
-  public static boolean taskEquals(Task expected, Task actual) {
+  static boolean taskEquals(Task expected, Task actual) {
     return expected.getJmsMessageId().equals(actual.getJmsMessageId())
         && expected.getJobInstanceId().equals(actual.getJobInstanceId())
         && expected.getJobName().equals(actual.getJobName())
@@ -141,7 +141,7 @@ public final class TestUtils {
    *
    * @return ParameterDto
    */
-  public static ParameterDto createParameterDto() {
+  static ParameterDto createParameterDto() {
     ParameterDto parameterDto = new ParameterDto();
     parameterDto.setName("Name");
     parameterDto.setValue("Value");
@@ -154,7 +154,7 @@ public final class TestUtils {
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
    */
-  public static void checkEqualHashAndToString(final Object obj1, final Object obj2) {
+  static void checkEqualHashAndToString(final Object obj1, final Object obj2) {
     assertThat(obj1.equals(obj2)).isTrue();
     assertThat(obj1.hashCode()).isEqualTo(obj2.hashCode());
     assertThat(obj1.toString()).isEqualTo(obj2.toString());
@@ -166,11 +166,9 @@ public final class TestUtils {
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
    */
-  public static void checkNotEqualHashAndToString(final Object obj1, final Object obj2) {
+  static void checkNotEqualHashAndToString(final Object obj1, final Object obj2) {
     assertThat(obj1.equals(obj2)).isFalse();
     assertThat(obj1.hashCode()).isNotEqualTo(obj2.hashCode());
     assertThat(obj1.toString()).isNotEqualTo(obj2.toString());
   }
-
-  private TestUtils() {}
 }

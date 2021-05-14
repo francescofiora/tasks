@@ -27,10 +27,6 @@ public class RefTaskDto implements Serializable, DtoIdentifier {
   @JsonProperty("type")
   private TaskType type;
 
-  public RefTaskDto() {
-
-  }
-
   @Override
   public int hashCode() {
     return Objects.hashCode(getId());

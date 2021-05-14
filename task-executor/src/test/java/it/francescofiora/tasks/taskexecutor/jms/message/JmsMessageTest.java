@@ -11,7 +11,7 @@ import it.francescofiora.tasks.message.MessageDtoRequest;
 import it.francescofiora.tasks.taskexecutor.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
-public class JmsMessageTest {
+class JmsMessageTest {
 
   private static final String ID = "123456789";
   private static final Long TIMESTAMP = 1000L;

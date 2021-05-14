@@ -2,10 +2,12 @@ package it.francescofiora.tasks.taskapi.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import it.francescofiora.tasks.taskapi.domain.Task;
+import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaskMapperTest {
+class TaskMapperTest {
   private TaskMapper taskMapper;
 
   @BeforeEach
@@ -25,5 +27,22 @@ public class TaskMapperTest {
     assertThat(taskMapper.toDto(null)).isNull();
 
     assertThat(taskMapper.toEntity(null)).isNull();
+  }
+
+  @Test
+  void testNullFields() {
+    Task task = new Task();
+    task.getParameters().add(null);
+    TaskDto taskDto = taskMapper.toDto(task);
+    assertThat(taskDto.getParameters()).hasSize(1);
+    assertThat(taskDto.getParameters().iterator().next()).isEqualTo(null);
+
+    task.setParameters(null);
+    taskDto = taskMapper.toDto(task);
+    assertThat(taskDto.getParameters()).isNull();
+    assertThat(taskDto.getResult()).isNull();
+
+    task = taskMapper.toEntity(taskDto);
+    assertThat(task.getParameters()).isNull();
   }
 }

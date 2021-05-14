@@ -14,22 +14,22 @@ import it.francescofiora.tasks.taskapi.util.FilterPackageInfo;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class DtoTest {
+class DtoTest {
   // Configured for expectation, so we know when a class gets added or removed.
   private static final int EXPECTED_CLASS_COUNT = 5;
 
   // The package to test
-  private static final String DTO_PACKAGE = "it.francescofiora.tasks.taskapi.service.dto";
+  private static final String DTO_PACKAGE = DtoTest.class.getPackage().getName();
 
   @Test
-  void ensureExpectedDtoCount() {
-    List<PojoClass> dtoClasses =
+  void ensureExpectedCount() {
+    List<PojoClass> classes =
         PojoClassFactory.getPojoClasses(DTO_PACKAGE, new FilterPackageInfo());
-    Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT, dtoClasses.size());
+    Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT, classes.size());
   }
 
   @Test
-  void testDtoStructureAndBehavior() {
+  void testStructureAndBehavior() {
     Validator validator = ValidatorBuilder.create()
         .with(new GetterMustExistRule())
         .with(new SetterMustExistRule())

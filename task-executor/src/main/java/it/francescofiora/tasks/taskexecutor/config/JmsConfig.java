@@ -1,9 +1,9 @@
 package it.francescofiora.tasks.taskexecutor.config;
 
 import it.francescofiora.tasks.message.MessageDto;
+import it.francescofiora.tasks.taskexecutor.config.parameter.JmsProperties;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQSslConnectionFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ public class JmsConfig {
 
   /**
    * MessageConverter bean.
-   * 
+   *
    * @return MessageConverter
    */
   @Bean
@@ -33,40 +33,30 @@ public class JmsConfig {
   }
 
   /**
-   * create a connectionFactory.
-   * 
-   * @param brokerUrl      String
-   * @param trustStorePath String
-   * @param trustStorePass String
-   * @param keyStorePath   String
-   * @param keyStorePass   String
-   * @param userName       String
+   * Create a connectionFactory.
+   *
+   * @param properties JmsProperties
    * @return ConnectionFactory
    * @throws Exception if truststore/keystore path is wrong
    */
   @Profile("!dev")
   @Bean
-  public ConnectionFactory connectionFactory(
-      @Value("${spring.activemq.broker-url}") String brokerUrl,
-      @Value("${spring.activemq.ssl.trustStorePath}") String trustStorePath,
-      @Value("${spring.activemq.ssl.trustStorePass}") String trustStorePass,
-      @Value("${spring.activemq.ssl.keyStorePath}") String keyStorePath,
-      @Value("${spring.activemq.ssl.keyStorePass}") String keyStorePass,
-      @Value("${spring.activemq.user}") String userName) throws Exception {
-    ActiveMQSslConnectionFactory factory = new ActiveMQSslConnectionFactory(brokerUrl);
-    factory.setTrustStore(trustStorePath);
-    factory.setTrustStorePassword(trustStorePass);
-    factory.setKeyStore(keyStorePath);
-    factory.setKeyStorePassword(keyStorePass);
-    factory.setUserName(userName);
+  public ConnectionFactory connectionFactory(JmsProperties properties) throws Exception {
+    ActiveMQSslConnectionFactory factory =
+        new ActiveMQSslConnectionFactory(properties.getBrokerUrl());
+    factory.setTrustStore(properties.getSsl().getTrustStorePath());
+    factory.setTrustStorePassword(properties.getSsl().getKeyStorePass());
+    factory.setKeyStore(properties.getSsl().getKeyStorePath());
+    factory.setKeyStorePassword(properties.getSsl().getKeyStorePass());
+    factory.setUserName(properties.getUser());
     return factory;
   }
 
   /**
-   * create JmsListenerContainerFactory.
-   * 
+   * Create JmsListenerContainerFactory.
+   *
    * @param connectionFactory ConnectionFactory
-   * @param configurer        DefaultJmsListenerContainerFactoryConfigurer
+   * @param configurer DefaultJmsListenerContainerFactoryConfigurer
    * @return
    */
   @Bean

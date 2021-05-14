@@ -6,7 +6,7 @@ import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
-public class NewTaskDtoTest {
+class NewTaskDtoTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {

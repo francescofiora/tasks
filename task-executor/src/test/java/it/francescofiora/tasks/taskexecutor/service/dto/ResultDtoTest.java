@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import it.francescofiora.tasks.taskexecutor.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
-public class ResultDtoTest {
+class ResultDtoTest {
 
   private static final String VALUE = "Value";
 

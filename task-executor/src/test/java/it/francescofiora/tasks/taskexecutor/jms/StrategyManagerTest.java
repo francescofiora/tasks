@@ -24,7 +24,7 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class StrategyManagerTest {
+class StrategyManagerTest {
 
   private StrategyManager strategyManager;
 

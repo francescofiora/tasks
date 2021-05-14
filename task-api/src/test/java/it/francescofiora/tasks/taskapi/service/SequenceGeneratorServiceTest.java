@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.query.UpdateDefinition;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class SequenceGeneratorServiceTest {
+class SequenceGeneratorServiceTest {
 
   private static final long ID = 100L;
 
@@ -51,5 +51,4 @@ public class SequenceGeneratorServiceTest {
     actual = sequenceGenerator.generateSequence("name");
     assertThat(actual).isEqualTo(ID);
   }
-
 }

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
-public class DatabaseSequenceTest {
+class DatabaseSequenceTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {

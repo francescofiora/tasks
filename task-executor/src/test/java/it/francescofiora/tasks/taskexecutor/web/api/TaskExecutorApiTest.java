@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = TaskExecutorApi.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class TaskExecutorApiTest extends AbstractTestApi {
+class TaskExecutorApiTest extends AbstractTestApi {
   private static final Long ID = 1L;
   private static final String TASKS_URI = "/api/tasks";
   private static final String TASKS_ID_URI = "/api/tasks/{id}";

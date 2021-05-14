@@ -16,9 +16,9 @@ import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
 
 /**
- * Utility class for testing.
+ * Utility for testing.
  */
-public final class TestUtils {
+public interface TestUtils {
 
   /**
    * Create an example of Parameter.
@@ -27,7 +27,7 @@ public final class TestUtils {
    * @param value the value of Parameter
    * @return Parameter
    */
-  public static Parameter createParameter(final String name, final String value) {
+  static Parameter createParameter(final String name, final String value) {
     Parameter parameter = new Parameter();
     parameter.setName(name);
     parameter.setValue(value);
@@ -39,7 +39,7 @@ public final class TestUtils {
    *
    * @return NewTaskDto
    */
-  public static NewTaskDto createNewTaskDto() {
+  static NewTaskDto createNewTaskDto() {
     NewTaskDto taskDto = new NewTaskDto();
     taskDto.setDescription("Description");
     taskDto.setType(TaskType.LONG);
@@ -52,7 +52,7 @@ public final class TestUtils {
    *
    * @return ParameterDto
    */
-  public static ParameterDto createParameterDto() {
+  static ParameterDto createParameterDto() {
     ParameterDto parameterDto = new ParameterDto();
     parameterDto.setName("Name");
     parameterDto.setValue("Value");
@@ -64,7 +64,7 @@ public final class TestUtils {
    *
    * @return UpdatableTaskDto
    */
-  public static UpdatableTaskDto createUpdatableTaskDto(Long id) {
+  static UpdatableTaskDto createUpdatableTaskDto(Long id) {
     UpdatableTaskDto taskDto = new UpdatableTaskDto();
     taskDto.setId(id);
     taskDto.setDescription("Description updated");
@@ -77,7 +77,7 @@ public final class TestUtils {
    * @param id ID
    * @return Task
    */
-  public static Task createTask1(final Long id) {
+  static Task createTask1(final Long id) {
     Task task = new Task();
     task.setId(id);
     task.setDescription("first");
@@ -94,7 +94,7 @@ public final class TestUtils {
    * @param id ID
    * @return Task
    */
-  public static Task createTask2(final Long id) {
+  static Task createTask2(final Long id) {
     Task task = new Task();
     task.setId(id);
     task.setDescription("second");
@@ -111,7 +111,7 @@ public final class TestUtils {
    * @param id ID
    * @return Task
    */
-  public static Task createTask3(final Long id) {
+  static Task createTask3(final Long id) {
     Task task = new Task();
     task.setId(id);
     task.setDescription("third");
@@ -127,7 +127,7 @@ public final class TestUtils {
    *
    * @return MessageDtoRequest
    */
-  public static MessageDtoRequest createMessageDtoRequest() {
+  static MessageDtoRequest createMessageDtoRequest() {
     // @formatter:off
     return new MessageDtoRequestImpl()
         .taskId(1L)
@@ -141,7 +141,7 @@ public final class TestUtils {
    *
    * @return MessageDtoResponse
    */
-  public static MessageDtoResponse createMessageDtoResponse() {
+  static MessageDtoResponse createMessageDtoResponse() {
     // @formatter:off
     return new MessageDtoResponseImpl()
         .taskId(1L)
@@ -157,7 +157,7 @@ public final class TestUtils {
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
    */
-  public static void checkEqualHashAndToString(final Object obj1, final Object obj2) {
+  static void checkEqualHashAndToString(final Object obj1, final Object obj2) {
     assertThat(obj1.equals(obj2)).isTrue();
     assertThat(obj1.hashCode()).isEqualTo(obj2.hashCode());
     assertThat(obj1.toString()).isEqualTo(obj2.toString());
@@ -169,11 +169,9 @@ public final class TestUtils {
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
    */
-  public static void checkNotEqualHashAndToString(final Object obj1, final Object obj2) {
+  static void checkNotEqualHashAndToString(final Object obj1, final Object obj2) {
     assertThat(obj1.equals(obj2)).isFalse();
     assertThat(obj1.hashCode()).isNotEqualTo(obj2.hashCode());
     assertThat(obj1.toString()).isNotEqualTo(obj2.toString());
   }
-
-  private TestUtils() {}
 }

@@ -3,7 +3,7 @@ package it.francescofiora.tasks.taskexecutor.service.dto;
 import it.francescofiora.tasks.taskexecutor.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
-public class ParameterDtoTest {
+class ParameterDtoTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class DtoUtilsTest {
+class DtoUtilsTest {
 
   static class DummyDto implements DtoIdentifier {
 
@@ -38,6 +38,7 @@ public class DtoUtilsTest {
   void dtoIdentifierVerifier() {
     DtoIdentifier domainObj1 = new DummyDto();
     domainObj1.setId(1L);
+    assertThat(DtoUtils.equals(null, domainObj1)).isFalse();
     assertThat(DtoUtils.equals(domainObj1, null)).isFalse();
     assertThat(DtoUtils.equals(domainObj1, new Object())).isFalse();
 

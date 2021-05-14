@@ -22,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
+class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
 
   private static final String TASKS_URI = "/api/tasks";
   private static final String TASKS_ID_URI = "/api/tasks/%d";
@@ -80,5 +80,4 @@ public class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
 
     assertGetNotFound(tasksIdUri, TaskExecutorDto.class, ALERT_NOT_FOUND, String.valueOf(id));
   }
-
 }

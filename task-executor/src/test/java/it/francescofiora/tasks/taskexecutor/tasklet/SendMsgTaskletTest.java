@@ -36,7 +36,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {SendMsgTaskletTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class SendMsgTaskletTest {
+class SendMsgTaskletTest {
 
   private static final Long TASK_REF = 10L;
 

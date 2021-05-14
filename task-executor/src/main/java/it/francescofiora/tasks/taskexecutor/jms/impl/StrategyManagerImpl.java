@@ -23,10 +23,10 @@ public class StrategyManagerImpl implements StrategyManager {
   private final JobLauncher jobLauncher;
 
   /**
-   * constructor.
-   * 
+   * Constructor.
+   *
    * @param jobLauncher JobLauncher
-   * @param jobs        Job[]
+   * @param jobs Job[]
    */
   public StrategyManagerImpl(JobLauncher jobLauncher, Job[] jobs) {
     this.jobLauncher = jobLauncher;

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
-public class ParameterTest {
+class ParameterTest {
 
   @Test
   void equalsVerifier() throws Exception {
@@ -25,5 +25,4 @@ public class ParameterTest {
     parameter1.setName(null);
     TestUtils.checkNotEqualHashAndToString(parameter1, parameter2);
   }
-  
 }

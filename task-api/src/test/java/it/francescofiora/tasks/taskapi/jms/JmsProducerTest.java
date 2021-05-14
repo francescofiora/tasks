@@ -31,7 +31,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class JmsProducerTest {
+class JmsProducerTest {
 
   @Autowired
   private JmsProducer jmsProducer;

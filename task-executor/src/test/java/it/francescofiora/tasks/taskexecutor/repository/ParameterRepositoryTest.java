@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class ParameterRepositoryTest extends AbstractTestRepository {
+class ParameterRepositoryTest extends AbstractTestRepository {
 
   @Autowired
   private ParameterRepository parameterRepository;

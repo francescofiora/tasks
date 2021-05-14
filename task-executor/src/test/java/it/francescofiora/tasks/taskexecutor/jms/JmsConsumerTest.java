@@ -34,7 +34,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class JmsConsumerTest {
+class JmsConsumerTest {
 
   private static final MessageDtoRequest MSG_SENT = new MessageDtoRequestImpl().taskId(1L);
 

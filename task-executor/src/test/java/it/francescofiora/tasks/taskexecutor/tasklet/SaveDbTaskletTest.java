@@ -37,7 +37,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {SaveDbTaskletTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class SaveDbTaskletTest {
+class SaveDbTaskletTest {
 
   private static final Long ID = 1L;
 

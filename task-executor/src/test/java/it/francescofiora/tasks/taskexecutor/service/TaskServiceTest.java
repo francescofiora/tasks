@@ -30,7 +30,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class TaskServiceTest {
+class TaskServiceTest {
 
   private static final Long ID = 1L;
   private static final Long TASK_REF = 10L;

@@ -13,7 +13,7 @@ public final class JmsMessage {
 
   /**
    * Constructor.
-   * 
+   *
    * @param request MessageDtoRequest
    * @param jmsMessageId String
    * @param timestamp long

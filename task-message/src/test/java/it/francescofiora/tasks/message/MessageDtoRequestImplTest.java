@@ -15,7 +15,7 @@ import it.francescofiora.tasks.util.TestUtils;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
-public class MessageDtoRequestImplTest {
+class MessageDtoRequestImplTest {
 
   private static final String KEY = "Key";
   private static final String VALUE = "Value";

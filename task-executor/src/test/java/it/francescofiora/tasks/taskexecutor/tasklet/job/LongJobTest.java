@@ -37,7 +37,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {LongJobTest.BatchConfiguration.class})
 @ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class LongJobTest {
+class LongJobTest {
 
   private static final Long ID = 1L;
 

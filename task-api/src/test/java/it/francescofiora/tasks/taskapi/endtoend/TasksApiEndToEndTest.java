@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class TasksApiEndToEndTest extends AbstractTestEndToEnd {
+class TasksApiEndToEndTest extends AbstractTestEndToEnd {
 
   private static final String TASKS_URI = "/api/tasks";
   private static final String TASKS_ID_URI = "/api/tasks/%d";
@@ -128,5 +128,4 @@ public class TasksApiEndToEndTest extends AbstractTestEndToEnd {
     assertGetBadRequest(TASKS_URI + "/999999999999999999999999", String.class, "id.badRequest",
         PARAM_NOT_VALID_LONG);
   }
-
 }

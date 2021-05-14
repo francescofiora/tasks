@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = TasksApi.class)
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class TasksApiTest extends AbstractTestApi {
+class TasksApiTest extends AbstractTestApi {
 
   private static final Long ID = 1L;
   private static final String TASKS_URI = "/api/tasks";

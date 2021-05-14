@@ -2,6 +2,7 @@ package it.francescofiora.tasks.taskapi.config;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings.Builder;
+import it.francescofiora.tasks.taskapi.config.parameter.DbProperties;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -15,7 +16,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
@@ -28,48 +29,34 @@ public class DatabaseConfiguration extends AbstractMongoClientConfiguration {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-  @Value("${spring.data.mongodb.database}")
-  private String database;
+  @Autowired
+  private DbProperties dbProperties;
 
-  @Value("${spring.data.mongodb.keystorefile}")
-  private String keystoreFile;
-
-  @Value("${spring.data.mongodb.keystorepassword}")
-  private String keyPassword;
-
-  @Value("${spring.data.mongodb.truststorefile}")
-  private String truststoreFile;
-
-  @Value("${spring.data.mongodb.truststorepassword}")
-  private String truststorepassword;
-
-  @Value("${spring.data.mongodb.uri}")
-  private String uri;
 
   @Override
   protected String getDatabaseName() {
-    return database;
+    return dbProperties.getDatabase();
   }
 
   @Override
   protected void configureClientSettings(Builder builder) {
-    builder.applyConnectionString(new ConnectionString(uri))
+    builder.applyConnectionString(new ConnectionString(dbProperties.getUri()))
         .applyToSslSettings(b -> b.enabled(true).context(getSslContext()));
   }
 
   private SSLContext getSslContext() {
     try {
       KeyStore keystore = KeyStore.getInstance("jks");
-      try (InputStream in = new FileInputStream(keystoreFile)) {
-        keystore.load(in, keyPassword.toCharArray());
+      try (InputStream in = new FileInputStream(dbProperties.getKeystorefile())) {
+        keystore.load(in, dbProperties.getKeystorepassword().toCharArray());
       }
 
       KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-      keyManagerFactory.init(keystore, keyPassword.toCharArray());
+      keyManagerFactory.init(keystore, dbProperties.getKeystorepassword().toCharArray());
 
       KeyStore truststore = KeyStore.getInstance("jks");
-      try (InputStream in = new FileInputStream(truststoreFile)) {
-        keystore.load(in, truststorepassword.toCharArray());
+      try (InputStream in = new FileInputStream(dbProperties.getTruststorefile())) {
+        keystore.load(in, dbProperties.getTruststorepassword().toCharArray());
       }
 
       TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
@@ -79,13 +66,11 @@ public class DatabaseConfiguration extends AbstractMongoClientConfiguration {
 
         @Override
         public void checkClientTrusted(X509Certificate[] chain, String authType)
-            throws CertificateException {
-        }
+            throws CertificateException {}
 
         @Override
         public void checkServerTrusted(X509Certificate[] chain, String authType)
-            throws CertificateException {
-        }
+            throws CertificateException {}
 
         @Override
         public X509Certificate[] getAcceptedIssuers() {
@@ -95,12 +80,12 @@ public class DatabaseConfiguration extends AbstractMongoClientConfiguration {
       };
 
       SSLContext sslContext = SSLContext.getInstance("SSL");
-      sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[] { tm },
+      sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[] {tm},
           new SecureRandom());
 
       // TODO fix later
       // sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(),
-      //   new SecureRandom());
+      // new SecureRandom());
 
       return sslContext;
     } catch (Exception e) {

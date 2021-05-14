@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class JmsConsumer {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
-  
+
   private final JmsValidator validator;
-  
+
   private final StrategyManager strategyManager;
-  
+
   public JmsConsumer(JmsValidator validator, StrategyManager strategyManager) {
     this.validator = validator;
     this.strategyManager = strategyManager;
@@ -22,15 +22,16 @@ public class JmsConsumer {
 
   /**
    * Jms Listener.
+   *
    * @param obj Object
    */
   @JmsListener(destination = "${activemq.queue.request:QUEUE_REQUEST}")
   public void receiveMessage(Object obj) {
     log.debug("Message received: " + obj);
-    
+
     JmsMessage message = validator.validate(obj);
     log.debug("Message validated: " + message);
-    
+
     strategyManager.exec(message);
     log.debug("Message executed: " + message);
   }

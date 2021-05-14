@@ -19,9 +19,8 @@ public class ResultDto implements Serializable {
   @JsonProperty("value")
   private String value;
 
-  public ResultDto() {
-  }
-  
+  public ResultDto() {}
+
   public ResultDto(String value) {
     this.value = value;
   }

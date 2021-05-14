@@ -11,25 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-public class TaskRepositoryTest extends AbstractTestRepository {
+class TaskRepositoryTest extends AbstractTestRepository {
 
   @Autowired
   private TaskRepository taskRepository;
-  
+
   @Test
   void testCrud() throws Exception {
     Task expected1 = TestUtils.createTask1(generateSequence(Task.SEQUENCE_NAME));
     Task expected2 = TestUtils.createTask2(generateSequence(Task.SEQUENCE_NAME));
     taskRepository.save(expected1);
     taskRepository.save(expected2);
-    
+
     Page<Task> tasks = taskRepository.findAll(PageRequest.of(0, 10));
     assertThat(tasks).isNotNull().isNotEmpty();
 
     for (Task actual : tasks) {
       assertThat(actual).isNotNull();
-      assertThat(dataEquals(expected1, actual)
-          || dataEquals(expected2, actual)).isTrue();
+      assertThat(dataEquals(expected1, actual) || dataEquals(expected2, actual)).isTrue();
     }
 
     Task expected3 = TestUtils.createTask3(generateSequence(Task.SEQUENCE_NAME));
@@ -52,12 +51,11 @@ public class TaskRepositoryTest extends AbstractTestRepository {
     tasks = taskRepository.findAll(PageRequest.of(0, 10));
     assertThat(tasks).isNotNull().isEmpty();
   }
-  
+
   private boolean dataEquals(Task expected, Task actual) {
     return Objects.equals(expected.getDescription(), actual.getDescription())
         && Objects.equals(expected.getStatus(), actual.getStatus())
         && Objects.equals(expected.getType(), actual.getType())
         && Objects.equals(expected.getResult(), actual.getResult());
   }
-
 }

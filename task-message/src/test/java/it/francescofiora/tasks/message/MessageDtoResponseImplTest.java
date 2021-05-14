@@ -15,7 +15,7 @@ import it.francescofiora.tasks.util.DtoEqualsTester;
 import it.francescofiora.tasks.util.TestUtils;
 import org.junit.jupiter.api.Test;
 
-public class MessageDtoResponseImplTest {
+class MessageDtoResponseImplTest {
 
   private static final Long ID = 1L;
   private static final TaskType TASK_TYPE_LONG = TaskType.LONG;
