@@ -21,12 +21,12 @@ public class NewTaskDto implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @NotBlank
-  @Schema(description = "description", example = "description", required = true)
+  @Schema(description = "Description", example = "description", required = true)
   @JsonProperty("description")
   private String description;
 
   @NotNull
-  @Schema(description = "type of task", example = "SHORT", required = true)
+  @Schema(description = "Type of task", example = "SHORT", required = true)
   @JsonProperty("type")
   private TaskType type;
 

@@ -23,7 +23,7 @@ public class UpdatableTaskDto implements Serializable, DtoIdentifier {
   private Long id;
 
   @NotBlank
-  @Schema(description = "description", example = "description", required = true)
+  @Schema(description = "Description", example = "description", required = true)
   @JsonProperty("description")
   private String description;
 

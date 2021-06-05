@@ -46,12 +46,12 @@ public class TaskExecutorDto implements Serializable, DtoIdentifier {
   private RefJobDto job = new RefJobDto();
 
   @NotNull
-  @Schema(description = "status of task", example = "TERMINATED", required = true)
+  @Schema(description = "Status of task", example = "TERMINATED", required = true)
   @JsonProperty("status")
   private TaskStatus status;
 
   @NotNull
-  @Schema(description = "messageCreated", required = true)
+  @Schema(description = "Message Created", required = true)
   @JsonProperty("messageCreated")
   private Timestamp messageCreated;
 

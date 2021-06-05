@@ -15,7 +15,7 @@ public class ResultDto implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @NotBlank
-  @Schema(description = "value", example = "value", required = true)
+  @Schema(description = "Value", example = "value", required = true)
   @JsonProperty("value")
   private String value;
 

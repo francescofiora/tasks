@@ -24,13 +24,13 @@ public class TaskDto extends NewTaskDto implements Serializable, DtoIdentifier {
   private Long id;
 
   @NotNull
-  @Schema(description = "status of task", example = "TERMINATED", required = true)
+  @Schema(description = "Status of task", example = "TERMINATED", required = true)
   @JsonProperty("status")
   private TaskStatus status;
 
   @NotNull
   @Valid
-  @Schema(description = "result of execution", required = false)
+  @Schema(description = "Result of execution", required = false)
   @JsonProperty("result")
   private ResultDto result;
   

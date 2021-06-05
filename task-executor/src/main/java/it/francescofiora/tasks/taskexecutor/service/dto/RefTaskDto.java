@@ -23,7 +23,7 @@ public class RefTaskDto implements Serializable, DtoIdentifier {
   private Long id;
 
   @NotNull
-  @Schema(description = "type of task", example = "SHORT", required = true)
+  @Schema(description = "Type of task", example = "SHORT", required = true)
   @JsonProperty("type")
   private TaskType type;
 

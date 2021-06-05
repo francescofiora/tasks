@@ -15,12 +15,12 @@ public class ParameterDto implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @NotBlank
-  @Schema(description = "name", example = "name", required = true)
+  @Schema(description = "Name", example = "name", required = true)
   @JsonProperty("name")
   private String name;
 
   @NotBlank
-  @Schema(description = "value", example = "value", required = true)
+  @Schema(description = "Value", example = "value", required = true)
   @JsonProperty("value")
   private String value;
 

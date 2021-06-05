@@ -23,19 +23,19 @@ public class TaskServiceImpl implements TaskService {
   private final TaskMapper taskMapper;
 
   private final TaskRepository taskRepository;
-  private final ParameterRepository parameterRepositor;
+  private final ParameterRepository parameterRepository;
 
   /**
    * Constructor.
-   * 
-   * @param taskRepository     TaskRepository
-   * @param parameterRepositor ParameterRepository
-   * @param taskMapper         TaskMapper
+   *
+   * @param taskRepository TaskRepository
+   * @param parameterRepository ParameterRepository
+   * @param taskMapper TaskMapper
    */
-  public TaskServiceImpl(TaskRepository taskRepository, ParameterRepository parameterRepositor,
+  public TaskServiceImpl(TaskRepository taskRepository, ParameterRepository parameterRepository,
       TaskMapper taskMapper) {
     this.taskRepository = taskRepository;
-    this.parameterRepositor = parameterRepositor;
+    this.parameterRepository = parameterRepository;
     this.taskMapper = taskMapper;
   }
 
@@ -43,7 +43,7 @@ public class TaskServiceImpl implements TaskService {
   public Task save(Task task) {
     log.debug("Request to save a Task : {}", task);
 
-    parameterRepositor.saveAll(task.getParameters());
+    parameterRepository.saveAll(task.getParameters());
 
     return taskRepository.save(task);
   }
@@ -75,7 +75,7 @@ public class TaskServiceImpl implements TaskService {
     Optional<Task> opt = taskRepository.findById(id);
     if (opt.isPresent()) {
       taskRepository.deleteById(id);
-      parameterRepositor.deleteAll(opt.get().getParameters());
+      parameterRepository.deleteAll(opt.get().getParameters());
     }
   }
 

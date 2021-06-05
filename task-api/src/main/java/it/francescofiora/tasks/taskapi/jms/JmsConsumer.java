@@ -16,7 +16,7 @@ public class JmsConsumer {
   private final StrategyManager strategyManager;
 
   /**
-   * constructor.
+   * Constructor.
    * 
    * @param validator       JmsValidator
    * @param strategyManager StrategyManager

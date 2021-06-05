@@ -43,6 +43,6 @@ public class Task extends AbstractDomain implements Serializable {
   @Override
   public String toString() {
     return "Task{" + "id=" + getId() + ", description='" + getDescription() + "'" + ", type='"
-        + getType() + "'" + ", status='" + getStatus() + "'" + "}";
+        + getType() + "'" + ", status='" + getStatus() + "'" + ", result = " + getResult()  + "}";
   }
 }
