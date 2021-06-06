@@ -78,9 +78,9 @@ Environment with sit profile and SSL connection.
  - service:jmx:rmi:///jndi/rmi://localhost:9998/jmxrmi
 
 # Technologies used
-- [Gradle 6.3](https://gradle.org/)
+- [Gradle 7.0](https://gradle.org/)
 - [Java 8](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
-- [Spring Boot 2.4](https://spring.io/projects/spring-boot)
+- [Spring Boot 2.5](https://spring.io/projects/spring-boot)
 - [Spring Batch 4.2](https://spring.io/projects/spring-batch)
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Swagger OpeApi 3.0](https://swagger.io/specification/)
