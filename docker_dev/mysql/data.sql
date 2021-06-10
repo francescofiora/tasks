@@ -128,8 +128,8 @@ create table task (
 
 create table task_parameter (
    task_id bigint not null,
-   paramter_id bigint not null,
-   primary key (task_id, paramter_id)
+   parameter_id bigint not null,
+   primary key (task_id, parameter_id)
 ) ENGINE=InnoDB;
     
 alter table task 
@@ -137,7 +137,7 @@ alter table task
 
 alter table task_parameter 
    add constraint FK1_task_parameter 
-   foreign key (paramter_id) 
+   foreign key (parameter_id)
    references parameter (id);
 
 alter table task_parameter 

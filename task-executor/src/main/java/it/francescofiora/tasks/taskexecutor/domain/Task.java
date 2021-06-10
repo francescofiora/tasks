@@ -61,7 +61,7 @@ public class Task extends AbstractDomain implements Serializable {
   @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   @JoinTable(name = "task_parameter",
       joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "paramter_id", referencedColumnName = "id"))
+      inverseJoinColumns = @JoinColumn(name = "parameter_id", referencedColumnName = "id"))
   private Set<Parameter> parameters;
 
   @Column(name = "result")

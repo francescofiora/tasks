@@ -58,12 +58,14 @@ services:
     image: openjdk:8u282-jdk-slim
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
+      - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
     volumes:
       - "./tasks-api:/workspace"
     working_dir: /workspace
-    command: java -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar ./task-api-1.0-SNAPSHOT.jar
+    command: java -jar ./task-api-1.0-SNAPSHOT.jar
     ports:
       - '8081:8081'
+      - '9999:9999'
     depends_on:
       - tasks-mongodb
       - tasks-activemq
@@ -72,12 +74,14 @@ services:
     image: openjdk:8u282-jdk-slim
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
+      - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
     volumes:
       - "./tasks-executor:/workspace"
     working_dir: /workspace
-    command: java -Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar ./task-executor-1.0-SNAPSHOT.jar
+    command: java -jar ./task-executor-1.0-SNAPSHOT.jar
     ports:
       - '8082:8082'
+      - '9998:9998'
     depends_on:
       - tasks-mysql
       - tasks-activemq
