@@ -26,7 +26,7 @@ public class JmsConfig {
    */
   @Bean
   public MessageConverter jacksonJmsMessageConverter() {
-    MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+    var converter = new MappingJackson2MessageConverter();
     converter.setTargetType(MessageType.TEXT);
     converter.setTypeIdPropertyName(MessageDto.class.getName());
     return converter;
@@ -42,8 +42,7 @@ public class JmsConfig {
   @Profile("!dev")
   @Bean
   public ConnectionFactory connectionFactory(JmsProperties properties) throws Exception {
-    ActiveMQSslConnectionFactory factory =
-        new ActiveMQSslConnectionFactory(properties.getBrokerUrl());
+    var factory = new ActiveMQSslConnectionFactory(properties.getBrokerUrl());
     factory.setTrustStore(properties.getSsl().getTrustStorePath());
     factory.setTrustStorePassword(properties.getSsl().getKeyStorePass());
     factory.setKeyStore(properties.getSsl().getKeyStorePath());
@@ -62,7 +61,7 @@ public class JmsConfig {
   @Bean
   public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
       DefaultJmsListenerContainerFactoryConfigurer configurer) {
-    DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+    var factory = new DefaultJmsListenerContainerFactory();
     configurer.configure(factory, connectionFactory);
     return factory;
   }

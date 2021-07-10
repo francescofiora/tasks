@@ -32,7 +32,7 @@ class JmsMessageTest {
 
   @Test
   void testBuilder() {
-    JmsMessage message = new JmsMessage(REQUEST, ID, TIMESTAMP);
+    var message = new JmsMessage(REQUEST, ID, TIMESTAMP);
 
     assertThat(message.getJmsMessageId()).isEqualTo(ID);
     assertThat(message.getTimestamp()).isEqualTo(TIMESTAMP);
@@ -41,12 +41,12 @@ class JmsMessageTest {
 
   @Test
   void equalsVerifier() throws Exception {
-    JmsMessage message1 = new JmsMessage(REQUEST, ID, TIMESTAMP);
+    var message1 = new JmsMessage(REQUEST, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message1);
     assertThat(message1.equals(null)).isFalse();
     assertThat(message1.equals(new Object())).isFalse();
 
-    JmsMessage message2 = new JmsMessage(REQUEST, ID, TIMESTAMP);
+    var message2 = new JmsMessage(REQUEST, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message2);
 
     message2 = new JmsMessage(REQUEST, "notequals", TIMESTAMP);

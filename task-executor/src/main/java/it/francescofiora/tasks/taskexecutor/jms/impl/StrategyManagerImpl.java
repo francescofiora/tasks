@@ -30,19 +30,19 @@ public class StrategyManagerImpl implements StrategyManager {
    */
   public StrategyManagerImpl(JobLauncher jobLauncher, Job[] jobs) {
     this.jobLauncher = jobLauncher;
-    for (Job job : jobs) {
+    for (var job : jobs) {
       map.put(job.getName(), job);
     }
   }
 
   @Override
   public void exec(JmsMessage message) {
-    final String type = message.getRequest().getType().name();
-    Job job = map.containsKey(type) ? map.get(type) : map.get(JobType.NOPE.name());
+    final var type = message.getRequest().getType().name();
+    var job = map.containsKey(type) ? map.get(type) : map.get(JobType.NOPE.name());
 
     log.info("Executor - " + job.getName());
     try {
-      JobParametersBuilder jobParametersBuilder = new JobParametersBuilder()
+      var jobParametersBuilder = new JobParametersBuilder()
           .addString(JmsParameters.JMS_MESSAGE_ID, message.getJmsMessageId())
           .addString(JmsParameters.TASK_TYPE, type)
           .addLong(JmsParameters.TASK_REF, message.getRequest().getTaskId())

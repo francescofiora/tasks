@@ -25,7 +25,7 @@ class MessageDtoResponseImplTest {
   @Test
   void testDtoStructureAndBehavior() {
     // @formatter:off
-    Validator validator = ValidatorBuilder
+    var validator = ValidatorBuilder
         .create()
         .with(new GetterMustExistRule())
         .with(new SetterMustExistRule())
@@ -40,13 +40,13 @@ class MessageDtoResponseImplTest {
 
   @Test
   void testBuilder() {
-    MessageDtoResponseImpl response1 = new MessageDtoResponseImpl();
+    var response1 = new MessageDtoResponseImpl();
     response1.setTaskId(ID);
     response1.setType(TASK_TYPE_LONG);
     response1.setResult(RESULT);
     response1.setStatus(STATUS_TERMINATED);
 
-    MessageDtoResponseImpl response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
+    var response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
 
     assertThat(response2.getTaskId()).isEqualTo(response1.getTaskId());
     assertThat(response2.getType()).isEqualTo(response1.getType());
@@ -67,8 +67,8 @@ class MessageDtoResponseImplTest {
 
   @Test
   void equalsVerifier() throws Exception {
-    MessageDtoResponseImpl response1 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
-    MessageDtoResponseImpl response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
+    var response1 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
+    var response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
     TestUtils.checkEqualHashAndToString(response1, response2);
 
     response2.setTaskId(2L);

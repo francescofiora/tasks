@@ -9,13 +9,13 @@ class ParameterTest {
 
   @Test
   void equalsVerifier() throws Exception {
-    Parameter parameter1 = new Parameter();
+    var parameter1 = new Parameter();
     parameter1.setName("Name1");
 
     assertThat(parameter1.equals(null)).isFalse();
     assertThat(parameter1.equals(new Object())).isFalse();
 
-    Parameter parameter2 = new Parameter();
+    var parameter2 = new Parameter();
     parameter2.setName(parameter1.getName());
     TestUtils.checkEqualHashAndToString(parameter1, parameter2);
 

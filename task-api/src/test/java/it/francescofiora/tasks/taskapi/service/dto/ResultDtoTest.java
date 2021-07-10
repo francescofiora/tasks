@@ -7,9 +7,9 @@ class ResultDtoTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {
-    ResultDto resultDto1 = new ResultDto();
+    var resultDto1 = new ResultDto();
     resultDto1.setValue("Value1");
-    ResultDto resultDto2 = new ResultDto();
+    var resultDto2 = new ResultDto();
     TestUtils.checkNotEqualHashAndToString(resultDto1, resultDto2);
 
     resultDto2.setValue(resultDto1.getValue());

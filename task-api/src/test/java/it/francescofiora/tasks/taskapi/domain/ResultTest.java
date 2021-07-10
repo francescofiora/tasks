@@ -9,13 +9,13 @@ class ResultTest {
 
   @Test
   void equalsVerifier() throws Exception {
-    Result result1 = new Result();
+    var result1 = new Result();
     result1.setValue("Result1");
 
     assertThat(result1.equals(null)).isFalse();
     assertThat(result1.equals(new Object())).isFalse();
 
-    Result result2 = new Result();
+    var result2 = new Result();
     result2.setValue(result1.getValue());
     TestUtils.checkEqualHashAndToString(result1, result2);
 

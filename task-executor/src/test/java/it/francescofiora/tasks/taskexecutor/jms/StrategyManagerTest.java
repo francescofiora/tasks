@@ -8,7 +8,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import it.francescofiora.tasks.message.MessageDtoRequest;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.jms.errors.JmsException;
 import it.francescofiora.tasks.taskexecutor.jms.impl.StrategyManagerImpl;
@@ -55,8 +54,8 @@ class StrategyManagerTest {
 
   @Test
   void testExec() throws Exception {
-    MessageDtoRequest request = TestUtils.createMessageDtoRequest();
-    JmsMessage message = new JmsMessage(request, "ID", new Date().getTime());
+    var request = TestUtils.createMessageDtoRequest();
+    var message = new JmsMessage(request, "ID", new Date().getTime());
 
     strategyManager.exec(message);
     verify(jobLauncher).run(eq(jobLong), any(JobParameters.class));
@@ -64,8 +63,8 @@ class StrategyManagerTest {
 
   @Test
   void testExecNope() throws Exception {
-    MessageDtoRequest request = TestUtils.createMessageDtoRequestNewType();
-    JmsMessage message = new JmsMessage(request, "ID", new Date().getTime());
+    var request = TestUtils.createMessageDtoRequestNewType();
+    var message = new JmsMessage(request, "ID", new Date().getTime());
 
     strategyManager.exec(message);
     verify(jobLauncher).run(eq(jobNope), any(JobParameters.class));
@@ -75,8 +74,8 @@ class StrategyManagerTest {
   void testExecException() throws Exception {
     when(jobLauncher.run(eq(jobLong), any(JobParameters.class))).thenThrow(new RuntimeException());
 
-    MessageDtoRequest request = TestUtils.createMessageDtoRequest();
-    JmsMessage message = new JmsMessage(request, "ID", new Date().getTime());
+    var request = TestUtils.createMessageDtoRequest();
+    var message = new JmsMessage(request, "ID", new Date().getTime());
 
     assertThrows(JmsException.class, () -> strategyManager.exec(message));
   }

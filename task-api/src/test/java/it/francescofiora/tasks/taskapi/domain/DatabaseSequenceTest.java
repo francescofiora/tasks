@@ -9,13 +9,13 @@ class DatabaseSequenceTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {
-    DatabaseSequence dbSequence1 = new DatabaseSequence();
+    var dbSequence1 = new DatabaseSequence();
     dbSequence1.setId("ID1");
 
     assertThat(dbSequence1.equals(null)).isFalse();
     assertThat(dbSequence1.equals(new Object())).isFalse();
 
-    DatabaseSequence dbSequence2 = new DatabaseSequence();
+    var dbSequence2 = new DatabaseSequence();
     TestUtils.checkNotEqualHashAndToString(dbSequence1, dbSequence2);
 
     dbSequence2.setId(dbSequence1.getId());

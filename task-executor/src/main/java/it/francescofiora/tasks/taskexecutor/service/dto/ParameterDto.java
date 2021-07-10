@@ -37,7 +37,7 @@ public class ParameterDto implements Serializable {
     if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    ParameterDto other = (ParameterDto) obj;
+    var other = (ParameterDto) obj;
     return Objects.equals(getName(), other.getName())
         && Objects.equals(getValue(), other.getValue());
   }

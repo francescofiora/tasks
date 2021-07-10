@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.francescofiora.tasks.message.MessageDto;
-import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.taskexecutor.jms.impl.JmsProducerImpl;
 import it.francescofiora.tasks.taskexecutor.util.TaskTestListener;
@@ -41,18 +40,17 @@ class JmsProducerTest {
 
   @Test
   void testSend() throws Exception {
-    Long count = listener.getLatch().getCount();
+    var count = listener.getLatch().getCount();
 
-    MessageDtoResponse response = TestUtils.createMessageDtoResponse();
+    var response = TestUtils.createMessageDtoResponse();
     jmsProducer.send(response);
 
     listener.getLatch().await(10000, TimeUnit.MILLISECONDS);
 
     assertThat(listener.getLatch().getCount()).isEqualTo(count - 1);
 
-    ActiveMQTextMessage message = (ActiveMQTextMessage) listener.getObj();
-    MessageDtoResponse actual =
-        new ObjectMapper().readValue(message.getText(), MessageDtoResponseImpl.class);
+    var message = (ActiveMQTextMessage) listener.getObj();
+    var actual = new ObjectMapper().readValue(message.getText(), MessageDtoResponseImpl.class);
     assertThat(actual).isEqualTo(response);
   }
 
@@ -62,7 +60,7 @@ class JmsProducerTest {
 
     @Bean
     public MessageConverter messageConverter() {
-      MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+      var converter = new MappingJackson2MessageConverter();
       converter.setTargetType(MessageType.TEXT);
       converter.setTypeIdPropertyName(MessageDto.class.getName());
       return converter;
@@ -77,7 +75,7 @@ class JmsProducerTest {
     @Bean
     public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory,
         MessageConverter messageConverter) {
-      JmsTemplate template = new JmsTemplate(connectionFactory);
+      var template = new JmsTemplate(connectionFactory);
       template.setMessageConverter(messageConverter);
       return template;
     }
@@ -85,7 +83,7 @@ class JmsProducerTest {
     @Bean
     public JmsListenerContainerFactory<?> jmsListenerContainerFactory(
         ConnectionFactory connectionFactory, MessageConverter messageConverter) {
-      DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+      var factory = new DefaultJmsListenerContainerFactory();
       factory.setMessageConverter(messageConverter);
       factory.setConnectionFactory(connectionFactory);
 
@@ -103,5 +101,4 @@ class JmsProducerTest {
     }
 
   }
-
 }

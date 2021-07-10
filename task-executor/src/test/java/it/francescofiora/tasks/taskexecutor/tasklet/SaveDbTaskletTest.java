@@ -8,14 +8,12 @@ import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
@@ -52,31 +50,31 @@ class SaveDbTaskletTest {
 
   @Test
   void testSaveDbTasklet() {
-    Map<String, JobParameter> parameters = new HashMap<>();
+    var parameters = new HashMap<String, JobParameter>();
     parameters.put(JmsParameters.TASK_REF, new JobParameter(TASK_REF));
     parameters.put(JmsParameters.MESSAGE_CREATED, new JobParameter(MESSAGE_CREATED));
     parameters.put(JmsParameters.JOB_TYPE, new JobParameter(JobType.NOPE.name()));
-    JobParameters jobParameters = new JobParameters(parameters);
+    var jobParameters = new JobParameters(parameters);
 
-    JobExecution jobExecution =
+    var jobExecution =
         jobLauncherTestUtils.launchStep(SaveDbTasklet.NAME, jobParameters, new ExecutionContext());
     assertThat(jobExecution).isNotNull();
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
 
     assertThat(jobExecution.getExecutionContext().containsKey(SaveDbTasklet.TASK));
-    Task task = (Task) jobExecution.getExecutionContext().get(SaveDbTasklet.TASK);
+    var task = (Task) jobExecution.getExecutionContext().get(SaveDbTasklet.TASK);
     assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(ID);
   }
 
   @Test
   void testTaskInProgress() {
-    Map<String, JobParameter> parameters = new HashMap<>();
+    var parameters = new HashMap<String, JobParameter>();
     parameters.put(JmsParameters.TASK_REF, new JobParameter(TASK_REF_IN_PROGRESS));
     parameters.put(JmsParameters.MESSAGE_CREATED, new JobParameter(MESSAGE_CREATED));
     parameters.put(JmsParameters.JOB_TYPE, new JobParameter(JobType.NOPE.name()));
 
-    JobExecution jobExecution = jobLauncherTestUtils.launchStep(SaveDbTasklet.NAME,
+    var jobExecution = jobLauncherTestUtils.launchStep(SaveDbTasklet.NAME,
         new JobParameters(parameters), new ExecutionContext());
     assertThat(jobExecution).isNotNull();
     assertThat(jobExecution.getExitStatus().getExitCode())
@@ -89,13 +87,13 @@ class SaveDbTaskletTest {
 
     @Bean
     public TaskService taskService() {
-      TaskService taskService = Mockito.mock(TaskService.class);
+      var taskService = Mockito.mock(TaskService.class);
 
-      Task task = new Task();
+      var task = new Task();
       task.setId(ID);
       Mockito.when(taskService.save(Mockito.any(Task.class))).thenReturn(task);
 
-      Task taskInProgress = new Task();
+      var taskInProgress = new Task();
       taskInProgress.setId(ID);
       taskInProgress.setStatus(TaskStatus.IN_PROGRESS);
 
@@ -117,7 +115,7 @@ class SaveDbTaskletTest {
     @Bean
     public JobLauncherTestUtils jobLauncherTestUtils(JobLauncher jobLauncher,
         JobRepository jobRepository, Job job) {
-      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+      var jobLauncherTestUtils = new JobLauncherTestUtils();
       jobLauncherTestUtils.setJob(job);
       jobLauncherTestUtils.setJobRepository(jobRepository);
       jobLauncherTestUtils.setJobLauncher(jobLauncher);

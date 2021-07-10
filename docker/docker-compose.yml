@@ -41,7 +41,7 @@ services:
       - "./mysql/data:/docker-entrypoint-initdb.d"
     ports:
       - "3306:3306"
-   
+
   tasks-myadmin:
     image: phpmyadmin/phpmyadmin:5.1.0
     environment:
@@ -55,7 +55,7 @@ services:
       - "8080:80"
 
   tasks-api:
-    image: openjdk:8u282-jdk-slim
+    image: azul/zulu-openjdk-alpine:11
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
       - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
@@ -71,7 +71,7 @@ services:
       - tasks-activemq
 
   task-executor:
-    image: openjdk:8u282-jdk-slim
+    image: azul/zulu-openjdk-alpine:11
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
       - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"

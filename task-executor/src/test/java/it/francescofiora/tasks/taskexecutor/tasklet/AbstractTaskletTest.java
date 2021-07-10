@@ -23,7 +23,7 @@ public class AbstractTaskletTest {
 
   @Test
   void testTasklet() throws Exception {
-    DummyTasklet tasklet = new DummyTasklet();
+    var tasklet = new DummyTasklet();
     assertThat(tasklet.toString(Collections.emptyMap(), KEY)).isNull();
     assertThat(tasklet.toString(Collections.singletonMap(KEY, null), KEY)).isNull();
 

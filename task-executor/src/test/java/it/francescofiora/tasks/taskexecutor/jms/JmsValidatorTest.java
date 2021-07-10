@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.francescofiora.tasks.message.MessageDtoRequest;
 import it.francescofiora.tasks.taskexecutor.jms.errors.JmsException;
 import it.francescofiora.tasks.taskexecutor.jms.impl.JmsValidatorImpl;
-import it.francescofiora.tasks.taskexecutor.jms.message.JmsMessage;
 import it.francescofiora.tasks.taskexecutor.util.TestUtils;
 import java.util.Date;
 import org.apache.activemq.command.ActiveMQTextMessage;
@@ -35,13 +33,13 @@ class JmsValidatorTest {
 
   @Test
   void testValidate() throws Exception {
-    MessageDtoRequest request = TestUtils.createMessageDtoRequest();
-    ActiveMQTextMessage amqMessage = new ActiveMQTextMessage();
+    var request = TestUtils.createMessageDtoRequest();
+    var amqMessage = new ActiveMQTextMessage();
     amqMessage.setJMSMessageID(ID);
     amqMessage.setTimestamp(new Date().getTime());
     amqMessage.setText(mapper.writeValueAsString(request));
 
-    JmsMessage message = validator.validate(amqMessage);
+    var message = validator.validate(amqMessage);
 
     assertThat(message.getJmsMessageId()).isEqualTo(amqMessage.getJMSMessageID());
     assertThat(message.getTimestamp()).isEqualTo(amqMessage.getTimestamp());

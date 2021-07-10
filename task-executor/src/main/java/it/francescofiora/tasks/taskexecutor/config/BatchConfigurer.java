@@ -20,7 +20,7 @@ public class BatchConfigurer extends DefaultBatchConfigurer {
 
   @Override
   protected JobRepository createJobRepository() throws Exception {
-    JobRepositoryFactoryBean factory = new JobRepositoryFactoryBean();
+    var factory = new JobRepositoryFactoryBean();
     factory.setDataSource(dataSource);
     factory.setTransactionManager(getTransactionManager());
     factory.setIsolationLevelForCreate("ISOLATION_REPEATABLE_READ");
@@ -30,7 +30,7 @@ public class BatchConfigurer extends DefaultBatchConfigurer {
 
   @Override
   protected JobExplorer createJobExplorer() throws Exception {
-    JobExplorerFactoryBean jobExplorerFactoryBean = new JobExplorerFactoryBean();
+    var jobExplorerFactoryBean = new JobExplorerFactoryBean();
     jobExplorerFactoryBean.setDataSource(this.dataSource);
     jobExplorerFactoryBean.afterPropertiesSet();
     jobExplorerFactoryBean.setTablePrefix(TABLE_PREFIX);

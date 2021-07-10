@@ -142,7 +142,7 @@ public interface TestUtils {
    * @return ParameterDto
    */
   static ParameterDto createParameterDto() {
-    ParameterDto parameterDto = new ParameterDto();
+    var parameterDto = new ParameterDto();
     parameterDto.setName("Name");
     parameterDto.setValue("Value");
     return parameterDto;

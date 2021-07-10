@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
-import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -28,7 +27,7 @@ public class NopeTasklet extends AbstractTasklet {
       ExecutionContext executionContext) {
     log.info("NopeTasklet.execute() id:" + jobInstanceId);
 
-    Task task = getTask(executionContext);
+    var task = getTask(executionContext);
     task.setStatus(TaskStatus.ERROR);
     task.setResult("Type not supported!");
     taskService.save(task);

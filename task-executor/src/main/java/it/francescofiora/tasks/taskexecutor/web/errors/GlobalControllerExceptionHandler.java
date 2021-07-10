@@ -42,11 +42,11 @@ public class GlobalControllerExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ResponseEntity<Void> handleBadRequest(MethodArgumentNotValidException ex) {
 
-    final BindingResult result = ex.getBindingResult();
-    final List<String> fieldErrors = result.getFieldErrors().stream()
+    final var result = ex.getBindingResult();
+    final var fieldErrors = result.getFieldErrors().stream()
         .map(f -> "[" + f.getObjectName() + "." + f.getField() + " - " + f.getCode() + "]")
         .collect(Collectors.toList());
-    final String entityName = ex.getTarget().getClass().getSimpleName();
+    final var entityName = ex.getTarget().getClass().getSimpleName();
 
     return ResponseEntity.badRequest()
         .headers(
@@ -64,9 +64,9 @@ public class GlobalControllerExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ResponseEntity<Void> handleBadRequest(MethodArgumentTypeMismatchException ex) {
 
-    final String fieldError = String.format(TYPE_MISMATCH_MESSAGE, ex.getName(),
+    final var fieldError = String.format(TYPE_MISMATCH_MESSAGE, ex.getName(),
         ex.getRequiredType().getSimpleName(), ex.getValue());
-    final String entityName = ex.getName();
+    final var entityName = ex.getName();
 
     return ResponseEntity.badRequest()
         .headers(

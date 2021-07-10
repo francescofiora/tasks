@@ -2,7 +2,6 @@ package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.message.enumeration.TaskType;
-import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.jms.JmsProducer;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class SendMsgTasklet extends AbstractTasklet {
       ExecutionContext executionContext) {
     log.info("SendMsgTasklet.execute() id:" + jobInstanceId);
 
-    Task task = getTask(executionContext);
+    var task = getTask(executionContext);
 
     jmsProducer.send(new MessageDtoResponseImpl().taskId(task.getTaskRef())
         .type(TaskType.valueOf(task.getTaskType())).status(task.getStatus())

@@ -38,7 +38,7 @@ public interface TaskMapper {
     if (id == null) {
       return null;
     }
-    Task task = new Task();
+    var task = new Task();
     task.setId(id);
     return task;
   }

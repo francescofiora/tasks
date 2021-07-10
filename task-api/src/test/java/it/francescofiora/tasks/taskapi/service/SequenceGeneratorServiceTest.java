@@ -40,10 +40,10 @@ class SequenceGeneratorServiceTest {
     when(mongoOperations.findAndModify(any(Query.class), any(UpdateDefinition.class),
         any(FindAndModifyOptions.class), eq(DatabaseSequence.class))).thenReturn(null);
 
-    long actual = sequenceGenerator.generateSequence("name");
+    var actual = sequenceGenerator.generateSequence("name");
     assertThat(actual).isEqualTo(1L);
 
-    DatabaseSequence counter = new DatabaseSequence();
+    var counter = new DatabaseSequence();
     counter.setSeq(ID);
     when(mongoOperations.findAndModify(any(Query.class), any(UpdateDefinition.class),
         any(FindAndModifyOptions.class), eq(DatabaseSequence.class))).thenReturn(counter);

@@ -11,8 +11,8 @@ allprojects {
     mavenLocal()
     mavenCentral()
   }
-  sourceCompatibility = 1.8
-  targetCompatibility = 1.8
+  sourceCompatibility = 1.11
+  targetCompatibility = 1.11
 }
 
 subprojects {
@@ -21,8 +21,8 @@ subprojects {
   apply plugin: 'checkstyle'
   apply plugin: 'jacoco'
 
-  sourceCompatibility = 1.8
-  targetCompatibility = 1.8
+  sourceCompatibility = 1.11
+  targetCompatibility = 1.11
 
   group = rootProject.group
   version = rootProject.version

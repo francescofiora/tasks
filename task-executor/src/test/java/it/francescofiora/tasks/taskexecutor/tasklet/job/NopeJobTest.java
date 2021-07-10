@@ -13,14 +13,12 @@ import it.francescofiora.tasks.taskexecutor.tasklet.NopeTasklet;
 import it.francescofiora.tasks.taskexecutor.tasklet.SaveDbTasklet;
 import it.francescofiora.tasks.taskexecutor.tasklet.SendMsgTasklet;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.NoSuchJobException;
@@ -52,22 +50,22 @@ class NopeJobTest {
 
   @Test
   void test() throws Exception {
-    Map<String, JobParameter> parameters = new HashMap<>();
+    var parameters = new HashMap<String, JobParameter>();
     parameters.put(JmsParameters.TASK_REF, new JobParameter(TASK_REF));
     parameters.put(JmsParameters.MESSAGE_CREATED, new JobParameter(MESSAGE_CREATED));
     parameters.put(JmsParameters.JOB_TYPE, new JobParameter(JobType.NOPE.name()));
-    JobExecution jobExecution = jobLauncherTestUtils.launchJob(new JobParameters(parameters));
+    var jobExecution = jobLauncherTestUtils.launchJob(new JobParameters(parameters));
     assertThat(jobExecution.getExitStatus().getExitCode()).isEqualTo("COMPLETED");
   }
 
   @Test
   void testTaskInProgress() throws Exception {
-    Map<String, JobParameter> parameters = new HashMap<>();
+    var parameters = new HashMap<String, JobParameter>();
     parameters.put(JmsParameters.TASK_REF, new JobParameter(TASK_REF_IN_PROGRESS));
     parameters.put(JmsParameters.MESSAGE_CREATED, new JobParameter(MESSAGE_CREATED));
     parameters.put(JmsParameters.JOB_TYPE, new JobParameter(JobType.NOPE.name()));
 
-    JobExecution jobExecution = jobLauncherTestUtils.launchJob(new JobParameters(parameters));
+    var jobExecution = jobLauncherTestUtils.launchJob(new JobParameters(parameters));
     assertThat(jobExecution).isNotNull();
     assertThat(jobExecution.getExitStatus().getExitCode())
         .isEqualTo(ExitStatus.FAILED.getExitCode());
@@ -82,12 +80,12 @@ class NopeJobTest {
 
     @Bean
     public TaskService taskService() {
-      TaskService taskService = Mockito.mock(TaskService.class);
-      Task task = new Task();
+      var taskService = Mockito.mock(TaskService.class);
+      var task = new Task();
       task.setId(ID);
       Mockito.when(taskService.save(Mockito.any(Task.class))).thenReturn(task);
 
-      Task taskInProgress = new Task();
+      var taskInProgress = new Task();
       taskInProgress.setId(ID);
       taskInProgress.setStatus(TaskStatus.IN_PROGRESS);
 
@@ -104,7 +102,7 @@ class NopeJobTest {
 
     @Bean
     public JobLauncherTestUtils jobLauncherTestUtils(Job nopeJob) throws NoSuchJobException {
-      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+      var jobLauncherTestUtils = new JobLauncherTestUtils();
       jobLauncherTestUtils.setJob(nopeJob);
 
       return jobLauncherTestUtils;

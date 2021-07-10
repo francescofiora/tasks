@@ -49,7 +49,7 @@ public class NewTaskDto implements Serializable {
     if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    NewTaskDto other = (NewTaskDto) obj;
+    var other = (NewTaskDto) obj;
     return Objects.equals(getDescription(), other.getDescription())
         && Objects.equals(getParameters(), other.getParameters())
         && Objects.equals(getType(), other.getType());

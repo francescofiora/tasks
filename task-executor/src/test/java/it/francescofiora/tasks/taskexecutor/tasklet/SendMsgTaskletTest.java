@@ -9,13 +9,11 @@ import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.jms.JmsProducer;
 import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -53,15 +51,14 @@ class SendMsgTaskletTest {
 
   @Test
   void testSaveDbTasklet() {
-    Map<String, Object> map = new HashMap<>();
+    var map = new HashMap<String, Object>();
     map.put(SendMsgTasklet.TASK, createTask());
-    ExecutionContext jobExecutionContext = new ExecutionContext(map);
+    var jobExecutionContext = new ExecutionContext(map);
 
-    JobExecution jobExecution =
-        jobLauncherTestUtils.launchStep(SendMsgTasklet.NAME, jobExecutionContext);
+    var jobExecution = jobLauncherTestUtils.launchStep(SendMsgTasklet.NAME, jobExecutionContext);
     assertThat(jobExecution).isNotNull();
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
-    
+
     Mockito.verify(jmsProducer).send(Mockito.any(MessageDtoResponse.class));
   }
 
@@ -84,7 +81,7 @@ class SendMsgTaskletTest {
     @Bean
     public JobLauncherTestUtils jobLauncherTestUtils(JobLauncher jobLauncher,
         JobRepository jobRepository, Job job) {
-      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+      var jobLauncherTestUtils = new JobLauncherTestUtils();
       jobLauncherTestUtils.setJob(job);
       jobLauncherTestUtils.setJobRepository(jobRepository);
       jobLauncherTestUtils.setJobLauncher(jobLauncher);

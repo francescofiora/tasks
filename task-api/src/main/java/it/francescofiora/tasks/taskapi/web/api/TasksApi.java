@@ -62,7 +62,7 @@ public class TasksApi extends AbstractApi {
       @Parameter(description = "Add new Task") @Valid @RequestBody NewTaskDto taskDto)
       throws URISyntaxException {
     log.debug("REST request to save Task : {}", taskDto);
-    TaskDto result = taskService.create(taskDto);
+    var result = taskService.create(taskDto);
     return postResponse("/api/tasks/" + result.getId(), result.getId());
   }
 

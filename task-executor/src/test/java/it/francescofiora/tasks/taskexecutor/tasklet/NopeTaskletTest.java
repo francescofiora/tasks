@@ -46,13 +46,12 @@ class NopeTaskletTest {
 
   @Test
   void testNopeTasklet() throws Exception {
-    Map<String, Object> map = new HashMap<>();
-    Task task = new Task();
+    var map = new HashMap<String, Object>();
+    var task = new Task();
     task.setId(ID);
     map.put(AbstractTasklet.TASK, task);
 
-    JobExecution jobExecution =
-        jobLauncherTestUtils.launchStep(NopeTasklet.NAME, new ExecutionContext(map));
+    var jobExecution = jobLauncherTestUtils.launchStep(NopeTasklet.NAME, new ExecutionContext(map));
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
 
     Mockito.verify(taskService).save(Mockito.eq(task));
@@ -79,7 +78,7 @@ class NopeTaskletTest {
     @Bean
     public JobLauncherTestUtils jobLauncherTestUtils(JobBuilderFactory jobBuilderFactory,
         JobLauncher jobLauncher, JobRepository jobRepository, Step nopeStep) {
-      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+      var jobLauncherTestUtils = new JobLauncherTestUtils();
       jobLauncherTestUtils.setJob(createFakeJob(jobBuilderFactory, nopeStep));
       jobLauncherTestUtils.setJobRepository(jobRepository);
       jobLauncherTestUtils.setJobLauncher(jobLauncher);

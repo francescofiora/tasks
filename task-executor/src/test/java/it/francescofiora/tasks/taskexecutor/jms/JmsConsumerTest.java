@@ -62,7 +62,7 @@ class JmsConsumerTest {
 
     @Bean
     public MessageConverter messageConverter() {
-      MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+      var converter = new MappingJackson2MessageConverter();
       converter.setTargetType(MessageType.TEXT);
       converter.setTypeIdPropertyName(MessageDto.class.getName());
       return converter;
@@ -77,7 +77,7 @@ class JmsConsumerTest {
     @Bean
     public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory,
         MessageConverter messageConverter) {
-      JmsTemplate template = new JmsTemplate(connectionFactory);
+      var template = new JmsTemplate(connectionFactory);
       template.setMessageConverter(messageConverter);
       return template;
     }
@@ -85,7 +85,7 @@ class JmsConsumerTest {
     @Bean
     public JmsListenerContainerFactory<?> jmsListenerContainerFactory(
         ConnectionFactory connectionFactory, MessageConverter messageConverter) {
-      DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+      var factory = new DefaultJmsListenerContainerFactory();
       factory.setMessageConverter(messageConverter);
       factory.setConnectionFactory(connectionFactory);
 
@@ -99,7 +99,7 @@ class JmsConsumerTest {
 
     @Bean
     public JmsValidator validator() {
-      JmsValidator validator = mock(JmsValidator.class);
+      var validator = mock(JmsValidator.class);
       when(validator.validate(any(ActiveMQTextMessage.class))).thenReturn(MSG_VALIDATED);
       return validator;
     }

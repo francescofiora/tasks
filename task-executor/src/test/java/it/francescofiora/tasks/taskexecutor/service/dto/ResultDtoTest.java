@@ -11,9 +11,9 @@ class ResultDtoTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {
-    ResultDto resultDto1 = new ResultDto();
+    var resultDto1 = new ResultDto();
     resultDto1.setValue(VALUE);
-    ResultDto resultDto2 = new ResultDto();
+    var resultDto2 = new ResultDto();
     TestUtils.checkNotEqualHashAndToString(resultDto1, resultDto2);
 
     resultDto2.setValue(VALUE);
@@ -28,7 +28,7 @@ class ResultDtoTest {
 
   @Test
   void testConstructor() {
-    ResultDto result = new ResultDto(VALUE);
+    var result = new ResultDto(VALUE);
     assertThat(result.getValue()).isEqualTo(VALUE);
   }
 }

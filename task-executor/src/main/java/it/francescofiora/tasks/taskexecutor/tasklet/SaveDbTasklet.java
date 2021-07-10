@@ -34,7 +34,7 @@ public class SaveDbTasklet extends AbstractTasklet {
       ExecutionContext executionContext) {
     log.info("SaveDbTasklet.execute() id:" + jobInstanceId);
 
-    Optional<Task> taskOpt = taskService.findByTaskRef(getTaskRef(jobParameters));
+    var taskOpt = taskService.findByTaskRef(getTaskRef(jobParameters));
     Task task = null;
     if (taskOpt.isPresent()) {
       task = taskOpt.get();

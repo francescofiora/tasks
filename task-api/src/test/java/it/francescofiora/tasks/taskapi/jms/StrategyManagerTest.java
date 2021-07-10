@@ -34,8 +34,8 @@ class StrategyManagerTest {
 
   @Test
   void testExec() {
-    MessageDtoResponse response = new MessageDtoResponseImpl().taskId(1L);
-    JmsMessage message = new JmsMessage(response, "ID", new Date().getTime());
+    var response = new MessageDtoResponseImpl().taskId(1L);
+    var message = new JmsMessage(response, "ID", new Date().getTime());
     strategyManager.exec(message);
     verify(spyTaskService).response(eq(response));
   }

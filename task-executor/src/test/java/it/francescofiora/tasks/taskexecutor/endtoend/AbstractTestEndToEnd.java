@@ -34,7 +34,7 @@ public class AbstractTestEndToEnd {
   }
 
   protected void testUnauthorized(String path) throws Exception {
-    ResponseEntity<String> result = unauthorizedGet(path, String.class);
+    var result = unauthorizedGet(path, String.class);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
 
     result = unauthorizedGetWrongUser(path, String.class);
@@ -48,25 +48,25 @@ public class AbstractTestEndToEnd {
 
   protected <T> ResponseEntity<T> unauthorizedGetWrongUser(String path, Class<T> responseType)
       throws Exception {
-    HttpHeaders headers = new HttpHeaders();
+    var headers = new HttpHeaders();
     headers.setBasicAuth("wrong_user", "wrong_password");
-    HttpEntity<Void> request = new HttpEntity<>(null, headers);
+    var request = new HttpEntity<>(null, headers);
     return restTemplate.exchange(getPath(path), HttpMethod.GET, request, responseType);
   }
 
   protected <T> ResponseEntity<T> performGet(String path, Class<T> responseType) throws Exception {
-    HttpEntity<Void> request = new HttpEntity<>(null, createHttpHeaders());
+    var request = new HttpEntity<>(null, createHttpHeaders());
     return restTemplate.exchange(getPath(path), HttpMethod.GET, request, responseType);
   }
 
   protected <T> ResponseEntity<T> performGet(String path, Pageable pageable, Class<T> responseType)
       throws Exception {
-    HttpEntity<Pageable> request = new HttpEntity<>(pageable, createHttpHeaders());
+    var request = new HttpEntity<>(pageable, createHttpHeaders());
     return restTemplate.exchange(getPath(path), HttpMethod.GET, request, responseType);
   }
 
   protected ResponseEntity<Void> performDelete(String path) throws Exception {
-    HttpEntity<Void> request = new HttpEntity<>(null, createHttpHeaders());
+    var request = new HttpEntity<>(null, createHttpHeaders());
     return restTemplate.exchange(getPath(path), HttpMethod.DELETE, request, Void.class);
   }
 
@@ -85,53 +85,53 @@ public class AbstractTestEndToEnd {
 
   protected <T> T get(String path, Class<T> responseType, String alert, String param)
       throws Exception {
-    ResponseEntity<T> result = performGet(path, responseType);
+    var result = performGet(path, responseType);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     checkHeaders(result.getHeaders(), alert, param);
-    T value = result.getBody();
+    var value = result.getBody();
     assertThat(value).isNotNull();
     return value;
   }
 
   protected <T> T get(String path, Pageable pageable, Class<T> responseType, String alert,
       String param) throws Exception {
-    ResponseEntity<T> result = performGet(path, pageable, responseType);
+    var result = performGet(path, pageable, responseType);
     checkHeaders(result.getHeaders(), alert, param);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-    T value = result.getBody();
+    var value = result.getBody();
     assertThat(value).isNotNull();
     return value;
   }
 
   protected <T> void assertGetNotFound(String path, Class<T> responseType, String alert,
       String param) throws Exception {
-    ResponseEntity<T> result = performGet(path, responseType);
+    var result = performGet(path, responseType);
     checkHeadersError(result.getHeaders(), alert, param);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
   protected <T> void assertGetNotFound(String path, Pageable pageable, Class<T> responseType,
       String alert, String param) throws Exception {
-    ResponseEntity<T> result = performGet(path, pageable, responseType);
+    var result = performGet(path, pageable, responseType);
     checkHeadersError(result.getHeaders(), alert, param);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
   protected <T> void assertGetBadRequest(String path, Class<T> responseType, String alert,
       String param) throws Exception {
-    ResponseEntity<T> result = performGet(path, responseType);
+    var result = performGet(path, responseType);
     checkHeadersError(result.getHeaders(), alert, param);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
   protected void delete(String path, String alert, String param) throws Exception {
-    ResponseEntity<Void> result = performDelete(path);
+    var result = performDelete(path);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     checkHeaders(result.getHeaders(), alert, param);
   }
 
   private HttpHeaders createHttpHeaders() {
-    HttpHeaders headers = new HttpHeaders();
+    var headers = new HttpHeaders();
     headers.setBasicAuth(user, password);
     return headers;
   }

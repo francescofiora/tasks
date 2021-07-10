@@ -25,7 +25,7 @@ public class JmsValidatorImpl implements JmsValidator {
   @Override
   public JmsMessage validate(Object obj) {
     if (obj instanceof ActiveMQTextMessage) {
-      ActiveMQTextMessage txtMessage = (ActiveMQTextMessage) obj;
+      var txtMessage = (ActiveMQTextMessage) obj;
 
       MessageDtoRequest request = null;
       try {

@@ -7,8 +7,8 @@ class ParameterDtoTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {
-    ParameterDto parameterDto1 = TestUtils.createParameterDto();
-    ParameterDto parameterDto2 = TestUtils.createParameterDto();
+    var parameterDto1 = TestUtils.createParameterDto();
+    var parameterDto2 = TestUtils.createParameterDto();
     TestUtils.checkEqualHashAndToString(parameterDto1, parameterDto2);
 
     parameterDto1.setName("Name2");

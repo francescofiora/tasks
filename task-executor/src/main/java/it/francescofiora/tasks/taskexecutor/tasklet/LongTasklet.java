@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
-import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -34,7 +33,7 @@ public class LongTasklet extends AbstractTasklet {
       log.error(e.getMessage());
     }
 
-    Task task = getTask(executionContext);
+    var task = getTask(executionContext);
     task.setStatus(TaskStatus.TERMINATED);
     task.setResult("Task Terminated");
     taskService.save(task);

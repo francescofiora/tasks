@@ -3,12 +3,10 @@ package it.francescofiora.tasks.taskexecutor.endtoend;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import it.francescofiora.tasks.taskexecutor.domain.Parameter;
-import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.util.TestUtils;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,14 +49,14 @@ class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
 
   @Test
   void testGetTask() throws Exception {
-    Task task = TestUtils.createLongTask();
+    var task = TestUtils.createLongTask();
     task.setParameters(Collections.singleton(new Parameter().name("name").value("value")));
     task = taskService.save(task);
-    final Long id = task.getId();
+    final var id = task.getId();
 
-    final String tasksIdUri = String.format(TASKS_ID_URI, id);
+    final var tasksIdUri = String.format(TASKS_ID_URI, id);
 
-    TaskExecutorDto taskDto = get(tasksIdUri, TaskExecutorDto.class, ALERT_GET, String.valueOf(id));
+    var taskDto = get(tasksIdUri, TaskExecutorDto.class, ALERT_GET, String.valueOf(id));
     assertThat(taskDto.getId()).isEqualTo(id);
     assertThat(taskDto.getJmsMessageId()).isEqualTo(task.getJmsMessageId());
     assertThat(taskDto.getJob().getId()).isEqualTo(task.getJobInstanceId());
@@ -68,11 +66,10 @@ class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
     assertThat(taskDto.getMessageCreated()).isEqualTo(task.getMessageCreated());
     assertThat(taskDto.getTask().getId()).isEqualTo(task.getTaskRef());
 
-    TaskExecutorDto[] taskDtoArr =
+    var taskDtoArr =
         get(TASKS_URI, PageRequest.of(1, 1), TaskExecutorDto[].class, ALERT_GET, PARAM_PAGE_20);
     assertThat(taskDtoArr).isNotEmpty();
-    Optional<TaskExecutorDto> option =
-        Stream.of(taskDtoArr).filter(tsk -> tsk.getId().equals(id)).findAny();
+    var option = Stream.of(taskDtoArr).filter(tsk -> tsk.getId().equals(id)).findAny();
     assertThat(option).isPresent();
     assertThat(option.get()).isEqualTo(taskDto);
 

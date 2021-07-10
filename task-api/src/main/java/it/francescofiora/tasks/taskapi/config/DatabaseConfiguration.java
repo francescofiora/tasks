@@ -4,7 +4,6 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings.Builder;
 import it.francescofiora.tasks.taskapi.config.parameter.DbProperties;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
@@ -46,23 +45,23 @@ public class DatabaseConfiguration extends AbstractMongoClientConfiguration {
 
   private SSLContext getSslContext() {
     try {
-      KeyStore keystore = KeyStore.getInstance("jks");
-      try (InputStream in = new FileInputStream(dbProperties.getKeystorefile())) {
+      var keystore = KeyStore.getInstance("jks");
+      try (var in = new FileInputStream(dbProperties.getKeystorefile())) {
         keystore.load(in, dbProperties.getKeystorepassword().toCharArray());
       }
 
-      KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+      var keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
       keyManagerFactory.init(keystore, dbProperties.getKeystorepassword().toCharArray());
 
-      KeyStore truststore = KeyStore.getInstance("jks");
-      try (InputStream in = new FileInputStream(dbProperties.getTruststorefile())) {
+      var truststore = KeyStore.getInstance("jks");
+      try (var in = new FileInputStream(dbProperties.getTruststorefile())) {
         keystore.load(in, dbProperties.getTruststorepassword().toCharArray());
       }
 
-      TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+      var trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
       trustManagerFactory.init(truststore);
 
-      TrustManager tm = new X509TrustManager() {
+      var tm = new X509TrustManager() {
 
         @Override
         public void checkClientTrusted(X509Certificate[] chain, String authType)
@@ -79,7 +78,7 @@ public class DatabaseConfiguration extends AbstractMongoClientConfiguration {
 
       };
 
-      SSLContext sslContext = SSLContext.getInstance("SSL");
+      var sslContext = SSLContext.getInstance("SSL");
       sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[] {tm},
           new SecureRandom());
 

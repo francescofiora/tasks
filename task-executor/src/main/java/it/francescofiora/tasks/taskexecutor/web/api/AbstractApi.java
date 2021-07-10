@@ -6,7 +6,6 @@ import it.francescofiora.tasks.taskexecutor.web.util.PaginationUtil;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 public abstract class AbstractApi {
@@ -38,7 +37,7 @@ public abstract class AbstractApi {
    */
   protected <T> ResponseEntity<List<T>> getResponse(final String refEntityName,
       final Page<T> page) {
-    HttpHeaders headers = PaginationUtil.getHttpHeadersfromPagination(refEntityName, page);
+    var headers = PaginationUtil.getHttpHeadersfromPagination(refEntityName, page);
     // @formatter:off
     return ResponseEntity
         .ok()

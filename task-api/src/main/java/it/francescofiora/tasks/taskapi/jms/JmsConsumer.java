@@ -1,6 +1,5 @@
 package it.francescofiora.tasks.taskapi.jms;
 
-import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
@@ -35,7 +34,7 @@ public class JmsConsumer {
   public void receiveMessage(Object obj) {
     log.debug("Message received: " + obj);
 
-    JmsMessage message = validator.validate(obj);
+    var message = validator.validate(obj);
     log.debug("Message validated: " + message);
 
     strategyManager.exec(message);

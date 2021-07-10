@@ -2,11 +2,9 @@ package it.francescofiora.tasks.taskapi.endtoend;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
-import java.util.Optional;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,21 +45,20 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
 
   @Test
   void testCreateTask() throws Exception {
-    NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
-    Long id = createAndReturnId(TASKS_URI, newTaskDto, ALERT_CREATED);
+    var newTaskDto = TestUtils.createNewTaskDto();
+    var id = createAndReturnId(TASKS_URI, newTaskDto, ALERT_CREATED);
 
-    final String tasksIdUri = String.format(TASKS_ID_URI, id);
+    final var tasksIdUri = String.format(TASKS_ID_URI, id);
 
-    TaskDto taskDto = get(tasksIdUri, TaskDto.class, ALERT_GET, String.valueOf(id));
+    var taskDto = get(tasksIdUri, TaskDto.class, ALERT_GET, String.valueOf(id));
     assertThat(taskDto.getDescription()).isEqualTo(taskDto.getDescription());
     assertThat(taskDto.getId()).isEqualTo(id);
     assertThat(taskDto.getType()).isEqualTo(newTaskDto.getType());
 
-    TaskDto[] taskDtoArr =
+    var taskDtoArr =
         get(TASKS_URI, PageRequest.of(1, 1), TaskDto[].class, ALERT_GET, PARAM_PAGE_20);
     assertThat(taskDtoArr).isNotEmpty();
-    Optional<TaskDto> option =
-        Stream.of(taskDtoArr).filter(task -> task.getId().equals(id)).findAny();
+    var option = Stream.of(taskDtoArr).filter(task -> task.getId().equals(id)).findAny();
     assertThat(option).isPresent();
     assertThat(option.get()).isEqualTo(taskDto);
 
@@ -72,7 +69,7 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
 
   @Test
   void testBadRequest() throws Exception {
-    NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
+    var newTaskDto = TestUtils.createNewTaskDto();
 
     // description
     newTaskDto.setDescription(null);
@@ -100,7 +97,7 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
 
     // value
     newTaskDto = TestUtils.createNewTaskDto();
-    ParameterDto param = new ParameterDto();
+    var param = new ParameterDto();
     param.setName("NewName");
     newTaskDto.getParameters().add(param);
     assertCreateBadRequest(TASKS_URI, newTaskDto, ALERT_BAD_REQUEST, PARAM_VALUE_NOT_EMPTY);

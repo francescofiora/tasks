@@ -35,13 +35,13 @@ class JmsValidatorTest {
 
   @Test
   void testValidate() throws Exception {
-    MessageDtoResponse response = TestUtils.createMessageDtoResponse();
-    ActiveMQTextMessage amqMessage = new ActiveMQTextMessage();
+    var response = TestUtils.createMessageDtoResponse();
+    var amqMessage = new ActiveMQTextMessage();
     amqMessage.setJMSMessageID(ID);
     amqMessage.setTimestamp(new Date().getTime());
     amqMessage.setText(mapper.writeValueAsString(response));
 
-    JmsMessage message = validator.validate(amqMessage);
+    var message = validator.validate(amqMessage);
 
     assertThat(message.getJmsMessageId()).isEqualTo(amqMessage.getJMSMessageID());
     assertThat(message.getTimestamp()).isEqualTo(amqMessage.getTimestamp());

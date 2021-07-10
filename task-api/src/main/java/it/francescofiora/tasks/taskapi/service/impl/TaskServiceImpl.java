@@ -58,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public TaskDto create(NewTaskDto taskDto) {
     log.debug("Request to create Task : {}", taskDto);
-    Task task = taskMapper.toEntity(taskDto);
+    var task = taskMapper.toEntity(taskDto);
     task.setId(sequenceGenerator.generateSequence(Task.SEQUENCE_NAME));
     task = taskRepository.save(task);
 
@@ -87,12 +87,12 @@ public class TaskServiceImpl implements TaskService {
   public void patch(UpdatableTaskDto taskDto) {
     log.debug("Request to patch Task : {}", taskDto);
 
-    Optional<Task> taskOpt = taskRepository.findById(taskDto.getId());
+    var taskOpt = taskRepository.findById(taskDto.getId());
     if (!taskOpt.isPresent()) {
-      String id = String.valueOf(taskDto.getId());
+      var id = String.valueOf(taskDto.getId());
       throw new NotFoundAlertException(ENTITY_NAME, id, ENTITY_NAME + " not found with id " + id);
     }
-    Task task = taskOpt.get();
+    var task = taskOpt.get();
     taskMapper.updateEntityFromDto(taskDto, task);
     taskRepository.save(task);
   }
@@ -119,11 +119,11 @@ public class TaskServiceImpl implements TaskService {
   public void response(MessageDtoResponse response) {
     log.debug("Response Task : {}", response);
 
-    Optional<Task> taskOpt = taskRepository.findById(response.getTaskId());
+    var taskOpt = taskRepository.findById(response.getTaskId());
     if (!taskOpt.isPresent()) {
       throw new JmsException("Not found!");
     }
-    Task task = taskOpt.get();
+    var task = taskOpt.get();
     task.setStatus(response.getStatus());
     task.setResult(new Result(response.getResult()));
     taskRepository.save(task);

@@ -28,7 +28,7 @@ public interface TestUtils {
    * @return Parameter
    */
   static Parameter createParameter(final String name, final String value) {
-    Parameter parameter = new Parameter();
+    var parameter = new Parameter();
     parameter.setName(name);
     parameter.setValue(value);
     return parameter;
@@ -40,7 +40,7 @@ public interface TestUtils {
    * @return NewTaskDto
    */
   static NewTaskDto createNewTaskDto() {
-    NewTaskDto taskDto = new NewTaskDto();
+    var taskDto = new NewTaskDto();
     taskDto.setDescription("Description");
     taskDto.setType(TaskType.LONG);
     taskDto.getParameters().add(createParameterDto());
@@ -53,7 +53,7 @@ public interface TestUtils {
    * @return ParameterDto
    */
   static ParameterDto createParameterDto() {
-    ParameterDto parameterDto = new ParameterDto();
+    var parameterDto = new ParameterDto();
     parameterDto.setName("Name");
     parameterDto.setValue("Value");
     return parameterDto;
@@ -65,7 +65,7 @@ public interface TestUtils {
    * @return UpdatableTaskDto
    */
   static UpdatableTaskDto createUpdatableTaskDto(Long id) {
-    UpdatableTaskDto taskDto = new UpdatableTaskDto();
+    var taskDto = new UpdatableTaskDto();
     taskDto.setId(id);
     taskDto.setDescription("Description updated");
     return taskDto;
@@ -78,7 +78,7 @@ public interface TestUtils {
    * @return Task
    */
   static Task createTask1(final Long id) {
-    Task task = new Task();
+    var task = new Task();
     task.setId(id);
     task.setDescription("first");
     task.setStatus(TaskStatus.SCHEDULATED);
@@ -95,7 +95,7 @@ public interface TestUtils {
    * @return Task
    */
   static Task createTask2(final Long id) {
-    Task task = new Task();
+    var task = new Task();
     task.setId(id);
     task.setDescription("second");
     task.setStatus(TaskStatus.SCHEDULATED);
@@ -112,7 +112,7 @@ public interface TestUtils {
    * @return Task
    */
   static Task createTask3(final Long id) {
-    Task task = new Task();
+    var task = new Task();
     task.setId(id);
     task.setDescription("third");
     task.setStatus(TaskStatus.SCHEDULATED);

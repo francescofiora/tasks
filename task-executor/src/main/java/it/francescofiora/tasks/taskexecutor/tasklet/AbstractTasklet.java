@@ -15,11 +15,11 @@ public abstract class AbstractTasklet implements Tasklet {
   public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
       throws Exception {
 
-    final ExecutionContext executionContext =
+    final var executionContext =
         chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext();
-    final StepContext stepContext = chunkContext.getStepContext();
-    final Long jobInstanceId = stepContext.getJobInstanceId();
-    final Map<String, Object> jobParameters = stepContext.getJobParameters();
+    final var stepContext = chunkContext.getStepContext();
+    final var jobInstanceId = stepContext.getJobInstanceId();
+    final var jobParameters = stepContext.getJobParameters();
 
     execute(jobInstanceId, jobParameters, executionContext);
 
@@ -32,7 +32,7 @@ public abstract class AbstractTasklet implements Tasklet {
   protected String getJmsMessageId(Map<String, Object> jobParameters) {
     return getString(jobParameters, JmsParameters.JMS_MESSAGE_ID);
   }
-  
+
 
   protected String getJobType(Map<String, Object> jobParameters) {
     return getString(jobParameters, JmsParameters.JOB_TYPE);

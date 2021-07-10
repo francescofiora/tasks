@@ -11,7 +11,6 @@ import it.francescofiora.tasks.taskapi.service.TaskService;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
-import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
 import java.util.Collections;
 import java.util.List;
@@ -42,20 +41,19 @@ class TasksApiTest extends AbstractTestApi {
 
   @Test
   void testCreateTask() throws Exception {
-    NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
+    var newTaskDto = TestUtils.createNewTaskDto();
 
-    TaskDto taskDto = new TaskDto();
+    var taskDto = new TaskDto();
     taskDto.setId(ID);
     given(taskService.create(any(NewTaskDto.class))).willReturn(taskDto);
-    MvcResult result =
-        performPost(TASKS_URI, newTaskDto).andExpect(status().isCreated()).andReturn();
+    var result = performPost(TASKS_URI, newTaskDto).andExpect(status().isCreated()).andReturn();
     assertThat(result.getResponse().getHeaderValue("location")).isEqualTo(TASKS_URI + "/" + ID);
   }
 
   @Test
   void testCreateTaskBadRequest() throws Exception {
     // description
-    NewTaskDto newTaskDto = TestUtils.createNewTaskDto();
+    var newTaskDto = TestUtils.createNewTaskDto();
     newTaskDto.setDescription(null);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
@@ -86,7 +84,7 @@ class TasksApiTest extends AbstractTestApi {
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
 
     newTaskDto = TestUtils.createNewTaskDto();
-    ParameterDto parameterDto = TestUtils.createParameterDto();
+    var parameterDto = TestUtils.createParameterDto();
     parameterDto.setName("");
     newTaskDto.getParameters().add(parameterDto);
     performPost(TASKS_URI, newTaskDto).andExpect(status().isBadRequest());
@@ -125,7 +123,7 @@ class TasksApiTest extends AbstractTestApi {
   @Test
   void testPatchTaskBadRequest() throws Exception {
     // id
-    UpdatableTaskDto taskDto = TestUtils.createUpdatableTaskDto(null);
+    var taskDto = TestUtils.createUpdatableTaskDto(null);
     performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isBadRequest());
 
     taskDto = TestUtils.createUpdatableTaskDto(2L);
@@ -147,31 +145,31 @@ class TasksApiTest extends AbstractTestApi {
 
   @Test
   void testPatchTask() throws Exception {
-    UpdatableTaskDto taskDto = TestUtils.createUpdatableTaskDto(ID);
+    var taskDto = TestUtils.createUpdatableTaskDto(ID);
     performPatch(TASKS_ID_URI, ID, taskDto).andExpect(status().isOk());
   }
 
   @Test
   void testGetAllTasks() throws Exception {
-    Pageable pageable = PageRequest.of(1, 1);
-    TaskDto expected = new TaskDto();
+    var pageable = PageRequest.of(1, 1);
+    var expected = new TaskDto();
     expected.setId(ID);
     given(taskService.findAll(any(Pageable.class)))
         .willReturn(new PageImpl<TaskDto>(Collections.singletonList(expected)));
 
-    MvcResult result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
-    List<TaskDto> list = readValue(result, new TypeReference<List<TaskDto>>() {});
+    var result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
+    var list = readValue(result, new TypeReference<List<TaskDto>>() {});
     assertThat(list).isNotNull().isNotEmpty();
     assertThat(list.get(0)).isEqualTo(expected);
   }
 
   @Test
   void testGetTask() throws Exception {
-    TaskDto expected = new TaskDto();
+    var expected = new TaskDto();
     expected.setId(ID);
     given(taskService.findOne(eq(ID))).willReturn(Optional.of(expected));
-    MvcResult result = performGet(TASKS_ID_URI, ID).andExpect(status().isOk()).andReturn();
-    TaskDto actual = readValue(result, new TypeReference<TaskDto>() {});
+    var result = performGet(TASKS_ID_URI, ID).andExpect(status().isOk()).andReturn();
+    var actual = readValue(result, new TypeReference<TaskDto>() {});
     assertThat(actual).isNotNull().isEqualTo(expected);
   }
 

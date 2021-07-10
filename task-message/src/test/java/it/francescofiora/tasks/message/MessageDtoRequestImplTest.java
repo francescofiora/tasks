@@ -3,7 +3,6 @@ package it.francescofiora.tasks.message;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.rule.impl.SetterMustExistRule;
@@ -29,7 +28,7 @@ class MessageDtoRequestImplTest {
   @Test
   void testDtoStructureAndBehavior() {
     // @formatter:off
-    Validator validator = ValidatorBuilder
+    var validator = ValidatorBuilder
         .create()
         .with(new GetterMustExistRule())
         .with(new SetterMustExistRule())
@@ -44,13 +43,11 @@ class MessageDtoRequestImplTest {
 
   @Test
   void testBuilder() {
-    MessageDtoRequestImpl request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
+    var request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
 
     assertThat(request2.getTaskId()).isEqualTo(ID);
     assertThat(request2.getType()).isEqualTo(TASK_TYPE);
-    assertThat(request2.getParameters())
-      .hasSize(1)
-      .containsEntry(KEY, VALUE);
+    assertThat(request2.getParameters()).hasSize(1).containsEntry(KEY, VALUE);
   }
 
   private MessageDtoRequestImpl buildRequest(Long taskId, TaskType type, String parKey,
@@ -65,8 +62,8 @@ class MessageDtoRequestImplTest {
 
   @Test
   void equalsVerifier() throws Exception {
-    MessageDtoRequestImpl request1 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
-    MessageDtoRequestImpl request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
+    var request1 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
+    var request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
     TestUtils.checkEqualHashAndToString(request1, request2);
 
     request2.setTaskId(2L);
@@ -79,7 +76,7 @@ class MessageDtoRequestImplTest {
   @Test
   void addParameters() throws Exception {
     // @formatter:off
-    MessageDtoRequest request = new MessageDtoRequestImpl()
+    var request = new MessageDtoRequestImpl()
         .addParameters(null)
         .addParameters(Collections.singletonMap(KEY, VALUE))
         .addParameters(Collections.emptyMap())

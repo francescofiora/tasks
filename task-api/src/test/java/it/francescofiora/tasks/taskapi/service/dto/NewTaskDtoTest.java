@@ -10,9 +10,9 @@ class NewTaskDtoTest {
 
   @Test
   void dtoEqualsVerifier() throws Exception {
-    NewTaskDto newTaskDto1 = TestUtils.createNewTaskDto();
+    var newTaskDto1 = TestUtils.createNewTaskDto();
     newTaskDto1.setDescription("Description");
-    NewTaskDto newTaskDto2 = TestUtils.createNewTaskDto();
+    var newTaskDto2 = TestUtils.createNewTaskDto();
 
     TestUtils.checkEqualHashAndToString(newTaskDto1, newTaskDto1);
     TestUtils.checkEqualHashAndToString(newTaskDto1, newTaskDto2);

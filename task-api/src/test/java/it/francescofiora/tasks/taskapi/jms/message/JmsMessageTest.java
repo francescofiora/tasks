@@ -3,7 +3,6 @@ package it.francescofiora.tasks.taskapi.jms.message;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
@@ -20,7 +19,7 @@ class JmsMessageTest {
   @Test
   void testDtoStructureAndBehavior() {
     // @formatter:off
-    Validator validator = ValidatorBuilder
+    var validator = ValidatorBuilder
         .create()
         .with(new GetterMustExistRule())
         .with(new GetterTester())
@@ -32,7 +31,7 @@ class JmsMessageTest {
 
   @Test
   void testBuilder() {
-    JmsMessage message = new JmsMessage(RESPONSE, ID, TIMESTAMP);
+    var message = new JmsMessage(RESPONSE, ID, TIMESTAMP);
 
     assertThat(message.getJmsMessageId()).isEqualTo(ID);
     assertThat(message.getTimestamp()).isEqualTo(TIMESTAMP);
@@ -41,12 +40,12 @@ class JmsMessageTest {
 
   @Test
   void equalsVerifier() throws Exception {
-    JmsMessage message1 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
+    var message1 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message1);
     assertThat(message1.equals(null)).isFalse();
     assertThat(message1.equals(new Object())).isFalse();
 
-    JmsMessage message2 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
+    var message2 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message2);
 
     message2 = new JmsMessage(RESPONSE, "notequals", TIMESTAMP);

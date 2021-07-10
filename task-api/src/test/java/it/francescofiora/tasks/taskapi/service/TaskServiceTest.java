@@ -72,16 +72,16 @@ class TaskServiceTest {
 
   @Test
   void testCreate() throws Exception {
-    Task task = new Task();
+    var task = new Task();
     when(taskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
 
     when(taskRepository.save(any(Task.class))).thenReturn(task);
 
-    TaskDto expected = new TaskDto();
+    var expected = new TaskDto();
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
 
-    NewTaskDto taskDto = new NewTaskDto();
-    TaskDto actual = taskService.create(taskDto);
+    var taskDto = new NewTaskDto();
+    var actual = taskService.create(taskDto);
     assertThat(actual).isEqualTo(expected);
 
     verify(spyJmsProducer).send(any(MessageDtoRequestImpl.class));
@@ -89,35 +89,35 @@ class TaskServiceTest {
 
   @Test
   void testSendError() throws Exception {
-    Task task = new Task();
+    var task = new Task();
     when(taskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
 
     when(taskRepository.save(any(Task.class))).thenReturn(task);
 
-    JmsProducer jmsProducerErr = mock(JmsProducer.class);
+    var jmsProducerErr = mock(JmsProducer.class);
     doThrow(new RuntimeException(ERROR_MSG)).when(jmsProducerErr)
         .send(any(MessageDtoRequest.class));
 
-    TaskService taskServiceErr = new TaskServiceImpl(taskRepository, new TaskMapperImpl(),
+    var taskServiceErr = new TaskServiceImpl(taskRepository, new TaskMapperImpl(),
         sequenceGenerator, jmsProducerErr);
 
-    TaskDto actual = taskServiceErr.create(new NewTaskDto());
+    var actual = taskServiceErr.create(new NewTaskDto());
     assertThat(actual.getResult().getValue()).isEqualTo(ERROR_MSG);
     assertThat(actual.getStatus()).isEqualTo(TaskStatus.ERROR);
   }
 
   @Test
   void testPatchNotFound() throws Exception {
-    UpdatableTaskDto taskDto = new UpdatableTaskDto();
+    var taskDto = new UpdatableTaskDto();
     assertThrows(NotFoundAlertException.class, () -> taskService.patch(taskDto));
   }
 
   @Test
   void testPatch() throws Exception {
-    Task task = new Task();
+    var task = new Task();
     when(taskRepository.findById(eq(ID))).thenReturn(Optional.of(task));
 
-    UpdatableTaskDto taskDto = new UpdatableTaskDto();
+    var taskDto = new UpdatableTaskDto();
     taskDto.setId(ID);
     taskService.patch(taskDto);
 
@@ -125,33 +125,33 @@ class TaskServiceTest {
 
   @Test
   void testFindAll() throws Exception {
-    Task task = new Task();
+    var task = new Task();
     when(taskRepository.findAll(any(Pageable.class)))
         .thenReturn(new PageImpl<Task>(singletonList(task)));
-    TaskDto expected = new TaskDto();
+    var expected = new TaskDto();
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
-    Pageable pageable = PageRequest.of(1, 1);
-    Page<TaskDto> page = taskService.findAll(pageable);
+    var pageable = PageRequest.of(1, 1);
+    var page = taskService.findAll(pageable);
     assertThat(page.getContent().get(0)).isEqualTo(expected);
   }
 
   @Test
   void testFindOneNotFound() throws Exception {
-    Optional<TaskDto> taskOpt = taskService.findOne(ID);
+    var taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isNotPresent();
   }
 
   @Test
   void testFindOne() throws Exception {
-    Task task = new Task();
+    var task = new Task();
     task.setId(ID);
     when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
-    TaskDto expected = new TaskDto();
+    var expected = new TaskDto();
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
 
-    Optional<TaskDto> taskOpt = taskService.findOne(ID);
+    var taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isPresent();
-    TaskDto actual = taskOpt.get();
+    var actual = taskOpt.get();
     assertThat(actual).isEqualTo(expected);
   }
 
@@ -162,18 +162,18 @@ class TaskServiceTest {
 
   @Test
   void testResponse() throws Exception {
-    Task task = new Task();
+    var task = new Task();
     task.setId(ID);
     when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
 
-    MessageDtoResponse response = new MessageDtoResponseImpl().taskId(ID).result("Result");
+    var response = new MessageDtoResponseImpl().taskId(ID).result("Result");
     taskService.response(response);
   }
 
   @Test
   void testResponseNotFound() throws Exception {
     when(taskRepository.findById(eq(ID))).thenReturn(Optional.empty());
-    MessageDtoResponse response = new MessageDtoResponseImpl().taskId(ID).result("Result");
+    var response = new MessageDtoResponseImpl().taskId(ID).result("Result");
     assertThrows(JmsException.class, () -> taskService.response(response));
   }
 }

@@ -1,8 +1,6 @@
 package it.francescofiora.tasks.taskapi.service.dto;
 
-import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.affirm.Affirm;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
@@ -11,7 +9,6 @@ import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 import it.francescofiora.tasks.taskapi.util.DtoEqualsTester;
 import it.francescofiora.tasks.taskapi.util.FilterPackageInfo;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class DtoTest {
@@ -23,19 +20,21 @@ class DtoTest {
 
   @Test
   void ensureExpectedCount() {
-    List<PojoClass> classes =
-        PojoClassFactory.getPojoClasses(DTO_PACKAGE, new FilterPackageInfo());
+    var classes = PojoClassFactory.getPojoClasses(DTO_PACKAGE, new FilterPackageInfo());
     Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT, classes.size());
   }
 
   @Test
   void testStructureAndBehavior() {
-    Validator validator = ValidatorBuilder.create()
+    // @formatter:off
+    var validator = ValidatorBuilder.create()
         .with(new GetterMustExistRule())
         .with(new SetterMustExistRule())
         .with(new SetterTester())
         .with(new GetterTester())
-        .with(new DtoEqualsTester()).build();
+        .with(new DtoEqualsTester())
+        .build();
+    // @formatter:on
 
     validator.validate(DTO_PACKAGE, new FilterPackageInfo());
   }

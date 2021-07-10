@@ -21,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MvcResult;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = TaskExecutorApi.class)
@@ -37,25 +36,25 @@ class TaskExecutorApiTest extends AbstractTestApi {
 
   @Test
   void testGetAllTasks() throws Exception {
-    Pageable pageable = PageRequest.of(1, 1);
-    TaskExecutorDto expected = new TaskExecutorDto();
+    var pageable = PageRequest.of(1, 1);
+    var expected = new TaskExecutorDto();
     expected.setId(ID);
     given(taskService.findAll(any(Pageable.class)))
         .willReturn(new PageImpl<TaskExecutorDto>(Collections.singletonList(expected)));
 
-    MvcResult result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
-    List<TaskExecutorDto> list = readValue(result, new TypeReference<List<TaskExecutorDto>>() {});
+    var result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
+    var list = readValue(result, new TypeReference<List<TaskExecutorDto>>() {});
     assertThat(list).isNotNull().isNotEmpty();
     assertThat(list.get(0)).isEqualTo(expected);
   }
 
   @Test
   void testGetTask() throws Exception {
-    TaskExecutorDto expected = new TaskExecutorDto();
+    var expected = new TaskExecutorDto();
     expected.setId(ID);
     given(taskService.findOne(eq(ID))).willReturn(Optional.of(expected));
-    MvcResult result = performGet(TASKS_ID_URI, ID).andExpect(status().isOk()).andReturn();
-    TaskExecutorDto actual = readValue(result, new TypeReference<TaskExecutorDto>() {});
+    var result = performGet(TASKS_ID_URI, ID).andExpect(status().isOk()).andReturn();
+    var actual = readValue(result, new TypeReference<TaskExecutorDto>() {});
     assertThat(actual).isNotNull().isEqualTo(expected);
   }
 

@@ -7,13 +7,11 @@ import it.francescofiora.tasks.taskexecutor.config.job.ShortJobConfig;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -46,12 +44,12 @@ class ShortTaskletTest {
 
   @Test
   void testShortTasklet() throws Exception {
-    Map<String, Object> map = new HashMap<>();
-    Task task = new Task();
+    var map = new HashMap<String, Object>();
+    var task = new Task();
     task.setId(ID);
     map.put(AbstractTasklet.TASK, task);
 
-    JobExecution jobExecution =
+    var jobExecution =
         jobLauncherTestUtils.launchStep(ShortTasklet.NAME, new ExecutionContext(map));
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
 
@@ -79,7 +77,7 @@ class ShortTaskletTest {
     @Bean
     public JobLauncherTestUtils jobLauncherTestUtils(JobBuilderFactory jobBuilderFactory,
         JobLauncher jobLauncher, JobRepository jobRepository, Step shortStep) {
-      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+      var jobLauncherTestUtils = new JobLauncherTestUtils();
       jobLauncherTestUtils.setJob(createFakeJob(jobBuilderFactory, shortStep));
       jobLauncherTestUtils.setJobRepository(jobRepository);
       jobLauncherTestUtils.setJobLauncher(jobLauncher);
