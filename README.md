@@ -79,7 +79,7 @@ Environment with sit profile and SSL connection.
 
 # Technologies used
 - [Gradle 7.0](https://gradle.org/)
-- [Java 8](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
+- [Java 11](https://openjdk.java.net/projects/jdk/11/)
 - [Spring Boot 2.5](https://spring.io/projects/spring-boot)
 - [Spring Batch 4.2](https://spring.io/projects/spring-batch)
 - [Spring Security](https://spring.io/projects/spring-security)
