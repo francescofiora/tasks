@@ -12,7 +12,6 @@ import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -155,7 +154,7 @@ class TasksApiTest extends AbstractTestApi {
     var expected = new TaskDto();
     expected.setId(ID);
     given(taskService.findAll(any(Pageable.class)))
-        .willReturn(new PageImpl<TaskDto>(Collections.singletonList(expected)));
+        .willReturn(new PageImpl<TaskDto>(List.of(expected)));
 
     var result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
     var list = readValue(result, new TypeReference<List<TaskDto>>() {});

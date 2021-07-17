@@ -18,6 +18,7 @@ import it.francescofiora.tasks.taskapi.service.mapper.TaskMapper;
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,35 +26,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private static final String ENTITY_NAME = "TaskDto";
 
-  private final SequenceGeneratorService sequenceGenerator;
-
   private final TaskRepository taskRepository;
-
   private final TaskMapper taskMapper;
-
+  private final SequenceGeneratorService sequenceGenerator;
   private final JmsProducer jmsProducer;
-
-  /**
-   * Constructor.
-   *
-   * @param taskRepository TaskRepository
-   * @param taskMapper TaskMapper
-   * @param sequenceGenerator SequenceGeneratorService
-   * @param jmsProducer JmsProducer
-   */
-  public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper,
-      SequenceGeneratorService sequenceGenerator, JmsProducer jmsProducer) {
-    this.taskRepository = taskRepository;
-    this.taskMapper = taskMapper;
-    this.sequenceGenerator = sequenceGenerator;
-    this.jmsProducer = jmsProducer;
-  }
 
   @Override
   public TaskDto create(NewTaskDto taskDto) {

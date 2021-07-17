@@ -1,6 +1,5 @@
 package it.francescofiora.tasks.taskapi.service;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,6 +26,7 @@ import it.francescofiora.tasks.taskapi.service.impl.TaskServiceImpl;
 import it.francescofiora.tasks.taskapi.service.mapper.TaskMapper;
 import it.francescofiora.tasks.taskapi.service.mapper.TaskMapperImpl;
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,7 +127,7 @@ class TaskServiceTest {
   void testFindAll() throws Exception {
     var task = new Task();
     when(taskRepository.findAll(any(Pageable.class)))
-        .thenReturn(new PageImpl<Task>(singletonList(task)));
+        .thenReturn(new PageImpl<Task>(List.of(task)));
     var expected = new TaskDto();
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
     var pageable = PageRequest.of(1, 1);

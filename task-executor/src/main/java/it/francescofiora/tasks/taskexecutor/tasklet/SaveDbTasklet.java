@@ -8,14 +8,15 @@ import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.tasklet.errors.TaskletException;
 import java.sql.Timestamp;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class SaveDbTasklet extends AbstractTasklet {
 
   public static final String NAME = "saveDbStep";
@@ -23,11 +24,6 @@ public class SaveDbTasklet extends AbstractTasklet {
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final TaskService taskService;
-
-  public SaveDbTasklet(TaskService taskService) {
-    super();
-    this.taskService = taskService;
-  }
 
   @Override
   void execute(Long jobInstanceId, Map<String, Object> jobParameters,

@@ -7,18 +7,16 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import it.francescofiora.tasks.taskapi.domain.DatabaseSequence;
 import it.francescofiora.tasks.taskapi.service.SequenceGeneratorService;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class SequenceGeneratorServiceImpl implements SequenceGeneratorService {
 
   private final MongoOperations mongoOperations;
-
-  public SequenceGeneratorServiceImpl(MongoOperations mongoOperations) {
-    this.mongoOperations = mongoOperations;
-  }
 
   @Override
   public long generateSequence(String seqName) {

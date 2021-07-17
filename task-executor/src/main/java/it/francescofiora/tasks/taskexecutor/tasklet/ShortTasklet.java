@@ -3,12 +3,14 @@ package it.francescofiora.tasks.taskexecutor.tasklet;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class ShortTasklet extends AbstractTasklet {
 
   public static final String NAME = "shortStep";
@@ -16,11 +18,6 @@ public class ShortTasklet extends AbstractTasklet {
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final TaskService taskService;
-
-  public ShortTasklet(TaskService taskService) {
-    super();
-    this.taskService = taskService;
-  }
 
   @Override
   void execute(Long jobInstanceId, Map<String, Object> jobParameters,

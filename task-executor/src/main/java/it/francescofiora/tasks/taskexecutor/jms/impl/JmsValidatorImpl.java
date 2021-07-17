@@ -6,21 +6,19 @@ import it.francescofiora.tasks.message.MessageDtoRequestImpl;
 import it.francescofiora.tasks.taskexecutor.jms.JmsValidator;
 import it.francescofiora.tasks.taskexecutor.jms.errors.JmsException;
 import it.francescofiora.tasks.taskexecutor.jms.message.JmsMessage;
+import lombok.AllArgsConstructor;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class JmsValidatorImpl implements JmsValidator {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
   
   private final ObjectMapper mapper;
-
-  public JmsValidatorImpl(ObjectMapper mapper) {
-    this.mapper = mapper;
-  }
 
   @Override
   public JmsMessage validate(Object obj) {

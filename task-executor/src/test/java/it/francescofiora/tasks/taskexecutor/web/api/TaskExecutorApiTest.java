@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.core.type.TypeReference;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,7 @@ class TaskExecutorApiTest extends AbstractTestApi {
     var expected = new TaskExecutorDto();
     expected.setId(ID);
     given(taskService.findAll(any(Pageable.class)))
-        .willReturn(new PageImpl<TaskExecutorDto>(Collections.singletonList(expected)));
+        .willReturn(new PageImpl<TaskExecutorDto>(List.of(expected)));
 
     var result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
     var list = readValue(result, new TypeReference<List<TaskExecutorDto>>() {});

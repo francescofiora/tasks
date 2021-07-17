@@ -25,9 +25,7 @@ public class AbstractTaskletTest {
   void testTasklet() throws Exception {
     var tasklet = new DummyTasklet();
     assertThat(tasklet.toString(Collections.emptyMap(), KEY)).isNull();
-    assertThat(tasklet.toString(Collections.singletonMap(KEY, null), KEY)).isNull();
 
     assertThat(tasklet.getLong(Collections.emptyMap(), KEY)).isNull();
-    assertThat(tasklet.getLong(Collections.singletonMap(KEY, null), KEY)).isNull();
   }
 }

@@ -38,7 +38,7 @@ public class StrategyManagerImpl implements StrategyManager {
   @Override
   public void exec(JmsMessage message) {
     final var type = message.getRequest().getType().name();
-    var job = map.containsKey(type) ? map.get(type) : map.get(JobType.NOPE.name());
+    var job = map.getOrDefault(type, map.get(JobType.NOPE.name()));
 
     log.info("Executor - " + job.getName());
     try {

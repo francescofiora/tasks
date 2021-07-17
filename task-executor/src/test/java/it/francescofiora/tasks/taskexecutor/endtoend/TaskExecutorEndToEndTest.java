@@ -6,7 +6,7 @@ import it.francescofiora.tasks.taskexecutor.domain.Parameter;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.util.TestUtils;
-import java.util.Collections;
+import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,7 +50,7 @@ class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
   @Test
   void testGetTask() throws Exception {
     var task = TestUtils.createLongTask();
-    task.setParameters(Collections.singleton(new Parameter().name("name").value("value")));
+    task.setParameters(Set.of(new Parameter().name("name").value("value")));
     task = taskService.save(task);
     final var id = task.getId();
 

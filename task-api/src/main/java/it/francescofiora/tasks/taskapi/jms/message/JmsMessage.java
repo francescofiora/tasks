@@ -2,27 +2,16 @@ package it.francescofiora.tasks.taskapi.jms.message;
 
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public final class JmsMessage {
 
   private final MessageDtoResponse response;
   private final String jmsMessageId;
   private final Long timestamp;
-
-  /**
-   * Constructor.
-   * 
-   * @param response     MessageDtoResponse
-   * @param jmsMessageId String
-   * @param timestamp    long
-   */
-  public JmsMessage(MessageDtoResponse response, String jmsMessageId, Long timestamp) {
-    this.response = response;
-    this.jmsMessageId = jmsMessageId;
-    this.timestamp = timestamp;
-  }
 
   @Override
   public int hashCode() {

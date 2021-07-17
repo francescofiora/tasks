@@ -4,7 +4,6 @@ import it.francescofiora.tasks.taskexecutor.domain.Task;
 import java.util.Map;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.scope.context.StepContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -58,7 +57,7 @@ public abstract class AbstractTasklet implements Tasklet {
   }
 
   protected String toString(Map<String, Object> jobParameters, String key) {
-    if (!jobParameters.containsKey(key) || jobParameters.get(key) == null) {
+    if (jobParameters.get(key) == null) {
       return null;
     }
     return String.valueOf(jobParameters.get(key));

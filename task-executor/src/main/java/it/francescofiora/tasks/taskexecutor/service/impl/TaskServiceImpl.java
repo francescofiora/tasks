@@ -7,6 +7,7 @@ import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,28 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-  private final TaskMapper taskMapper;
-
   private final TaskRepository taskRepository;
   private final ParameterRepository parameterRepository;
-
-  /**
-   * Constructor.
-   *
-   * @param taskRepository TaskRepository
-   * @param parameterRepository ParameterRepository
-   * @param taskMapper TaskMapper
-   */
-  public TaskServiceImpl(TaskRepository taskRepository, ParameterRepository parameterRepository,
-      TaskMapper taskMapper) {
-    this.taskRepository = taskRepository;
-    this.parameterRepository = parameterRepository;
-    this.taskMapper = taskMapper;
-  }
+  private final TaskMapper taskMapper;
 
   @Override
   public Task save(Task task) {

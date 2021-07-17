@@ -1,6 +1,5 @@
 package it.francescofiora.tasks.taskexecutor.service;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyIterable;
@@ -16,8 +15,9 @@ import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.service.impl.TaskServiceImpl;
 import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
-import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,7 +76,7 @@ class TaskServiceTest {
   void testFindAll() throws Exception {
     Task task = new Task();
     when(taskRepository.findAll(any(Pageable.class)))
-        .thenReturn(new PageImpl<Task>(singletonList(task)));
+        .thenReturn(new PageImpl<Task>(List.of(task)));
     TaskExecutorDto expected = new TaskExecutorDto();
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
     Pageable pageable = PageRequest.of(1, 1);
@@ -108,7 +108,7 @@ class TaskServiceTest {
   void testDelete() throws Exception {
     Task task = new Task();
     task.setId(ID);
-    task.setParameters(Collections.singleton(new Parameter()));
+    task.setParameters(Set.of(new Parameter()));
     when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
 
     taskService.delete(ID);
