@@ -10,6 +10,9 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+/**
+ * Abstract Test for Repository tests.
+ */
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
 public abstract class AbstractTestRepository {

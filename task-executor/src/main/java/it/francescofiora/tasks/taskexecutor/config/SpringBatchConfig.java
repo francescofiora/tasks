@@ -8,6 +8,9 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Spring Batch Config.
+ */
 @Configuration
 @EnableBatchProcessing
 public class SpringBatchConfig {

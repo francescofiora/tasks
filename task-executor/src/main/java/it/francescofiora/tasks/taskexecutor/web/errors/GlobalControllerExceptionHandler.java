@@ -1,17 +1,18 @@
 package it.francescofiora.tasks.taskexecutor.web.errors;
 
 import it.francescofiora.tasks.taskexecutor.web.util.HeaderUtil;
-import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+/**
+ * Global Controller ExceptionHandler.
+ */
 @RestControllerAdvice
 public class GlobalControllerExceptionHandler {
 

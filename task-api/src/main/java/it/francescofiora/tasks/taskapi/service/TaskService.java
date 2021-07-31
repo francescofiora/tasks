@@ -8,6 +8,9 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * Task Service.
+ */
 public interface TaskService {
 
   /**
@@ -43,13 +46,14 @@ public interface TaskService {
 
   /**
    * Delete the "id" task.
-   * 
+   *
    * @param id the id of the entity.
    */
   void delete(Long id);
 
   /**
    * handle response.
+   *
    * @param response MessageDtoResponse
    */
   void response(MessageDtoResponse response);

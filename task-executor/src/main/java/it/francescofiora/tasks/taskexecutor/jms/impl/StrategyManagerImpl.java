@@ -14,6 +14,9 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.stereotype.Component;
 
+/**
+ * Strategy Manager Impl.
+ */
 @Component
 public class StrategyManagerImpl implements StrategyManager {
 

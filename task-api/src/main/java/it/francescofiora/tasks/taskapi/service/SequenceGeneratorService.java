@@ -1,9 +1,13 @@
 package it.francescofiora.tasks.taskapi.service;
 
+/**
+ * Sequence Generator Service.
+ */
 public interface SequenceGeneratorService {
 
   /**
-   * generate Sequence.
+   * Generate Sequence.
+   *
    * @param seqName String
    * @return long
    */

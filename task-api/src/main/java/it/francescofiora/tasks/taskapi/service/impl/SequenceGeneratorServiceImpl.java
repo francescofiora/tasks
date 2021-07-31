@@ -12,6 +12,9 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+/**
+ * Sequence Generator Service Impl.
+ */
 @Service
 @AllArgsConstructor
 public class SequenceGeneratorServiceImpl implements SequenceGeneratorService {

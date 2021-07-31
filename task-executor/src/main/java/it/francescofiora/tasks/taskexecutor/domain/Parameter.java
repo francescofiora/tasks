@@ -12,6 +12,9 @@ import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * Parameter Entity.
+ */
 @Getter
 @Setter
 @Entity

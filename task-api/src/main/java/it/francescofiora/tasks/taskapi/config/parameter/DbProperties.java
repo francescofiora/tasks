@@ -7,6 +7,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Profile;
 import org.springframework.validation.annotation.Validated;
 
+/**
+ * Db Properties.
+ */
 @Getter
 @Setter
 @Profile("!dev")

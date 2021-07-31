@@ -21,6 +21,9 @@ import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * Task Entity.
+ */
 @Getter
 @Setter
 @Entity

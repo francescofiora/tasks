@@ -86,9 +86,9 @@ class MessageDtoRequestImplTest {
 
     // @formatter:off
     assertThat(request.getParameters())
-      .hasSize(2)
-      .containsEntry(KEY, VALUE)
-      .containsEntry(KEY2, VALUE2);
+        .hasSize(2)
+        .containsEntry(KEY, VALUE)
+        .containsEntry(KEY2, VALUE2);
     // @formatter:on
   }
 }

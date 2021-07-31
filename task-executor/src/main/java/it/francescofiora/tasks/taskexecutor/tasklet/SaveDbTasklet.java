@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
 
+/**
+ * Save to Db Tasklet.
+ */
 @Component
 @AllArgsConstructor
 public class SaveDbTasklet extends AbstractTasklet {

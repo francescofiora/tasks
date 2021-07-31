@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+/**
+ * Database Configuration for Dev profile.
+ */
 @Configuration
 @Profile("dev")
 @EnableMongoRepositories("it.francescofiora.tasks.taskapi.repository")

@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Message Dto Response Impl.
+ */
 @Getter
 @Setter
 public final class MessageDtoResponseImpl extends AbstractMessageDto

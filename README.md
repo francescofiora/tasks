@@ -21,7 +21,7 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
 
 # Getting Started
 ### Using Docker to simplify development
-The purpose of this tutorial is a Producer consumer microservice, however I have inserted and a Dockerfile for MySql and phpMyAdmin + ActiveMQ Artemis + MongoDb.
+The purpose of this tutorial is a Producer consumer microservice, however I have added a Dockerfile for MySql + phpMyAdmin + ActiveMQ Artemis + MongoDb.
 
 ### Compile
     ./gradlew clean build
@@ -42,6 +42,9 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
 
 ## Dev environment
 Basic environment for development with dev profile.
+
+## compile
+    ./gradlew clean build
 
 ### Hot to execute applications
     docker-compose -f docker_dev/docker-compose.yml up
@@ -77,6 +80,21 @@ Environment with sit profile and SSL connection.
  - service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
  - service:jmx:rmi:///jndi/rmi://localhost:9998/jmxrmi
 
+## reports
+    task-api/build/reports/checkstyle/main.html
+    task-api/build/reports/checkstyle/test.html
+    task-api/build/reports/tests/test/index.html
+    task-api/build/reports/jacoco/test/html/index.html
+    task-executor/build/reports/checkstyle/main.html
+    task-executor/build/reports/checkstyle/test.html
+    task-executor/build/reports/tests/test/index.html
+    task-executor/build/reports/jacoco/test/html/index.html
+    task-message/build/reports/checkstyle/main.html
+    task-message/build/reports/checkstyle/test.html
+    task-message/build/reports/tests/test/index.html
+    task-message/build/reports/jacoco/test/html/index.html
+    
+
 # Technologies used
 - [Gradle 7.0](https://gradle.org/)
 - [Java 11](https://openjdk.java.net/projects/jdk/11/)
@@ -95,3 +113,5 @@ Environment with sit profile and SSL connection.
 - [Mockito](https://site.mockito.org/)
 - [JUnit 5](https://junit.org/junit5/)
 - [OpenPojo 0.8](https://github.com/OpenPojo)
+- [CheckStyle 8.44](https://checkstyle.sourceforge.io/)
+- [Jacoco 0.8](https://www.jacoco.org/)

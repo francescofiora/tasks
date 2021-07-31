@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Task Executor Api.
+ */
 @RestController
 @Tag(name = "task-executor", description = "Task Executor Rest API")
 @RequestMapping("/api")

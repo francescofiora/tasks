@@ -1,5 +1,8 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
+/**
+ * Jms Parameters.
+ */
 public interface JmsParameters {
 
   String JMS_MESSAGE_ID = "JmsMessageId";

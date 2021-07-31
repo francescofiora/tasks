@@ -21,6 +21,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+/**
+ * Database Configuration.
+ */
 @Configuration
 @Profile("!dev")
 @EnableMongoRepositories("it.francescofiora.tasks.taskapi.repository")

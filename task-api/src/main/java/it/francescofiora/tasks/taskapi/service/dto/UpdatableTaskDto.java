@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Updatable Task Dto.
+ */
 @Getter
 @Setter
 public class UpdatableTaskDto implements Serializable, DtoIdentifier {

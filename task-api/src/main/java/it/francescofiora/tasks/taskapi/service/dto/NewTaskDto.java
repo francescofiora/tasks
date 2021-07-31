@@ -14,6 +14,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * New Task Dto.
+ */
 @Getter
 @Setter
 public class NewTaskDto implements Serializable {

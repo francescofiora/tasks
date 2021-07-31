@@ -7,6 +7,9 @@ import org.springframework.batch.core.explore.support.JobExplorerFactoryBean;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 
+/**
+ * Batch Configurer.
+ */
 public class BatchConfigurer extends DefaultBatchConfigurer {
 
   private final DataSource dataSource;

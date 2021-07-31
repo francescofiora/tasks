@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Ref Job Dto.
+ */
 @Getter
 @Setter
 public class RefJobDto implements Serializable, DtoIdentifier {

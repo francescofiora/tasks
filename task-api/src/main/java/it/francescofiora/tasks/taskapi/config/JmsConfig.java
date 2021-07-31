@@ -15,6 +15,9 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
+/**
+ * Jms Config.
+ */
 @Configuration
 @EnableJms
 public class JmsConfig {
@@ -56,7 +59,7 @@ public class JmsConfig {
    *
    * @param connectionFactory ConnectionFactory
    * @param configurer DefaultJmsListenerContainerFactoryConfigurer
-   * @return
+   * @return Jms ListenerContainer Factory
    */
   @Bean
   public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,

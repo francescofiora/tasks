@@ -4,6 +4,9 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Ssl Properties.
+ */
 @Getter
 @Setter
 public class SslProperties {

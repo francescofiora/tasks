@@ -10,6 +10,9 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Short Job Config.
+ */
 @Configuration
 public class ShortJobConfig {
 

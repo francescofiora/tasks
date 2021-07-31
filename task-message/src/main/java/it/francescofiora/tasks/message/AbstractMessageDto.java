@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Abstract classes for all Dto Messages.
+ */
 @Getter
 @Setter
 public abstract class AbstractMessageDto implements MessageDto {

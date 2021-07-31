@@ -25,6 +25,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+/**
+ * Task Service Impl.
+ */
 @Service
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {

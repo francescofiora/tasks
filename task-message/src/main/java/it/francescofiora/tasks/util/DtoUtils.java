@@ -2,6 +2,9 @@ package it.francescofiora.tasks.util;
 
 import java.util.Objects;
 
+/**
+ * Dto Utils.
+ */
 public interface DtoUtils {
 
   /**

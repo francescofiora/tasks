@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * Jms Producer Impl.
+ */
 @Component
 public class JmsProducerImpl implements JmsProducer {
 

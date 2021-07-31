@@ -17,6 +17,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Task Executor Dto.
+ */
 @Getter
 @Setter
 public class TaskExecutorDto implements Serializable, DtoIdentifier {

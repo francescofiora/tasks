@@ -10,6 +10,9 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Nope Job Config.
+ */
 @Configuration
 public class NopeJobConfig {
 

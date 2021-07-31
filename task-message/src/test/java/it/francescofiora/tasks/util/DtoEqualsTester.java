@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.validation.rule.Rule;
 
+/**
+ * DtoEqualsTester Rule.
+ */
 public class DtoEqualsTester implements Rule {
 
   @Override

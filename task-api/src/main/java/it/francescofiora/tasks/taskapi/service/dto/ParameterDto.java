@@ -8,6 +8,9 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Parameter Dto.
+ */
 @Getter
 @Setter
 public class ParameterDto implements Serializable {

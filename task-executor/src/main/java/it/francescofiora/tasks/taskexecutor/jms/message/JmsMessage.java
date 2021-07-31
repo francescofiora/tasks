@@ -5,6 +5,9 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Jms Message.
+ */
 @Getter
 @AllArgsConstructor
 public final class JmsMessage {

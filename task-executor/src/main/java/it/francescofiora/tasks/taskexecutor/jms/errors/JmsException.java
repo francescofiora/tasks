@@ -1,5 +1,8 @@
 package it.francescofiora.tasks.taskexecutor.jms.errors;
 
+/**
+ * Jms Exception.
+ */
 public class JmsException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;

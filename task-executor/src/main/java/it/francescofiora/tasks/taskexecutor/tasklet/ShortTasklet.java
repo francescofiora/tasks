@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
 
+/**
+ * Short Tasklet.
+ */
 @Component
 @AllArgsConstructor
 public class ShortTasklet extends AbstractTasklet {

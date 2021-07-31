@@ -1,23 +1,22 @@
 package it.francescofiora.tasks.taskexecutor.jms;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * Jms Consumer.
+ */
 @Component
+@AllArgsConstructor
 public class JmsConsumer {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final JmsValidator validator;
-
   private final StrategyManager strategyManager;
-
-  public JmsConsumer(JmsValidator validator, StrategyManager strategyManager) {
-    this.validator = validator;
-    this.strategyManager = strategyManager;
-  }
 
   /**
    * Jms Listener.

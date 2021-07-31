@@ -4,6 +4,9 @@ import java.util.concurrent.CountDownLatch;
 import lombok.Getter;
 import org.springframework.jms.annotation.JmsListener;
 
+/**
+ * Listener for Test.
+ */
 public class TaskTestListener {
 
   @Getter

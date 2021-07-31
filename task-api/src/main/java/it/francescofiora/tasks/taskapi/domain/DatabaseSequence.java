@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Database Sequence Document.
+ */
 @Getter
 @Setter
 @Document(collection = "database_sequences")

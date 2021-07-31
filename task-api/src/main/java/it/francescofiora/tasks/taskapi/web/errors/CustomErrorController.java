@@ -15,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.ServletWebRequest;
 
+/**
+ * Custom ErrorController.
+ */
 @Controller
 @Hidden
 public class CustomErrorController implements ErrorController {
@@ -44,8 +47,8 @@ public class CustomErrorController implements ErrorController {
   }
 
   /**
-   * return the error in JSON format.
-   * 
+   * Return the error in JSON format.
+   *
    * @param request rest request
    * @return handle Error
    */

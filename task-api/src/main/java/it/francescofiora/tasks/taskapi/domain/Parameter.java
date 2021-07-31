@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+/**
+ * Parameter Document.
+ */
 @Getter
 @Setter
 public class Parameter implements Serializable {

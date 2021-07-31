@@ -8,6 +8,9 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
+/**
+ * Support class for Tasklet classes.
+ */
 public abstract class AbstractTasklet implements Tasklet {
 
   @Override
