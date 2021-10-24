@@ -7,12 +7,14 @@ import java.util.Objects;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Result Dto.
  */
 @Getter
 @Setter
+@ToString(callSuper = true, includeFieldNames = true)
 public class ResultDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -36,10 +38,5 @@ public class ResultDto implements Serializable {
       return false;
     }
     return Objects.equals(getValue(), ((ResultDto) obj).getValue());
-  }
-
-  @Override
-  public String toString() {
-    return "ResultDto {value=" + value + "}";
   }
 }

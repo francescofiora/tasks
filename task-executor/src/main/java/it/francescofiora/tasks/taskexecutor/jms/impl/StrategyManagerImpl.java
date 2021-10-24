@@ -7,8 +7,7 @@ import it.francescofiora.tasks.taskexecutor.jms.message.JmsMessage;
 import it.francescofiora.tasks.taskexecutor.tasklet.JmsParameters;
 import java.util.HashMap;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -17,10 +16,9 @@ import org.springframework.stereotype.Component;
 /**
  * Strategy Manager Impl.
  */
+@Slf4j
 @Component
 public class StrategyManagerImpl implements StrategyManager {
-
-  private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final Map<String, Job> map = new HashMap<>();
   private final JobLauncher jobLauncher;

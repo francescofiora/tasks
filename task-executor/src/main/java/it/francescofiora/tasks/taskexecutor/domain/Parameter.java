@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -20,6 +21,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "parameter")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@ToString(callSuper = true, includeFieldNames = true)
 public class Parameter extends AbstractDomain implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -42,10 +44,5 @@ public class Parameter extends AbstractDomain implements Serializable {
   public Parameter value(String value) {
     this.value = value;
     return this;
-  }
-
-  @Override
-  public String toString() {
-    return "Parameter {id=" + getId() + ", name=" + getName() + ", value=" + getValue() + "}";
   }
 }

@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.taskapi.jms.impl.StrategyManagerImpl;
 import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;

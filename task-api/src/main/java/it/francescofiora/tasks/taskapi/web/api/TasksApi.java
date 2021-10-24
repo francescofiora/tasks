@@ -16,8 +16,7 @@ import it.francescofiora.tasks.taskapi.web.errors.BadRequestAlertException;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,11 +31,11 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Tasks Api.
  */
+@Slf4j
 @RestController
 @Tag(name = "task", description = "Task Rest API")
 @RequestMapping("/api")
 public class TasksApi extends AbstractApi {
-  private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private static final String ENTITY_NAME = "TaskDto";
 

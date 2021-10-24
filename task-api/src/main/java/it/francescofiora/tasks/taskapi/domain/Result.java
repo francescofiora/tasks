@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  */
 @Getter
 @Setter
+@ToString(callSuper = true, includeFieldNames = true)
 public class Result implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -39,10 +41,5 @@ public class Result implements Serializable {
   @Override
   public int hashCode() {
     return Objects.hashCode(getValue());
-  }
-
-  @Override
-  public String toString() {
-    return "Result {value=" + value + "}";
   }
 }

@@ -7,12 +7,14 @@ import java.util.Objects;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Parameter Dto.
  */
 @Getter
 @Setter
+@ToString(callSuper = true, includeFieldNames = true)
 public class ParameterDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -43,10 +45,5 @@ public class ParameterDto implements Serializable {
     var other = (ParameterDto) obj;
     return Objects.equals(getName(), other.getName())
         && Objects.equals(getValue(), other.getValue());
-  }
-
-  @Override
-  public String toString() {
-    return "ParameterDto{" + "name='" + getName() + "'" + ", value='" + getValue() + "'" + "}";
   }
 }

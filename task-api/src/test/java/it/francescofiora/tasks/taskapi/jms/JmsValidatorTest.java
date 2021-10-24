@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.taskapi.jms.errors.JmsException;
 import it.francescofiora.tasks.taskapi.jms.impl.JmsValidatorImpl;
-import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
 import it.francescofiora.tasks.taskapi.util.TestUtils;
 import java.util.Date;
 import org.apache.activemq.command.ActiveMQTextMessage;

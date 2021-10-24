@@ -5,21 +5,19 @@ import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskexecutor.jms.JmsProducer;
 import java.util.Map;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
 
 /**
  * Send Msg Tasklet.
  */
+@Slf4j
 @Component
 @AllArgsConstructor
 public class SendMsgTasklet extends AbstractTasklet {
 
   public static final String NAME = "sendMsgStep";
-
-  private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final JmsProducer jmsProducer;
 

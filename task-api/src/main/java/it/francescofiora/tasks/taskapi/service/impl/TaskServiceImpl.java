@@ -19,8 +19,7 @@ import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,11 +27,10 @@ import org.springframework.stereotype.Service;
 /**
  * Task Service Impl.
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
-
-  private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private static final String ENTITY_NAME = "TaskDto";
 

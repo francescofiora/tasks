@@ -11,8 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,12 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Task Executor Api.
  */
+@Slf4j
 @RestController
 @Tag(name = "task-executor", description = "Task Executor Rest API")
 @RequestMapping("/api")
 public class TaskExecutorApi extends AbstractApi {
-
-  private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private static final String ENTITY_NAME = "TaskExecutorDto";
 

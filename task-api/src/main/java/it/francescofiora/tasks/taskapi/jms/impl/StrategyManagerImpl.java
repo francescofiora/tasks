@@ -4,18 +4,16 @@ import it.francescofiora.tasks.taskapi.jms.StrategyManager;
 import it.francescofiora.tasks.taskapi.jms.message.JmsMessage;
 import it.francescofiora.tasks.taskapi.service.TaskService;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
  * Strategy Manager Impl.
  */
+@Slf4j
 @Component
 @AllArgsConstructor
 public class StrategyManagerImpl implements StrategyManager {
-
-  private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
   private final TaskService taskService;
 

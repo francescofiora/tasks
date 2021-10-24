@@ -10,12 +10,14 @@ import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Ref Job Dto.
  */
 @Getter
 @Setter
+@ToString(callSuper = true, includeFieldNames = true)
 public class RefJobDto implements Serializable, DtoIdentifier {
 
   private static final long serialVersionUID = 1L;
@@ -38,10 +40,5 @@ public class RefJobDto implements Serializable, DtoIdentifier {
   @Override
   public boolean equals(Object obj) {
     return DtoUtils.equals(this, obj);
-  }
-
-  @Override
-  public String toString() {
-    return "RefJobDto {id=" + getId() + ", jobName=" + getJobName() + "}";
   }
 }

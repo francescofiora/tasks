@@ -13,12 +13,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * New Task Dto.
  */
 @Getter
 @Setter
+@ToString(callSuper = true, includeFieldNames = true)
 public class NewTaskDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -56,10 +58,5 @@ public class NewTaskDto implements Serializable {
     return Objects.equals(getDescription(), other.getDescription())
         && Objects.equals(getParameters(), other.getParameters())
         && Objects.equals(getType(), other.getType());
-  }
-
-  @Override
-  public String toString() {
-    return "TaskDto{description='" + getDescription() + "', type='" + getType() + "'}";
   }
 }

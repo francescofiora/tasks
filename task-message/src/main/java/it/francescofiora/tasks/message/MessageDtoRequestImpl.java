@@ -8,12 +8,14 @@ import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Message Dto Request Impl.
  */
 @Getter
 @Setter
+@ToString(callSuper = true, includeFieldNames = true)
 public final class MessageDtoRequestImpl extends AbstractMessageDto
     implements MessageDtoRequest, Serializable {
 
@@ -64,11 +66,5 @@ public final class MessageDtoRequestImpl extends AbstractMessageDto
   @Override
   public int hashCode() {
     return Objects.hashCode(getTaskId());
-  }
-
-  @Override
-  public String toString() {
-    return "MessageDtoRequestImpl [parameters=" + getParameters() + ", type=" + getType()
-        + ", taskId=" + getTaskId() + "]";
   }
 }

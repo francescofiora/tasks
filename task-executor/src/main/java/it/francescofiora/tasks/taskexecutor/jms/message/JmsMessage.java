@@ -4,12 +4,14 @@ import it.francescofiora.tasks.message.MessageDtoRequest;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Jms Message.
  */
 @Getter
 @AllArgsConstructor
+@ToString(callSuper = true, includeFieldNames = true)
 public final class JmsMessage {
 
   private final MessageDtoRequest request;
@@ -30,11 +32,5 @@ public final class JmsMessage {
       return false;
     }
     return Objects.equals(getJmsMessageId(), ((JmsMessage) obj).getJmsMessageId());
-  }
-
-  @Override
-  public String toString() {
-    return "JmsMessage {request=" + getRequest() + ", jmsMessageId=" + getJmsMessageId()
-        + ", timestamp=" + getTimestamp() + "}";
   }
 }
