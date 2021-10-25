@@ -2,7 +2,7 @@ version: '3'
 services:
 
   tasks-mongodb:
-    image: mongo:4.4.4
+    image: mongo:5.0.3
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=secret
@@ -31,7 +31,7 @@ services:
       - "8161:8161"
 
   tasks-mysql:
-    image: mysql:8.0.23
+    image: mysql:8.0.27
     environment:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
@@ -43,7 +43,7 @@ services:
       - "3306:3306"
 
   tasks-myadmin:
-    image: phpmyadmin/phpmyadmin:5.1.0
+    image: phpmyadmin/phpmyadmin:5.1.1
     environment:
       - PMA_HOST=tasks-mysql
       - PMA_USER=root
@@ -55,7 +55,7 @@ services:
       - "8080:80"
 
   tasks-api:
-    image: azul/zulu-openjdk-alpine:11
+    image: azul/zulu-openjdk-alpine:17
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
       - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
@@ -71,7 +71,7 @@ services:
       - tasks-activemq
 
   task-executor:
-    image: azul/zulu-openjdk-alpine:11
+    image: azul/zulu-openjdk-alpine:17
     environment:
       - "SPRING_PROFILES_ACTIVE=sit"
       - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"

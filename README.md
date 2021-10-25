@@ -33,10 +33,12 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
  - Download Apache Artemis (https://activemq.apache.org/components/artemis/download/)
     tar xvzf apache-artemis-2.17.0-bin.tar.gz apache-artemis-2.17.0
  - Download files from (https://github.com/apache/activemq-artemis/tree/master/artemis-docker)
+
     ./prepare-docker.sh apache-artemis-2.17.0
     cd apache-artemis-2.17.0
     chmod +x docker/docker-run.sh
     docker build -f ./docker/Dockerfile-debian -t artemis-debian .
+
  - Check image created
     docker image ls artemis-debian
 
