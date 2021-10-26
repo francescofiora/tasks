@@ -1,6 +1,10 @@
 package it.francescofiora.tasks.taskexecutor.tasklet.job;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
@@ -16,7 +20,6 @@ import java.util.HashMap;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
@@ -70,7 +73,7 @@ class LongJobTest {
     assertThat(jobExecution.getExitStatus().getExitCode())
         .isEqualTo(ExitStatus.FAILED.getExitCode());
   }
-  
+
   @Configuration
   @Import({SpringBatchConfig.class, LongJobConfig.class, SaveDbTasklet.class})
   static class BatchConfiguration {
@@ -80,18 +83,18 @@ class LongJobTest {
 
     @Bean
     public TaskService taskService() {
-      var taskService = Mockito.mock(TaskService.class);
+      var taskService = mock(TaskService.class);
       var task = new Task();
       task.setId(ID);
-      Mockito.when(taskService.save(Mockito.any(Task.class))).thenReturn(task);
-      
+      when(taskService.save(any(Task.class))).thenReturn(task);
+
       var taskInProgress = new Task();
       taskInProgress.setId(ID);
       taskInProgress.setStatus(TaskStatus.IN_PROGRESS);
 
-      Mockito.when(taskService.findByTaskRef(Mockito.eq(TASK_REF_IN_PROGRESS)))
+      when(taskService.findByTaskRef(eq(TASK_REF_IN_PROGRESS)))
           .thenReturn(Optional.of(taskInProgress));
-      
+
       return taskService;
     }
 

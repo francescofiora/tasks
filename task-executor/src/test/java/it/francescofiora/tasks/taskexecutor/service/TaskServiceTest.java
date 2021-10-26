@@ -21,7 +21,6 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Spy;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,10 +36,10 @@ class TaskServiceTest {
 
   private TaskService taskService;
 
-  @Spy
+  @MockBean
   private ParameterRepository parameterRepositor;
 
-  @Spy
+  @MockBean
   private TaskRepository taskRepository;
 
   @MockBean

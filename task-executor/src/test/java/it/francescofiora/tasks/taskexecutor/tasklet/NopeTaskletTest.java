@@ -1,19 +1,18 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 
 import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
 import it.francescofiora.tasks.taskexecutor.config.job.NopeJobConfig;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -54,7 +53,7 @@ class NopeTaskletTest {
     var jobExecution = jobLauncherTestUtils.launchStep(NopeTasklet.NAME, new ExecutionContext(map));
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
 
-    Mockito.verify(taskService).save(Mockito.eq(task));
+    verify(taskService).save(eq(task));
   }
 
   @Configuration

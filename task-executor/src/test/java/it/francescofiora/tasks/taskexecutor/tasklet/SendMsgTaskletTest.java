@@ -1,6 +1,8 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
@@ -11,7 +13,6 @@ import it.francescofiora.tasks.taskexecutor.jms.JmsProducer;
 import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -59,7 +60,7 @@ class SendMsgTaskletTest {
     assertThat(jobExecution).isNotNull();
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
 
-    Mockito.verify(jmsProducer).send(Mockito.any(MessageDtoResponse.class));
+    verify(jmsProducer).send(any(MessageDtoResponse.class));
   }
 
   @Configuration

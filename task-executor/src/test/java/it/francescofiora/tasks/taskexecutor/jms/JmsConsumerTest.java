@@ -3,7 +3,6 @@ package it.francescofiora.tasks.taskexecutor.jms;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -94,7 +93,7 @@ class JmsConsumerTest {
 
     @Bean
     public StrategyManager strategyManager() {
-      return spy(mock(StrategyManager.class));
+      return mock(StrategyManager.class);
     }
 
     @Bean

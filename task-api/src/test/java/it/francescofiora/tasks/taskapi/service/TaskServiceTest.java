@@ -6,13 +6,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import it.francescofiora.tasks.message.MessageDtoRequest;
 import it.francescofiora.tasks.message.MessageDtoRequestImpl;
-import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.taskapi.domain.Task;
@@ -32,7 +30,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -58,16 +55,13 @@ class TaskServiceTest {
   @MockBean
   private JmsProducer jmsProducer;
 
-  private JmsProducer spyJmsProducer;
-
   /**
    * Set up.
    */
   @BeforeEach
   void setUp() {
-    spyJmsProducer = spy(jmsProducer);
     taskService =
-        new TaskServiceImpl(taskRepository, taskMapper, sequenceGenerator, spyJmsProducer);
+        new TaskServiceImpl(taskRepository, taskMapper, sequenceGenerator, jmsProducer);
   }
 
   @Test
@@ -84,7 +78,7 @@ class TaskServiceTest {
     var actual = taskService.create(taskDto);
     assertThat(actual).isEqualTo(expected);
 
-    verify(spyJmsProducer).send(any(MessageDtoRequestImpl.class));
+    verify(jmsProducer).send(any(MessageDtoRequestImpl.class));
   }
 
   @Test

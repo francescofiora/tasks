@@ -1,6 +1,8 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 
 import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
 import it.francescofiora.tasks.taskexecutor.config.job.ShortJobConfig;
@@ -9,7 +11,6 @@ import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -53,7 +54,7 @@ class ShortTaskletTest {
         jobLauncherTestUtils.launchStep(ShortTasklet.NAME, new ExecutionContext(map));
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
 
-    Mockito.verify(taskService).save(Mockito.eq(task));
+    verify(taskService).save(eq(task));
   }
 
   @Configuration
