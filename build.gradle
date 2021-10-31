@@ -40,6 +40,7 @@ subprojects {
          'checkstyle.cache.file': "${buildDir}/checkstyle.cache",
     ]
   }
+
   tasks.withType(Checkstyle) {
     reports {
       xml.enabled = false

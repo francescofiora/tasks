@@ -48,6 +48,9 @@ Basic environment for development with dev profile.
 ## compile
     ./gradlew clean build
 
+## Dependency-Check
+    ./gradlew dependencyCheckAnalyze --info
+
 ### Hot to execute applications
     docker-compose -f docker_dev/docker-compose.yml up
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
@@ -87,14 +90,17 @@ Environment with sit profile and SSL connection.
     task-api/build/reports/checkstyle/test.html
     task-api/build/reports/tests/test/index.html
     task-api/build/reports/jacoco/test/html/index.html
+    task-api/build/reports/dependency-check-report.html
     task-executor/build/reports/checkstyle/main.html
     task-executor/build/reports/checkstyle/test.html
     task-executor/build/reports/tests/test/index.html
     task-executor/build/reports/jacoco/test/html/index.html
+    task-executor/build/reports/dependency-check-report.html
     task-message/build/reports/checkstyle/main.html
     task-message/build/reports/checkstyle/test.html
     task-message/build/reports/tests/test/index.html
     task-message/build/reports/jacoco/test/html/index.html
+    task-message/build/reports/dependency-check-report.html
     
 
 # Technologies used
@@ -116,4 +122,5 @@ Environment with sit profile and SSL connection.
 - [JUnit 5](https://junit.org/junit5/)
 - [OpenPojo 0.8](https://github.com/OpenPojo)
 - [CheckStyle 8.44](https://checkstyle.sourceforge.io/)
+- [Owasp Dependency Check 6.2](https://owasp.org/www-project-dependency-check/)
 - [Jacoco 0.8](https://www.jacoco.org/)

@@ -1,5 +1,6 @@
 plugins {
 	id 'java-library'
+  id 'org.owasp.dependencycheck' version '6.2.2'
 }
 
 def lombok_version = parent.property('lombok.version')
