@@ -47,7 +47,7 @@ public class JmsConfig {
   public ConnectionFactory connectionFactory(JmsProperties properties) throws Exception {
     var factory = new ActiveMQSslConnectionFactory(properties.getBrokerUrl());
     factory.setTrustStore(properties.getSsl().getTrustStorePath());
-    factory.setTrustStorePassword(properties.getSsl().getKeyStorePass());
+    factory.setTrustStorePassword(properties.getSsl().getTrustStorePass());
     factory.setKeyStore(properties.getSsl().getKeyStorePath());
     factory.setKeyStorePassword(properties.getSsl().getKeyStorePass());
     factory.setUserName(properties.getUser());
