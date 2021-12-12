@@ -35,7 +35,7 @@ public interface HeaderUtil {
   }
 
   /**
-   * Create Entity Update Alert.
+   * Create Entity Patch Alert.
    *
    * @param entityName the entity name
    * @param param the parameter

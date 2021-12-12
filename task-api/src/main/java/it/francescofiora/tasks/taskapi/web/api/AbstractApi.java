@@ -43,7 +43,7 @@ public abstract class AbstractApi {
   /**
    * Create a ResponseEntity of a PATCH action.
    *
-   * @param id the id of the resource updated
+   * @param id the id of the resource
    * @return ResponseEntity
    */
   protected ResponseEntity<Void> patchResponse(final Long id) {
