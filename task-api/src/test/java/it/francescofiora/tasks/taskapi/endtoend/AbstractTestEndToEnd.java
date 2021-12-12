@@ -78,6 +78,11 @@ public class AbstractTestEndToEnd {
     return restTemplate.postForEntity(new URI(getPath(path)), request, Void.class);
   }
 
+  protected <T> ResponseEntity<Void> performPatch(String path, T body) throws Exception {
+    var request = new HttpEntity<>(body, createHttpHeaders());
+    return restTemplate.exchange(getPath(path), HttpMethod.PATCH, request, Void.class);
+  }
+
   private void checkHeaders(HttpHeaders headers, String alert, String param) {
     assertThat(headers).containsKeys(HeaderUtil.X_ALERT, HeaderUtil.X_PARAMS);
     assertThat(headers.get(HeaderUtil.X_ALERT)).contains(alert);
@@ -95,9 +100,22 @@ public class AbstractTestEndToEnd {
     return id;
   }
 
+  protected <T> void patch(String path, T body, String alert, String param) throws Exception {
+    var result = performPatch(path, body);
+    checkHeaders(result.getHeaders(), alert, param);
+    assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+  }
+
   protected <T> void assertCreateBadRequest(String path, T body, String alert, String param)
       throws Exception {
     var result = performPost(path, body);
+    checkHeadersError(result.getHeaders(), alert, param);
+    assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+  }
+
+  protected <T> void assertPatchBadRequest(String path, T body, String alert, String param)
+      throws Exception {
+    var result = performPatch(path, body);
     checkHeadersError(result.getHeaders(), alert, param);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }

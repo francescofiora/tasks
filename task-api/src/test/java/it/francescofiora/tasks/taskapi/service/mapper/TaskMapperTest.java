@@ -1,6 +1,7 @@
 package it.francescofiora.tasks.taskapi.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import it.francescofiora.tasks.taskapi.domain.Task;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,8 @@ class TaskMapperTest {
     assertThat(taskMapper.toDto(null)).isNull();
 
     assertThat(taskMapper.toEntity(null)).isNull();
+
+    assertDoesNotThrow(() -> taskMapper.updateEntityFromDto(null, new Task()));
   }
 
   @Test
