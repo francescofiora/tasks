@@ -1,40 +1,45 @@
 plugins {
-  id 'org.springframework.boot' version '2.5.6'
+  id 'org.springframework.boot' version '2.6.1'
   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-  id 'info.solidsoft.pitest' version '1.5.1'
+  id 'info.solidsoft.pitest' version '1.7.0'
   id 'org.owasp.dependencycheck' version '6.2.2'
 }
 
 def springdoc_openapi_version = parent.property('springdoc-openapi.version')
 def mapstruct_version = parent.property('mapstruct.version')
 def lombok_version = parent.property('lombok.version')
+def logback_version = parent.property('logback.version')
+def log4j_version = parent.property('log4j.version')
 def openpojo_version = parent.property('openpojo.version')
 def apache_httpclient_version = parent.property('apache-httpclient.version')
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
   implementation 'org.springframework.boot:spring-boot-starter-activemq'
-	implementation 'org.springframework.boot:spring-boot-devtools'
+  implementation 'org.springframework.boot:spring-boot-devtools'
 
-	implementation "org.springdoc:springdoc-openapi-ui:${springdoc_openapi_version}"
-	implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
+  implementation "org.springdoc:springdoc-openapi-ui:${springdoc_openapi_version}"
+  implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
 
-	implementation 'org.messaginghub:pooled-jms'
+  implementation 'org.messaginghub:pooled-jms'
+
+  implementation "org.apache.logging.log4j:log4j-api:${log4j_version}"
+  implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4j_version}"
 
   implementation "org.projectlombok:lombok:${lombok_version}"
-	implementation "org.mapstruct:mapstruct:${mapstruct_version}"
+  implementation "org.mapstruct:mapstruct:${mapstruct_version}"
 
-	annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+  annotationProcessor "org.projectlombok:lombok:${lombok_version}"
   annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
-  
+
   implementation project(':task-message')
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.springframework.security:spring-security-test'
+  testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.2.3'
   testImplementation "com.openpojo:openpojo:$openpojo_version"
   testImplementation "org.projectlombok:lombok:${lombok_version}"
   testImplementation "org.apache.httpcomponents:httpclient:${apache_httpclient_version}"
@@ -43,7 +48,7 @@ dependencies {
 }
 
 springBoot {
-    mainClassName = "it.francescofiora.tasks.taskapi.Application"
+  mainClass.set("it.francescofiora.tasks.taskapi.Application")
 }
 
 eclipse {
@@ -58,7 +63,7 @@ eclipse {
 
 pitest {
   timestampedReports = false
-  junit5PluginVersion = '0.12'
+  junit5PluginVersion = '0.15'
 }
 
 dependencyCheck {
@@ -70,5 +75,5 @@ dependencyCheck {
 }
 
 bootBuildImage {
-	imageName = "francescofiora.it/library/${project.name}:${project.version}"
+  imageName = "francescofiora.it/library/${project.name}:${project.version}"
 }

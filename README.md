@@ -31,11 +31,11 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
 
 ### Create artemis-debian image
  - Download Apache Artemis (https://activemq.apache.org/components/artemis/download/)
-    tar xvzf apache-artemis-2.17.0-bin.tar.gz apache-artemis-2.17.0
+    tar xvzf apache-artemis-2.20.0-bin.tar.gz apache-artemis-2.20.0
  - Download files from (https://github.com/apache/activemq-artemis/tree/master/artemis-docker)
 
-    ./prepare-docker.sh apache-artemis-2.17.0
-    cd apache-artemis-2.17.0
+    ./prepare-docker.sh apache-artemis-2.20.0
+    cd apache-artemis-2.20.0
     chmod +x docker/docker-run.sh
     docker build -f ./docker/Dockerfile-debian -t artemis-debian .
 
@@ -61,10 +61,12 @@ Basic environment for development with dev profile.
 
 it could be possible run applications using Eclipse 
 
- - http://localhost:8081/tasks-api/swagger-ui.html
- - http://localhost:8082/tasks-executor/swagger-ui.html
- - http://localhost:8080/
- - http://localhost:8161/console/login
+**Links**
+ - http://localhost:8081/tasks-api/swagger-ui.html (Tasks-Api)
+ - http://localhost:8082/tasks-executor/swagger-ui.html (Tasks-Executor)
+ - http://localhost:8080/ (PhpMyAdmin)
+ - http://localhost:8085/ (Mongo Express)
+ - http://localhost:8161/console/login (ActiveMQ)
 
 ### Debug Support
 java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
@@ -80,6 +82,7 @@ Environment with sit profile and SSL connection.
 ### Hot to execute applications
     docker-compose -f docker/docker-compose.yml up
 
+**Links**
  - https://localhost:8081/tasks-api/swagger-ui.html (Tasks-Api)
  - https://localhost:8082/tasks-executor/swagger-ui.html (Tasks-Executor)
  - http://localhost:8080/ (PhpMyAdmin)
@@ -112,11 +115,11 @@ Environment with sit profile and SSL connection.
 # Technologies used
 - [Gradle 7.0](https://gradle.org/)
 - [Java 11](https://openjdk.java.net/projects/jdk/11/)
-- [Spring Boot 2.5](https://spring.io/projects/spring-boot)
+- [Spring Boot 2.6](https://spring.io/projects/spring-boot)
 - [Spring Batch 4.2](https://spring.io/projects/spring-batch)
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Swagger OpeApi 3.0](https://swagger.io/specification/)
-- [Mapstruct 1.3](https://mapstruct.org/)
+- [Mapstruct 1.4](https://mapstruct.org/)
 - [Lombok 1.18](https://projectlombok.org/)
 - [Spring Data JPA](https://projects.spring.io/spring-data-jpa)
 - [Spring Data MongoDb](https://spring.io/projects/spring-data-mongodb)
@@ -126,8 +129,8 @@ Environment with sit profile and SSL connection.
 - [LogBack 1.2](https://logback.qos.ch/)
 - [Mockito](https://site.mockito.org/)
 - [JUnit 5](https://junit.org/junit5/)
-- [OpenPojo 0.8](https://github.com/OpenPojo)
+- [OpenPojo 0.9](https://github.com/OpenPojo)
 - [CheckStyle 8.44](https://checkstyle.sourceforge.io/)
 - [Owasp Dependency Check 6.2](https://owasp.org/www-project-dependency-check/)
 - [Jacoco 0.8](https://www.jacoco.org/)
-- [Pitest 1.5](https://pitest.org/)
+- [Pitest 1.7](https://pitest.org/)

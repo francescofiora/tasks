@@ -27,12 +27,6 @@ subprojects {
   group = rootProject.group
   version = rootProject.version
     
-  tasks.withType(JavaCompile) {
-    options.compilerArgs = [
-       '-Amapstruct.defaultComponentModel=spring'
-    ]
-  }
-
   checkstyle {
     toolVersion property('checkstyle.version')
     configFile  rootProject.file("config/checkstyle/checkstyle.xml")
