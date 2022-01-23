@@ -1,5 +1,5 @@
 plugins {
-  id 'org.springframework.boot' version '2.6.1'
+  id 'org.springframework.boot' version '2.6.2'
   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
   id 'info.solidsoft.pitest' version '1.7.0'
   id 'org.owasp.dependencycheck' version '6.2.2'
@@ -12,6 +12,7 @@ def logback_version = parent.property('logback.version')
 def log4j_version = parent.property('log4j.version')
 def openpojo_version = parent.property('openpojo.version')
 def apache_httpclient_version = parent.property('apache-httpclient.version')
+def mongo_version = parent.property('mongo.version')
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -39,7 +40,7 @@ dependencies {
 
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'org.springframework.security:spring-security-test'
-  testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.2.3'
+  testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${mongo_version}"
   testImplementation "com.openpojo:openpojo:$openpojo_version"
   testImplementation "org.projectlombok:lombok:${lombok_version}"
   testImplementation "org.apache.httpcomponents:httpclient:${apache_httpclient_version}"

@@ -1,0 +1,50 @@
+errorPath: /error
+
+server:
+  port: 8081
+  servlet:
+    context-path: /tasks-api
+  error:
+    path: errorPath
+  ssl:
+    key-store: file:${KEYSTORE_FILE}
+    key-store-password: ${KEYSTORE_PASSWORD}
+    enabled: ${SSL_ENABLED:false}
+
+spring:
+  profiles:
+    active: dev
+  security:
+    user:
+      name: ${APP_USER:user}
+      password: ${APP_PASSWORD:password}
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://root:secret@localhost:27017}
+      database: tasks
+      keystorefile: ${KEYSTORE_FILE}
+      keystorepassword: ${KEYSTORE_PASSWORD}
+      truststorefile: ${TRUSTSTORE_FILE}
+      truststorepassword: ${TRUSTSTORE_PASSWORD}
+  activemq:
+    in-memory: false
+    broker-url: ${BROKER_URL:tcp://localhost:61616}
+    user: ${BROKER_USER:artemis}
+    password: ${BROKER_PASSWORD:artemis}
+    pool:
+      enabled: true
+      max-connections: 10
+    ssl:
+      keyStorePath: ${KEYSTORE_FILE}
+      keyStorePass: ${KEYSTORE_PASSWORD}
+      trustStorePath: ${TRUSTSTORE_FILE}
+      trustStorePass: ${TRUSTSTORE_PASSWORD}
+
+activemq:
+  queue:
+    request: QUEUE_REQUEST
+    response: QUEUE_RESPONSE
+
+endpoints:
+  jmx:
+    enabled: true
