@@ -76,8 +76,7 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
         get(TASKS_URI, PageRequest.of(1, 1), TaskDto[].class, ALERT_GET, PARAM_PAGE_20);
     assertThat(taskDtoArr).isNotEmpty();
     var option = Stream.of(taskDtoArr).filter(task -> task.getId().equals(id)).findAny();
-    assertThat(option).isPresent();
-    assertThat(option.get()).isEqualTo(taskDto);
+    assertThat(option).isPresent().contains(taskDto);
 
     var updatabletaskDto = TestUtils.createUpdatableTaskDto(id);
     patch(tasksIdUri, updatabletaskDto, ALERT_PATCHED, String.valueOf(id));

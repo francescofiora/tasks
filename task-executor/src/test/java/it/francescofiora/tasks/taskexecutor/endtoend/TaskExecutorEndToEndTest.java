@@ -70,8 +70,7 @@ class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
         get(TASKS_URI, PageRequest.of(1, 1), TaskExecutorDto[].class, ALERT_GET, PARAM_PAGE_20);
     assertThat(taskDtoArr).isNotEmpty();
     var option = Stream.of(taskDtoArr).filter(tsk -> tsk.getId().equals(id)).findAny();
-    assertThat(option).isPresent();
-    assertThat(option.get()).isEqualTo(taskDto);
+    assertThat(option).isPresent().contains(taskDto);
 
     delete(tasksIdUri, ALERT_DELETED, String.valueOf(id));
 

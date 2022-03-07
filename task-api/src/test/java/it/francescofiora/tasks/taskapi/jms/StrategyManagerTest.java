@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskapi.jms;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;

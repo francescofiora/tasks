@@ -21,13 +21,13 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /**
- * Database Configuration.
+ * Database Configuration for SSL connection.
  */
 @Slf4j
 @Configuration
-@Profile("!dev")
+@Profile("sslDB")
 @EnableMongoRepositories("it.francescofiora.tasks.taskapi.repository")
-public class DatabaseConfiguration extends AbstractMongoClientConfiguration {
+public class DatabaseSslConfig extends AbstractMongoClientConfiguration {
 
   @Autowired
   private DbProperties dbProperties;

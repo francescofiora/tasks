@@ -44,4 +44,14 @@ public class Task extends AbstractDomain implements Serializable {
 
   @Field("result")
   private Result result;
+
+  @Override
+  public boolean equals(Object obj) {
+    return super.equals(obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
 }

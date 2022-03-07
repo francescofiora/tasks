@@ -15,7 +15,7 @@ public abstract class AbstractApi {
 
   private final String entityName;
 
-  public AbstractApi(String entityName) {
+  protected AbstractApi(String entityName) {
     this.entityName = entityName;
   }
 

@@ -1,16 +1,19 @@
 package it.francescofiora.tasks.taskapi.web.util;
 
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpHeaders;
 
 /**
  * Header Util.
  */
-public interface HeaderUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class HeaderUtil {
 
-  String X_ALERT = "X-alert";
-  String X_ERROR = "X-error";
-  String X_PARAMS = "X-params";
+  public static final String X_ALERT = "X-alert";
+  public static final String X_ERROR = "X-error";
+  public static final String X_PARAMS = "X-params";
 
   /**
    * Create Entity Creation Alert.
@@ -19,7 +22,7 @@ public interface HeaderUtil {
    * @param param the parameter
    * @return HttpHeaders
    */
-  static HttpHeaders createEntityCreationAlert(String entityName, String param) {
+  public static HttpHeaders createEntityCreationAlert(String entityName, String param) {
     return createAlert(entityName + ".created", param);
   }
 
@@ -30,7 +33,7 @@ public interface HeaderUtil {
    * @param param the parameter
    * @return HttpHeaders
    */
-  static HttpHeaders createEntityGetAlert(String entityName, String param) {
+  public static HttpHeaders createEntityGetAlert(String entityName, String param) {
     return createAlert(entityName + ".get", param);
   }
 
@@ -41,7 +44,7 @@ public interface HeaderUtil {
    * @param param the parameter
    * @return HttpHeaders
    */
-  static HttpHeaders createEntityPatchAlert(String entityName, String param) {
+  public static HttpHeaders createEntityPatchAlert(String entityName, String param) {
     return createAlert(entityName + ".patched", param);
   }
 
@@ -52,7 +55,7 @@ public interface HeaderUtil {
    * @param param the parameter
    * @return HttpHeaders
    */
-  static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
+  public static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
     return createAlert(entityName + ".deleted", param);
   }
 
@@ -64,7 +67,7 @@ public interface HeaderUtil {
    * @param errorMessage the error message
    * @return HttpHeaders
    */
-  static HttpHeaders createFailureAlert(String alert, String param, String errorMessage) {
+  public static HttpHeaders createFailureAlert(String alert, String param, String errorMessage) {
     var headers = new HttpHeaders();
     headers.add(X_ALERT, alert);
     headers.add(X_PARAMS, param);
@@ -80,7 +83,8 @@ public interface HeaderUtil {
    * @param errorMessage the error message
    * @return HttpHeaders
    */
-  static HttpHeaders createFailureAlert(String alert, List<String> params, String errorMessage) {
+  public static HttpHeaders createFailureAlert(String alert, List<String> params,
+      String errorMessage) {
     var headers = new HttpHeaders();
     headers.add(X_ALERT, alert);
     headers.addAll(X_PARAMS, params);
@@ -95,7 +99,7 @@ public interface HeaderUtil {
    * @param param the parameter
    * @return HttpHeaders
    */
-  static HttpHeaders createAlert(String alert, String param) {
+  public static HttpHeaders createAlert(String alert, String param) {
     var headers = new HttpHeaders();
     headers.add(X_ALERT, alert);
     headers.add(X_PARAMS, param);

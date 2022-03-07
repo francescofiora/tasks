@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /**
- * Database Configuration for Dev profile.
+ * Database Configuration.
  */
 @Configuration
-@Profile("dev")
+@Profile("!sslDB")
 @EnableMongoRepositories("it.francescofiora.tasks.taskapi.repository")
 @Import(value = MongoAutoConfiguration.class)
-public class DatabaseConfigurationDev {
+public class DatabaseConfig {
 
 }
