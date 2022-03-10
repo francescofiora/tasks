@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * Database Configuration.
  */
 @Configuration
-@Profile("!sslDB")
+@Profile("!MongoSsl")
 @EnableMongoRepositories("it.francescofiora.tasks.taskapi.repository")
 @Import(value = MongoAutoConfiguration.class)
 public class DatabaseConfig {

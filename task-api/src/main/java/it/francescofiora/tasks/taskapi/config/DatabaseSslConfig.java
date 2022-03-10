@@ -25,7 +25,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  */
 @Slf4j
 @Configuration
-@Profile("sslDB")
+@Profile("MongoSsl")
 @EnableMongoRepositories("it.francescofiora.tasks.taskapi.repository")
 public class DatabaseSslConfig extends AbstractMongoClientConfiguration {
 

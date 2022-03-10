@@ -57,7 +57,7 @@ services:
   tasks-api:
     image: azul/zulu-openjdk-alpine:17
     environment:
-      - "SPRING_PROFILES_ACTIVE=sslDB"
+      - "SPRING_PROFILES_ACTIVE=MongoSsl,AmqSsl"
       - "SSL_ENABLED=true"
       - "KEYSTORE_PASSWORD=mypass"
       - "KEYSTORE_FILE=/workspace/config/tasks-api-keystore.jks"

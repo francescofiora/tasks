@@ -14,11 +14,14 @@ import it.francescofiora.tasks.taskapi.domain.Task;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * Utility for testing.
  */
-public interface TestUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class TestUtils {
 
   /**
    * Create an example of Parameter.
@@ -27,7 +30,7 @@ public interface TestUtils {
    * @param value the value of Parameter
    * @return Parameter
    */
-  static Parameter createParameter(final String name, final String value) {
+  public static Parameter createParameter(final String name, final String value) {
     var parameter = new Parameter();
     parameter.setName(name);
     parameter.setValue(value);
@@ -39,7 +42,7 @@ public interface TestUtils {
    *
    * @return NewTaskDto
    */
-  static NewTaskDto createNewTaskDto() {
+  public static NewTaskDto createNewTaskDto() {
     var taskDto = new NewTaskDto();
     taskDto.setDescription("Description");
     taskDto.setType(TaskType.LONG);
@@ -52,7 +55,7 @@ public interface TestUtils {
    *
    * @return ParameterDto
    */
-  static ParameterDto createParameterDto() {
+  public static ParameterDto createParameterDto() {
     var parameterDto = new ParameterDto();
     parameterDto.setName("Name");
     parameterDto.setValue("Value");
@@ -64,7 +67,7 @@ public interface TestUtils {
    *
    * @return UpdatableTaskDto
    */
-  static UpdatableTaskDto createUpdatableTaskDto(Long id) {
+  public static UpdatableTaskDto createUpdatableTaskDto(Long id) {
     var taskDto = new UpdatableTaskDto();
     taskDto.setId(id);
     taskDto.setDescription("Description updated");
@@ -77,7 +80,7 @@ public interface TestUtils {
    * @param id ID
    * @return Task
    */
-  static Task createTask1(final Long id) {
+  public static Task createTask1(final Long id) {
     var task = new Task();
     task.setId(id);
     task.setDescription("first");
@@ -94,7 +97,7 @@ public interface TestUtils {
    * @param id ID
    * @return Task
    */
-  static Task createTask2(final Long id) {
+  public static Task createTask2(final Long id) {
     var task = new Task();
     task.setId(id);
     task.setDescription("second");
@@ -111,7 +114,7 @@ public interface TestUtils {
    * @param id ID
    * @return Task
    */
-  static Task createTask3(final Long id) {
+  public static Task createTask3(final Long id) {
     var task = new Task();
     task.setId(id);
     task.setDescription("third");
@@ -127,7 +130,7 @@ public interface TestUtils {
    *
    * @return MessageDtoRequest
    */
-  static MessageDtoRequest createMessageDtoRequest() {
+  public static MessageDtoRequest createMessageDtoRequest() {
     // @formatter:off
     return new MessageDtoRequestImpl()
         .taskId(1L)
@@ -141,7 +144,7 @@ public interface TestUtils {
    *
    * @return MessageDtoResponse
    */
-  static MessageDtoResponse createMessageDtoResponse() {
+  public static MessageDtoResponse createMessageDtoResponse() {
     // @formatter:off
     return new MessageDtoResponseImpl()
         .taskId(1L)
@@ -157,7 +160,7 @@ public interface TestUtils {
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
    */
-  static void checkEqualHashAndToString(final Object obj1, final Object obj2) {
+  public static void checkEqualHashAndToString(final Object obj1, final Object obj2) {
     assertThat(obj1.equals(obj2)).isTrue();
     assertThat(obj1.hashCode()).isEqualTo(obj2.hashCode());
     assertThat(obj1.toString()).isEqualTo(obj2.toString());
@@ -169,7 +172,7 @@ public interface TestUtils {
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
    */
-  static void checkNotEqualHashAndToString(final Object obj1, final Object obj2) {
+  public static void checkNotEqualHashAndToString(final Object obj1, final Object obj2) {
     assertThat(obj1.equals(obj2)).isFalse();
     assertThat(obj1.hashCode()).isNotEqualTo(obj2.hashCode());
     assertThat(obj1.toString()).isNotEqualTo(obj2.toString());

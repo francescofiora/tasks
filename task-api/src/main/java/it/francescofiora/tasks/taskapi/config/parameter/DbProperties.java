@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @Getter
 @Setter
-@Profile("sslDB")
+@Profile("MongoSsl")
 @Validated
 @ConfigurationProperties(prefix = "spring.data.mongodb")
 public class DbProperties {
