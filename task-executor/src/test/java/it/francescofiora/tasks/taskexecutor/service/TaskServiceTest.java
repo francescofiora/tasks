@@ -2,7 +2,6 @@ package it.francescofiora.tasks.taskexecutor.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyIterable;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -10,7 +9,6 @@ import static org.mockito.Mockito.when;
 
 import it.francescofiora.tasks.taskexecutor.domain.Parameter;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
-import it.francescofiora.tasks.taskexecutor.repository.ParameterRepository;
 import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import it.francescofiora.tasks.taskexecutor.service.impl.TaskServiceImpl;
@@ -37,9 +35,6 @@ class TaskServiceTest {
   private TaskService taskService;
 
   @MockBean
-  private ParameterRepository parameterRepositor;
-
-  @MockBean
   private TaskRepository taskRepository;
 
   @MockBean
@@ -47,7 +42,7 @@ class TaskServiceTest {
 
   @BeforeEach
   void setUp() {
-    taskService = new TaskServiceImpl(taskRepository, parameterRepositor, taskMapper);
+    taskService = new TaskServiceImpl(taskRepository, taskMapper);
   }
 
   @Test
@@ -112,7 +107,6 @@ class TaskServiceTest {
 
     taskService.delete(ID);
     verify(taskRepository).deleteById(eq(ID));
-    verify(parameterRepositor).deleteAll(eq(task.getParameters()));
   }
 
   @Test
@@ -121,6 +115,5 @@ class TaskServiceTest {
 
     taskService.delete(ID);
     verify(taskRepository, times(0)).deleteById(eq(ID));
-    verify(parameterRepositor, times(0)).deleteAll(anyIterable());
   }
 }

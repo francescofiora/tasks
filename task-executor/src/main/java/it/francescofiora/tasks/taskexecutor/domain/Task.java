@@ -1,26 +1,25 @@
 package it.francescofiora.tasks.taskexecutor.domain;
 
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
+import it.francescofiora.tasks.taskexecutor.domain.converter.JsonToSetConverter;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * Task Entity.
@@ -29,7 +28,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Setter
 @Entity
 @Table(name = "task")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @ToString(callSuper = true, includeFieldNames = true)
 public class Task extends AbstractDomain implements Serializable {
 
@@ -62,12 +60,10 @@ public class Task extends AbstractDomain implements Serializable {
   @Column(name = "status", nullable = false, length = 25)
   private TaskStatus status;
 
-  @ManyToMany
-  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-  @JoinTable(name = "task_parameter",
-      joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "parameter_id", referencedColumnName = "id"))
-  private Set<Parameter> parameters;
+  @Lob
+  @Column(name = "parameters")
+  @Convert(converter = JsonToSetConverter.class)
+  private Set<Parameter> parameters = new HashSet<>();
 
   @Column(name = "result")
   private String result;
@@ -110,5 +106,15 @@ public class Task extends AbstractDomain implements Serializable {
   public Task result(String result) {
     this.result = result;
     return this;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    return super.equals(obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return super.hashCode();
   }
 }

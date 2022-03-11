@@ -123,26 +123,11 @@ create table task (
    result varchar(255),
    task_ref bigint not null,
    task_type varchar(255) not null,
+   parameters text not null,
    primary key (id)
 ) ENGINE=InnoDB;
 
-create table task_parameter (
-   task_id bigint not null,
-   parameter_id bigint not null,
-   primary key (task_id, parameter_id)
-) ENGINE=InnoDB;
-    
 alter table task 
    add constraint UK1_task unique (task_ref);
-
-alter table task_parameter 
-   add constraint FK1_task_parameter 
-   foreign key (parameter_id)
-   references parameter (id);
-
-alter table task_parameter 
-   add constraint FK2_task_parameter 
-   foreign key (task_id) 
-   references task (id);
 
 COMMIT;

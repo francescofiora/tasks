@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskexecutor.service.impl;
 
 import it.francescofiora.tasks.taskexecutor.domain.Task;
-import it.francescofiora.tasks.taskexecutor.repository.ParameterRepository;
 import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
@@ -24,14 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class TaskServiceImpl implements TaskService {
 
   private final TaskRepository taskRepository;
-  private final ParameterRepository parameterRepository;
   private final TaskMapper taskMapper;
 
   @Override
   public Task save(Task task) {
     log.debug("Request to save a Task : {}", task);
-
-    parameterRepository.saveAll(task.getParameters());
 
     return taskRepository.save(task);
   }
@@ -63,8 +59,6 @@ public class TaskServiceImpl implements TaskService {
     var opt = taskRepository.findById(id);
     if (opt.isPresent()) {
       taskRepository.deleteById(id);
-      parameterRepository.deleteAll(opt.get().getParameters());
     }
   }
-
 }
