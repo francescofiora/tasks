@@ -1,5 +1,5 @@
 plugins {
-  id 'org.springframework.boot' version '2.6.3'
+  id 'org.springframework.boot' version '2.6.4'
   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
   id 'info.solidsoft.pitest' version '1.7.0'
   id 'org.owasp.dependencycheck' version '6.2.2'
@@ -9,7 +9,6 @@ def springdoc_openapi_version = parent.property('springdoc-openapi.version')
 def mapstruct_version = parent.property('mapstruct.version')
 def lombok_version = parent.property('lombok.version')
 def logback_version = parent.property('logback.version')
-def log4j_version = parent.property('log4j.version')
 def openpojo_version = parent.property('openpojo.version')
 def apache_httpclient_version = parent.property('apache-httpclient.version')
 def mongo_version = parent.property('mongo.version')
@@ -26,9 +25,6 @@ dependencies {
   implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
 
   implementation 'org.messaginghub:pooled-jms'
-
-  implementation "org.apache.logging.log4j:log4j-api:${log4j_version}"
-  implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4j_version}"
 
   implementation "org.projectlombok:lombok:${lombok_version}"
   implementation "org.mapstruct:mapstruct:${mapstruct_version}"
