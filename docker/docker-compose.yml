@@ -57,7 +57,7 @@ services:
   tasks-api:
     image: azul/zulu-openjdk-alpine:17
     environment:
-      - "SPRING_PROFILES_ACTIVE=MongoSsl,AmqSsl"
+      - "SPRING_PROFILES_ACTIVE=MongoSsl,AmqSsl,Logging"
       - "SSL_ENABLED=true"
       - "KEYSTORE_PASSWORD=mypass"
       - "KEYSTORE_FILE=/workspace/config/tasks-api-keystore.jks"
@@ -81,7 +81,7 @@ services:
   task-executor:
     image: azul/zulu-openjdk-alpine:17
     environment:
-      - "SPRING_PROFILES_ACTIVE=sit"
+      - "SPRING_PROFILES_ACTIVE=AmqSsl,Logging"
       - "SSL_ENABLED=true"
       - "KEYSTORE_PASSWORD=mypass"
       - "KEYSTORE_FILE=/workspace/config/tasks-executor-keystore.jks"

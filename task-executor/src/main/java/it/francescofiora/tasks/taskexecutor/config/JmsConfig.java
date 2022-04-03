@@ -42,7 +42,7 @@ public class JmsConfig {
    * @return ConnectionFactory
    * @throws Exception if truststore/keystore path is wrong
    */
-  @Profile("!dev")
+  @Profile("AmqSsl")
   @Bean
   public ConnectionFactory connectionFactory(JmsProperties properties) throws Exception {
     var factory = new ActiveMQSslConnectionFactory(properties.getBrokerUrl());

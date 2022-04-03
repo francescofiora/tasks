@@ -13,7 +13,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: Logging
   batch:
     job:
       enabled: false
@@ -59,6 +59,17 @@ activemq:
     request: QUEUE_REQUEST
     response: QUEUE_RESPONSE
 
-endpoints:
-  jmx:
-    enabled: true
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+     base-path: /actuator
+     exposure:
+       include: info,health,jolokia
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+    jolokia:
+      enabled: true

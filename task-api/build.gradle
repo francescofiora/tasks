@@ -19,10 +19,12 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
   implementation 'org.springframework.boot:spring-boot-starter-activemq'
-  implementation 'org.springframework.boot:spring-boot-devtools'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
   implementation "org.springdoc:springdoc-openapi-ui:${springdoc_openapi_version}"
   implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
+
+  implementation "org.jolokia:jolokia-core"
 
   implementation 'org.messaginghub:pooled-jms'
 

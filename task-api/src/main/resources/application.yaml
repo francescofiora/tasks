@@ -13,7 +13,7 @@ server:
 
 spring:
   profiles:
-    active:
+    active: Logging
   security:
     user:
       name: ${APP_USER:user}
@@ -45,6 +45,17 @@ activemq:
     request: QUEUE_REQUEST
     response: QUEUE_RESPONSE
 
-endpoints:
-  jmx:
-    enabled: true
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+     base-path: /actuator
+     exposure:
+       include: info,health,jolokia
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+    jolokia:
+      enabled: true

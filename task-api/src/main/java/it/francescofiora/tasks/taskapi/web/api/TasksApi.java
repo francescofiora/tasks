@@ -16,7 +16,6 @@ import it.francescofiora.tasks.taskapi.web.errors.BadRequestAlertException;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Tasks Api.
  */
-@Slf4j
 @RestController
 @Tag(name = "task", description = "Task Rest API")
 @RequestMapping("/api")
@@ -63,7 +61,6 @@ public class TasksApi extends AbstractApi {
   public ResponseEntity<Void> createTask(
       @Parameter(description = "Add new Task") @Valid @RequestBody NewTaskDto taskDto)
       throws URISyntaxException {
-    log.debug("REST request to save Task : {}", taskDto);
     var result = taskService.create(taskDto);
     return postResponse("/api/tasks/" + result.getId(), result.getId());
   }
@@ -86,7 +83,6 @@ public class TasksApi extends AbstractApi {
       @Parameter(description = "Task to update") @Valid @RequestBody UpdatableTaskDto taskDto,
       @Parameter(description = "The id of the task to update", required = true,
           example = "1") @PathVariable("id") Long id) {
-    log.debug("REST request to patch Task : {}", taskDto);
     if (!id.equals(taskDto.getId())) {
       throw new BadRequestAlertException(ENTITY_NAME, String.valueOf(taskDto.getId()),
           "Invalid id");
@@ -112,7 +108,6 @@ public class TasksApi extends AbstractApi {
       @ApiResponse(responseCode = "400", description = "Bad input parameter")})
   @GetMapping("/tasks")
   public ResponseEntity<List<TaskDto>> getAllTasks(Pageable pageable) {
-    log.debug("REST request to get a page of Tasks");
     return getResponse(taskService.findAll(pageable));
   }
 
@@ -133,7 +128,6 @@ public class TasksApi extends AbstractApi {
   @GetMapping("/tasks/{id}")
   public ResponseEntity<TaskDto> getTask(@Parameter(description = "id of the task to get",
       required = true, example = "1") @PathVariable Long id) {
-    log.debug("REST request to get Task : {}", id);
     return getResponse(taskService.findOne(id), id);
   }
 
@@ -153,7 +147,6 @@ public class TasksApi extends AbstractApi {
   @DeleteMapping("/tasks/{id}")
   public ResponseEntity<Void> deleteTask(@Parameter(description = "id of the task to delete",
       required = true, example = "1") @PathVariable Long id) throws URISyntaxException {
-    log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
     return deleteResponse(id);
   }

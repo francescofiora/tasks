@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Task Executor Api.
  */
-@Slf4j
 @RestController
 @Tag(name = "task-executor", description = "Task Executor Rest API")
 @RequestMapping("/api")
@@ -55,7 +53,6 @@ public class TaskExecutorApi extends AbstractApi {
       @ApiResponse(responseCode = "400", description = "Bad input parameter")})
   @GetMapping("/tasks")
   public ResponseEntity<List<TaskExecutorDto>> getAllTasks(Pageable pageable) {
-    log.debug("REST request to get a page of Tasks");
     return getResponse(taskService.findAll(pageable));
   }
 
@@ -76,7 +73,6 @@ public class TaskExecutorApi extends AbstractApi {
   @GetMapping("/tasks/{id}")
   public ResponseEntity<TaskExecutorDto> getTask(@Parameter(description = "id of the task to get",
       required = true, example = "1") @PathVariable Long id) {
-    log.debug("REST request to get Task : {}", id);
     return getResponse(taskService.findOne(id), id);
   }
 
@@ -95,7 +91,6 @@ public class TaskExecutorApi extends AbstractApi {
   @DeleteMapping("/tasks/{id}")
   public ResponseEntity<Void> deleteTask(@Parameter(description = "Id of the task to delete",
       required = true, example = "1") @PathVariable Long id) {
-    log.debug("REST request to delete Task : {}", id);
     taskService.delete(id);
     return deleteResponse(id);
   }
