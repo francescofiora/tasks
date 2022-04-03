@@ -21,7 +21,7 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
 
 # Getting Started
 ### Using Docker to simplify development
-The purpose of this tutorial is a Producer consumer microservice, however I have added a Dockerfile for MySql + phpMyAdmin + ActiveMQ Artemis + MongoDb.
+The purpose of this tutorial is a Producer consumer microservice, however I have added a Dockerfile for MySql + phpMyAdmin + ActiveMQ Artemis + MongoDb + Sonarqube.
 
 ### Compile
     ./gradlew clean build
@@ -54,6 +54,11 @@ Basic environment for development with dev profile.
 ## Pitest
     ./gradlew pitest
 
+## SonarQube
+    ./gradlew sonarqube \
+    -Dsonar.projectKey=yourProjectKey \
+    -Dsonar.login=yourAuthenticationToken
+
 ### Hot to execute applications
     docker-compose -f docker_dev/docker-compose.yml up
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
@@ -67,6 +72,9 @@ it could be possible run applications using Eclipse
  - http://localhost:8080/ (PhpMyAdmin)
  - http://localhost:8085/ (Mongo Express)
  - http://localhost:8161/console/login (ActiveMQ)
+ - http://localhost:9000/ (Sonarqube)
+
+For SonarQube configuration follow this link: [Try Out SonarQube](https://docs.sonarqube.org/latest/setup/get-started-2-minutes/)
 
 ### Debug Support
 java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
