@@ -27,7 +27,7 @@ public class LongTasklet extends AbstractTasklet {
 
     try {
       Thread.sleep(1000);
-    } catch (Exception e) {
+    } catch (InterruptedException e) {
       log.error(e.getMessage());
     }
 
