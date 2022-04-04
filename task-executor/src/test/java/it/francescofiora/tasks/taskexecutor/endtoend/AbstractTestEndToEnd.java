@@ -33,7 +33,7 @@ public class AbstractTestEndToEnd {
   private String password;
 
   private String getPath(String path) {
-    return "http://localhost:" + randomServerPort + "/tasks-executor" + path;
+    return "http://localhost:" + randomServerPort + path;
   }
 
   protected void testUnauthorized(String path) throws Exception {

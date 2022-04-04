@@ -3,7 +3,7 @@ errorPath: /error
 server:
   port: 8082
   servlet:
-    context-path: /tasks-executor
+    context-path: /
   error:
     path: errorPath
   ssl:

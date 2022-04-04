@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Tag(name = "task", description = "Task Rest API")
-@RequestMapping("/api")
+@RequestMapping("/tasks-api/api/v1")
 public class TasksApi extends AbstractApi {
 
   private static final String ENTITY_NAME = "TaskDto";
@@ -62,7 +62,7 @@ public class TasksApi extends AbstractApi {
       @Parameter(description = "Add new Task") @Valid @RequestBody NewTaskDto taskDto)
       throws URISyntaxException {
     var result = taskService.create(taskDto);
-    return postResponse("/api/tasks/" + result.getId(), result.getId());
+    return postResponse("/tasks-api/api/v1/tasks/" + result.getId(), result.getId());
   }
 
   /**

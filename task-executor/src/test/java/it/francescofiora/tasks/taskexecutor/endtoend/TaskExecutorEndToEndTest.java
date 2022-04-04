@@ -22,8 +22,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @TestPropertySource(locations = {"classpath:application_test.properties"})
 class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
 
-  private static final String TASKS_URI = "/api/tasks";
-  private static final String TASKS_ID_URI = "/api/tasks/%d";
+  private static final String TASKS_URI = "/tasks-executor/api/v1/tasks";
+  private static final String TASKS_ID_URI = "/tasks-executor/api/v1/tasks/%d";
 
   private static final String ALERT_GET = "TaskExecutorDto.get";
   private static final String ALERT_DELETED = "TaskExecutorDto.deleted";

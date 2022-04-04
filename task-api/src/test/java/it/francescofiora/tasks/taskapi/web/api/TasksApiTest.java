@@ -23,7 +23,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MvcResult;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = TasksApi.class)
@@ -31,9 +30,9 @@ import org.springframework.test.web.servlet.MvcResult;
 class TasksApiTest extends AbstractTestApi {
 
   private static final Long ID = 1L;
-  private static final String TASKS_URI = "/api/tasks";
-  private static final String TASKS_ID_URI = "/api/tasks/{id}";
-  private static final String WRONG_URI = "/api/wrong";
+  private static final String TASKS_URI = "/tasks-api/api/v1/tasks";
+  private static final String TASKS_ID_URI = "/tasks-api/api/v1/tasks/{id}";
+  private static final String WRONG_URI = "/tasks-api/api/v1/wrong";
 
   @MockBean
   private TaskService taskService;

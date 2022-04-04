@@ -26,9 +26,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @TestPropertySource(locations = {"classpath:application_test.properties"})
 class TaskExecutorApiTest extends AbstractTestApi {
   private static final Long ID = 1L;
-  private static final String TASKS_URI = "/api/tasks";
-  private static final String TASKS_ID_URI = "/api/tasks/{id}";
-  private static final String WRONG_URI = "/api/wrong";
+  private static final String TASKS_URI = "/tasks-executor/api/v1/tasks";
+  private static final String TASKS_ID_URI = "/tasks-executor/api/v1/tasks/{id}";
+  private static final String WRONG_URI = "/tasks-executor/api/v1/wrong";
 
   @MockBean
   private TaskService taskService;
