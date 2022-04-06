@@ -55,7 +55,7 @@ services:
       - "8080:80"
 
   tasks-api:
-    image: azul/zulu-openjdk-alpine:17
+    image: francescofiora-task-api
     environment:
       - "SPRING_PROFILES_ACTIVE=MongoSsl,AmqSsl,Logging"
       - "SSL_ENABLED=true"
@@ -66,20 +66,16 @@ services:
       - "MONGODB_URI=mongodb://root:secret@tasks-mongodb:27017/?ssl=true"
       - "BROKER_URL=ssl://tasks-activemq:61616"
       - "BROKER_USER=tasksapi"
-      - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
     volumes:
       - "./tasks-api:/workspace"
-    working_dir: /workspace
-    command: java -jar ./task-api-1.0-SNAPSHOT.jar
     ports:
       - '8081:8081'
-      - '9999:9999'
     depends_on:
       - tasks-mongodb
       - tasks-activemq
 
   task-executor:
-    image: azul/zulu-openjdk-alpine:17
+    image: francescofiora-task-executor
     environment:
       - "SPRING_PROFILES_ACTIVE=AmqSsl,Logging"
       - "SSL_ENABLED=true"
@@ -90,14 +86,10 @@ services:
       - "DATASOURCE_URL=jdbc:mysql://tasks-mysql:3306/tasks?verifyServerCertificate=true&useSSL=true&requireSSL=true&clientCertificateKeyStoreUrl=file:./config/tasks-executor-keystore.jks&clientCertificateKeyStorePassword=mypass&trustCertificateKeyStoreUrl=file:./config/truststore.ts&trustCertificateKeyStorePassword=mypass"
       - "BROKER_URL=ssl://tasks-activemq:61616"
       - "BROKER_USER=tasksexecutor"
-      - "JAVA_TOOL_OPTIONS=-Dcom.sun.management.jmxremote.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
     volumes:
       - "./tasks-executor:/workspace"
-    working_dir: /workspace
-    command: java -jar ./task-executor-1.0-SNAPSHOT.jar
     ports:
       - '8082:8082'
-      - '9998:9998'
     depends_on:
       - tasks-mysql
       - tasks-activemq

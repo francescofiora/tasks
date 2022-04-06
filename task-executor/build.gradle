@@ -3,7 +3,10 @@ plugins {
   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
   id 'info.solidsoft.pitest' version '1.7.0'
   id 'org.owasp.dependencycheck' version '6.2.2'
+  id 'com.google.cloud.tools.jib' version '3.2.1'
 }
+
+def main_class = 'it.francescofiora.tasks.taskexecutor.Application'
 
 def springdoc_openapi_version = parent.property('springdoc-openapi.version')
 def mysql_connector_version = parent.property('mysql_connector.version')
@@ -48,7 +51,25 @@ dependencies {
 }
 
 springBoot {
-  mainClass.set("it.francescofiora.tasks.taskexecutor.Application")
+  mainClass.set("${main_class}")
+  buildInfo()
+}
+
+jib {
+	container {
+		mainClass = "${main_class}"
+	}
+	from {
+	  image = 'azul/zulu-openjdk-alpine:17'
+	}
+	to {
+	  image = 'francescofiora-task-executor'
+	  tags = ['latest']
+	}
+	container {
+	  creationTime = 'USE_CURRENT_TIMESTAMP'
+	  workingDirectory = '/workspace'
+	}
 }
 
 eclipse {
@@ -73,8 +94,4 @@ dependencyCheck {
     assemblyEnabled = false
   }
   formats = [ "HTML" ]
-}
-
-bootBuildImage {
-  imageName = "francescofiora.it/library/${project.name}:${project.version}"
 }

@@ -17,7 +17,7 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
     - Services using Mockito
     - EndPoints using WebMvcTest
     - Pojos and Dtos using OpenPojo
-- JMX
+- JMX-HTTP
 
 # Getting Started
 ### Using Docker to simplify development
@@ -40,13 +40,8 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
     docker build -f ./docker/Dockerfile-debian -t artemis-debian .
 
  - Check image created
+
     docker image ls artemis-debian
-
-## Dev environment
-Basic environment for development with dev profile.
-
-## compile
-    ./gradlew clean build
 
 ## Dependency-Check
     ./gradlew dependencyCheckAnalyze --info
@@ -59,7 +54,7 @@ Basic environment for development with dev profile.
     -Dsonar.projectKey=yourProjectKey \
     -Dsonar.login=yourAuthenticationToken
 
-### Hot to execute applications
+### Hot to execute applications in debug mode
     docker-compose -f docker_dev/docker-compose.yml up
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
     java -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
@@ -67,8 +62,10 @@ Basic environment for development with dev profile.
 it could be possible run applications using Eclipse 
 
 **Links**
- - http://localhost:8081/tasks-api/swagger-ui.html (Tasks-Api)
- - http://localhost:8082/tasks-executor/swagger-ui.html (Tasks-Executor)
+ - http://localhost:8081/swagger-ui.html (Tasks-Api Swagger)
+ - http://localhost:8081/actuator (Tasks-Api /info,/health,/jolokia)
+ - http://localhost:8082/swagger-ui.html (Tasks-Executor Swagger)
+ - http://localhost:8082/actuator (Tasks-Executor /info,/health,/jolokia)
  - http://localhost:8080/ (PhpMyAdmin)
  - http://localhost:8085/ (Mongo Express)
  - http://localhost:8161/console/login (ActiveMQ)
@@ -80,24 +77,27 @@ For SonarQube configuration follow this link: [Try Out SonarQube](https://docs.s
 java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
 
 ## System Integration Test environment
-Environment with sit profile and SSL connection.
+Environment with SSL connection.
 
-### Create self-signed certificates and prepare environment
+### Create docker images
+    ./gradlew jibDockerBuild
+
+### Create self-signed certificates
     cd docker
     ./create_all_certificates.sh
-    ./cp_jars.sh
 
-### Hot to execute applications
+### Hot to execute all applications with docker
+Docker images and self-signed certificates required
+
     docker-compose -f docker/docker-compose.yml up
 
 **Links**
- - https://localhost:8081/tasks-api/swagger-ui.html (Tasks-Api)
- - https://localhost:8082/tasks-executor/swagger-ui.html (Tasks-Executor)
+ - https://localhost:8081/swagger-ui.html (Tasks-Api Swagger)
+ - https://localhost:8081/actuator (Tasks-Api /info,/health,/jolokia)
+ - https://localhost:8082/swagger-ui.html (Tasks-Executor Swagger)
+ - https://localhost:8082/actuator (Tasks-Executor /info,/health,/jolokia)
  - http://localhost:8080/ (PhpMyAdmin)
  - https://localhost:8161/console/login (ActiveMQ)
-
- - service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
- - service:jmx:rmi:///jndi/rmi://localhost:9998/jmxrmi
 
 ## reports
     task-api/build/reports/checkstyle/main.html
@@ -142,3 +142,4 @@ Environment with sit profile and SSL connection.
 - [Owasp Dependency Check 6.2](https://owasp.org/www-project-dependency-check/)
 - [Jacoco 0.8](https://www.jacoco.org/)
 - [Pitest 1.7](https://pitest.org/)
+- [Jolokia 1.7](https://jolokia.org/)
