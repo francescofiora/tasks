@@ -7,24 +7,27 @@ import org.junit.jupiter.api.Test;
 
 class DatabaseSequenceTest {
 
+  private static final String ID_1 = "ID1";
+  private static final String ID_2 = "ID2";
+
   @Test
   void dtoEqualsVerifier() throws Exception {
-    var dbSequence1 = new DatabaseSequence();
-    dbSequence1.setId("ID1");
+    var dbSequence1 = TestUtils.createDatabaseSequence(ID_1);
+    assertThat(dbSequence1).isNotEqualTo(new Object());
 
-    assertThat(dbSequence1.equals(null)).isFalse();
-    assertThat(dbSequence1.equals(new Object())).isFalse();
+    Object dbSequence2 = null;
+    assertThat(dbSequence1).isNotEqualTo(dbSequence2);
 
-    var dbSequence2 = new DatabaseSequence();
-    TestUtils.checkNotEqualHashAndToString(dbSequence1, dbSequence2);
+    var dbSequence3 = TestUtils.createDatabaseSequence(null);
+    TestUtils.checkNotEqualHashAndToString(dbSequence1, dbSequence3);
 
-    dbSequence2.setId(dbSequence1.getId());
-    TestUtils.checkEqualHashAndToString(dbSequence1, dbSequence2);
+    dbSequence3 = TestUtils.createDatabaseSequence(ID_1);
+    TestUtils.checkEqualHashAndToString(dbSequence1, dbSequence3);
 
-    dbSequence2.setId("ID2");
-    TestUtils.checkNotEqualHashAndToString(dbSequence1, dbSequence2);
+    dbSequence3 = TestUtils.createDatabaseSequence(ID_2);
+    TestUtils.checkNotEqualHashAndToString(dbSequence1, dbSequence3);
 
-    dbSequence1.setId(null);
-    TestUtils.checkNotEqualHashAndToString(dbSequence1, dbSequence2);
+    dbSequence1 = TestUtils.createDatabaseSequence(null);
+    TestUtils.checkNotEqualHashAndToString(dbSequence1, dbSequence3);
   }
 }

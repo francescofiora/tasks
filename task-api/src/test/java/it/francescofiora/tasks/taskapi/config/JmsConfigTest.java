@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 /**
  * JmsConfig Test.
  */
-public class JmsConfigTest {
+class JmsConfigTest {
 
   @Test
   void testJacksonJmsMessageConverter() throws Exception {

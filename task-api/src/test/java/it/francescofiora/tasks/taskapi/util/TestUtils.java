@@ -8,6 +8,8 @@ import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
+import it.francescofiora.tasks.taskapi.domain.DatabaseSequence;
+import it.francescofiora.tasks.taskapi.domain.DomainIdentifier;
 import it.francescofiora.tasks.taskapi.domain.Parameter;
 import it.francescofiora.tasks.taskapi.domain.Result;
 import it.francescofiora.tasks.taskapi.domain.Task;
@@ -22,6 +24,17 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestUtils {
+
+  /**
+   * Create Parameter.
+   *
+   * @return Parameter
+   */
+  public static Object createParameter(String name) {
+    var parameter = new Parameter();
+    parameter.setName(name);
+    return parameter;
+  }
 
   /**
    * Create an example of Parameter.
@@ -72,6 +85,30 @@ public final class TestUtils {
     taskDto.setId(id);
     taskDto.setDescription("Description updated");
     return taskDto;
+  }
+
+  /**
+   * Create DatabaseSequence.
+   *
+   * @param id Id
+   * @return DatabaseSequence
+   */
+  public static Object createDatabaseSequence(String id) {
+    var dbSequence = new DatabaseSequence();
+    dbSequence.setId(id);
+    return dbSequence;
+  }
+
+  /**
+   * Create Result.
+   *
+   * @param value Value
+   * @return Result
+   */
+  public static Object createResult(String value) {
+    var result = new Result();
+    result.setValue(value);
+    return result;
   }
 
   /**
@@ -152,6 +189,20 @@ public final class TestUtils {
         .status(TaskStatus.TERMINATED)
         .result("Result");
     // @formatter:on
+  }
+
+  /**
+   * create new DomainIdentifier.
+   *
+   * @param clazz the DomainIdentifier class.
+   * @param id the id
+   * @return a new DomainIdentifier Object
+   * @throws Exception if error occurs
+   */
+  public static <T> Object createNewDomain(Class<T> clazz, Long id) throws Exception {
+    var domainObj = (DomainIdentifier) clazz.getConstructor().newInstance();
+    domainObj.setId(id);
+    return domainObj;
   }
 
   /**

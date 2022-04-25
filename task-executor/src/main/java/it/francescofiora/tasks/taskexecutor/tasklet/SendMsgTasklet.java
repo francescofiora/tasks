@@ -4,7 +4,7 @@ import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskexecutor.jms.JmsProducer;
 import java.util.Map;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SendMsgTasklet extends AbstractTasklet {
 
   public static final String NAME = "sendMsgStep";

@@ -7,22 +7,24 @@ import org.junit.jupiter.api.Test;
 
 class ParameterTest {
 
+  private static final String NAME_1 = "Name1";
+  private static final String NAME_2 = "Name2";
+
   @Test
   void equalsVerifier() throws Exception {
-    var parameter1 = new Parameter();
-    parameter1.setName("Name1");
+    var parameter1 = TestUtils.createParameter(NAME_1);
+    assertThat(parameter1).isNotEqualTo(new Object());
 
-    assertThat(parameter1.equals(null)).isFalse();
-    assertThat(parameter1.equals(new Object())).isFalse();
+    Parameter parameter2 = null;
+    assertThat(parameter1).isNotEqualTo(parameter2);
 
-    var parameter2 = new Parameter();
-    parameter2.setName(parameter1.getName());
-    TestUtils.checkEqualHashAndToString(parameter1, parameter2);
+    var parameter3 = TestUtils.createParameter(NAME_1);
+    TestUtils.checkEqualHashAndToString(parameter1, parameter3);
 
-    parameter2.setName("Name2");
-    TestUtils.checkNotEqualHashAndToString(parameter1, parameter2);
+    parameter3 = TestUtils.createParameter(NAME_2);
+    TestUtils.checkNotEqualHashAndToString(parameter1, parameter3);
 
-    parameter1.setName(null);
-    TestUtils.checkNotEqualHashAndToString(parameter1, parameter2);
+    parameter1 = TestUtils.createParameter(null);
+    TestUtils.checkNotEqualHashAndToString(parameter1, parameter3);
   }
 }

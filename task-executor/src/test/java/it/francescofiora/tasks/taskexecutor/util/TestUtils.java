@@ -8,6 +8,7 @@ import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.message.enumeration.TaskType;
+import it.francescofiora.tasks.taskexecutor.domain.DomainIdentifier;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.service.dto.ParameterDto;
@@ -149,6 +150,20 @@ public final class TestUtils {
     parameterDto.setName("Name");
     parameterDto.setValue("Value");
     return parameterDto;
+  }
+
+  /**
+   * create new DomainIdentifier.
+   *
+   * @param clazz the DomainIdentifier class.
+   * @param id the id
+   * @return a new DomainIdentifier Object
+   * @throws Exception if error occurs
+   */
+  public static <T> Object createNewDomain(Class<T> clazz, Long id) throws Exception {
+    var domainObj = (DomainIdentifier) clazz.getConstructor().newInstance();
+    domainObj.setId(id);
+    return domainObj;
   }
 
   /**

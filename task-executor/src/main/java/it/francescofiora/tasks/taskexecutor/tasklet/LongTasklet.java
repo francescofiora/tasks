@@ -3,7 +3,7 @@ package it.francescofiora.tasks.taskexecutor.tasklet;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import java.util.Map;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LongTasklet extends AbstractTasklet {
 
-  public static String NAME = "longTasklet";
+  public static final String NAME = "longTasklet";
 
   private final TaskService taskService;
 

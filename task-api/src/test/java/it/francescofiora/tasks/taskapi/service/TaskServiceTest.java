@@ -3,7 +3,6 @@ package it.francescofiora.tasks.taskapi.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -109,7 +108,7 @@ class TaskServiceTest {
   @Test
   void testPatch() throws Exception {
     var task = new Task();
-    when(taskRepository.findById(eq(ID))).thenReturn(Optional.of(task));
+    when(taskRepository.findById(ID)).thenReturn(Optional.of(task));
 
     var taskDto = new UpdatableTaskDto();
     taskDto.setId(ID);
@@ -139,7 +138,7 @@ class TaskServiceTest {
   void testFindOne() throws Exception {
     var task = new Task();
     task.setId(ID);
-    when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
+    when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
     var expected = new TaskDto();
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
 
@@ -158,7 +157,7 @@ class TaskServiceTest {
   void testResponse() throws Exception {
     var task = new Task();
     task.setId(ID);
-    when(taskRepository.findById(eq(task.getId()))).thenReturn(Optional.of(task));
+    when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
 
     var response = new MessageDtoResponseImpl().taskId(ID).result("Result");
     taskService.response(response);
@@ -166,7 +165,7 @@ class TaskServiceTest {
 
   @Test
   void testResponseNotFound() throws Exception {
-    when(taskRepository.findById(eq(ID))).thenReturn(Optional.empty());
+    when(taskRepository.findById(ID)).thenReturn(Optional.empty());
     var response = new MessageDtoResponseImpl().taskId(ID).result("Result");
     assertThrows(JmsException.class, () -> taskService.response(response));
   }

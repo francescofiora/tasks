@@ -37,7 +37,7 @@ class TaskMapperTest {
     task.getParameters().add(null);
     var taskDto = taskMapper.toDto(task);
     assertThat(taskDto.getParameters()).hasSize(1);
-    assertThat(taskDto.getParameters().iterator().next()).isEqualTo(null);
+    assertThat(taskDto.getParameters().iterator().next()).isNull();
 
     task.setParameters(null);
     taskDto = taskMapper.toDto(task);

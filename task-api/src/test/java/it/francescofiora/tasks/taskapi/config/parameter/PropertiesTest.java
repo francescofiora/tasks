@@ -1,5 +1,7 @@
 package it.francescofiora.tasks.taskapi.config.parameter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.affirm.Affirm;
@@ -20,7 +22,7 @@ class PropertiesTest {
   @Test
   void ensureExpectedCount() {
     var classes = PojoClassFactory.getPojoClasses(PROPERTIES_PACKAGE, new FilterPackageInfo());
-    Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT, classes.size());
+    assertThat(classes.size()).isEqualTo(EXPECTED_CLASS_COUNT);
   }
 
   @Test

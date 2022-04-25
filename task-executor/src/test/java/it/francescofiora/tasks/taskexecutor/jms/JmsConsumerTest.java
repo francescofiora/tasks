@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskexecutor.jms;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
@@ -52,7 +51,7 @@ class JmsConsumerTest {
   @Test
   void testReceiveMessage() throws Exception {
     template.convertAndSend(destination, MSG_SENT);
-    verify(strategyManager, timeout(1000)).exec(eq(MSG_VALIDATED));
+    verify(strategyManager, timeout(1000)).exec(MSG_VALIDATED);
   }
 
   @TestConfiguration

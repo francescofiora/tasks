@@ -9,7 +9,7 @@ import it.francescofiora.tasks.taskexecutor.tasklet.errors.TaskletException;
 import java.sql.Timestamp;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SaveDbTasklet extends AbstractTasklet {
 
   public static final String NAME = "saveDbStep";

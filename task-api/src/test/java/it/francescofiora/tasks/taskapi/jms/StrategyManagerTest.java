@@ -1,6 +1,5 @@
 package it.francescofiora.tasks.taskapi.jms;
 
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 import it.francescofiora.tasks.message.MessageDtoResponseImpl;
@@ -35,7 +34,7 @@ class StrategyManagerTest {
     var response = new MessageDtoResponseImpl().taskId(1L);
     var message = new JmsMessage(response, "ID", new Date().getTime());
     strategyManager.exec(message);
-    verify(taskService).response(eq(response));
+    verify(taskService).response(response);
   }
 
 }

@@ -20,7 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = {"classpath:application_test.properties"})
-public class SwaggerTest extends AbstractTestApi {
+class SwaggerTest extends AbstractTestApi {
 
   @Test
   void testSwaggerUiPage() throws Exception {

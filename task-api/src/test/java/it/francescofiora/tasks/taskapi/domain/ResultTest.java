@@ -7,22 +7,24 @@ import org.junit.jupiter.api.Test;
 
 class ResultTest {
 
+  private static final String VALUE_1 = "Result1";
+  private static final String VALUE_2 = "Result2";
+
   @Test
   void equalsVerifier() throws Exception {
-    var result1 = new Result();
-    result1.setValue("Result1");
+    var result1 = TestUtils.createResult(VALUE_1);
+    assertThat(result1).isNotEqualTo(new Object());
 
-    assertThat(result1.equals(null)).isFalse();
-    assertThat(result1.equals(new Object())).isFalse();
+    Result result2 = null;
+    assertThat(result1).isNotEqualTo(result2);
 
-    var result2 = new Result();
-    result2.setValue(result1.getValue());
-    TestUtils.checkEqualHashAndToString(result1, result2);
+    var result3 = TestUtils.createResult(VALUE_1);
+    TestUtils.checkEqualHashAndToString(result1, result3);
 
-    result2.setValue("Result2");
-    TestUtils.checkNotEqualHashAndToString(result1, result2);
+    result3 = TestUtils.createResult(VALUE_2);
+    TestUtils.checkNotEqualHashAndToString(result1, result3);
 
-    result1.setValue(null);
-    TestUtils.checkNotEqualHashAndToString(result1, result2);
+    result1 = TestUtils.createResult(null);
+    TestUtils.checkNotEqualHashAndToString(result1, result3);
   }
 }
