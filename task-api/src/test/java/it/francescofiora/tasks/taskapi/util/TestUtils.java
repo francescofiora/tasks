@@ -16,6 +16,7 @@ import it.francescofiora.tasks.taskapi.domain.Task;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.ParameterDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
+import it.francescofiora.tasks.util.DtoIdentifier;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +31,7 @@ public final class TestUtils {
    *
    * @return Parameter
    */
-  public static Object createParameter(String name) {
+  public static Parameter createParameter(String name) {
     var parameter = new Parameter();
     parameter.setName(name);
     return parameter;
@@ -51,7 +52,7 @@ public final class TestUtils {
   }
 
   /**
-   * create NewTaskDto.
+   * Create NewTaskDto.
    *
    * @return NewTaskDto
    */
@@ -64,7 +65,7 @@ public final class TestUtils {
   }
 
   /**
-   * create ParameterDto.
+   * Create ParameterDto.
    *
    * @return ParameterDto
    */
@@ -76,7 +77,7 @@ public final class TestUtils {
   }
 
   /**
-   * create UpdatableTaskDto.
+   * Create UpdatableTaskDto.
    *
    * @return UpdatableTaskDto
    */
@@ -93,7 +94,7 @@ public final class TestUtils {
    * @param id Id
    * @return DatabaseSequence
    */
-  public static Object createDatabaseSequence(String id) {
+  public static DatabaseSequence createDatabaseSequence(String id) {
     var dbSequence = new DatabaseSequence();
     dbSequence.setId(id);
     return dbSequence;
@@ -105,7 +106,7 @@ public final class TestUtils {
    * @param value Value
    * @return Result
    */
-  public static Object createResult(String value) {
+  public static Result createResult(String value) {
     var result = new Result();
     result.setValue(value);
     return result;
@@ -163,7 +164,7 @@ public final class TestUtils {
   }
 
   /**
-   * create MessageDtoRequest.
+   * Create MessageDtoRequest.
    *
    * @return MessageDtoRequest
    */
@@ -177,7 +178,7 @@ public final class TestUtils {
   }
 
   /**
-   * create MessageDtoResponse.
+   * Create MessageDtoResponse.
    *
    * @return MessageDtoResponse
    */
@@ -192,21 +193,35 @@ public final class TestUtils {
   }
 
   /**
-   * create new DomainIdentifier.
+   * Create new DomainIdentifier.
    *
    * @param clazz the DomainIdentifier class.
    * @param id the id
-   * @return a new DomainIdentifier Object
+   * @return a new DomainIdentifier
    * @throws Exception if error occurs
    */
-  public static <T> Object createNewDomain(Class<T> clazz, Long id) throws Exception {
+  public static <T> DomainIdentifier createNewDomain(Class<T> clazz, Long id) throws Exception {
     var domainObj = (DomainIdentifier) clazz.getConstructor().newInstance();
     domainObj.setId(id);
     return domainObj;
   }
 
   /**
-   * assert that obj1 is equal to obj2 and also their hashCode and ToString.
+   * Create new DtoIdentifier.
+   *
+   * @param clazz the DtoIdentifier class.
+   * @param id the id
+   * @return a new DtoIdentifier
+   * @throws Exception if error occurs
+   */
+  public static <T> DtoIdentifier createNewDtoIdentifier(Class<T> clazz, Long id) throws Exception {
+    var dtoObj = (DtoIdentifier) clazz.getConstructor().newInstance();
+    dtoObj.setId(id);
+    return dtoObj;
+  }
+
+  /**
+   * Assert that obj1 is equal to obj2 and also their hashCode and ToString.
    *
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
@@ -218,7 +233,7 @@ public final class TestUtils {
   }
 
   /**
-   * assert that obj1 is not equal to obj2 and also their hashCode and ToString.
+   * Assert that obj1 is not equal to obj2 and also their hashCode and ToString.
    *
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare

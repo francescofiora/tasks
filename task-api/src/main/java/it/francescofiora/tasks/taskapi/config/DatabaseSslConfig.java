@@ -3,6 +3,7 @@ package it.francescofiora.tasks.taskapi.config;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings.Builder;
 import it.francescofiora.tasks.taskapi.config.parameter.DbProperties;
+import it.francescofiora.tasks.taskapi.jms.errors.JmsException;
 import java.io.FileInputStream;
 import java.security.KeyStore;
 import java.security.SecureRandom;
@@ -90,7 +91,7 @@ public class DatabaseSslConfig extends AbstractMongoClientConfiguration {
       return sslContext;
     } catch (Exception e) {
       log.error(e.getMessage());
-      throw new RuntimeException(e);
+      throw new JmsException(e.getMessage(), e);
     }
   }
 }

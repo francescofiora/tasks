@@ -12,6 +12,7 @@ import it.francescofiora.tasks.taskexecutor.domain.DomainIdentifier;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
 import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.service.dto.ParameterDto;
+import it.francescofiora.tasks.util.DtoIdentifier;
 import java.sql.Timestamp;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 public final class TestUtils {
 
   /**
-   * create MessageDtoRequest.
+   * Create MessageDtoRequest.
    *
    * @return MessageDtoRequest
    */
@@ -37,7 +38,7 @@ public final class TestUtils {
   }
 
   /**
-   * create MessageDtoRequest with NEW_TYPE.
+   * Create MessageDtoRequest with NEW_TYPE.
    *
    * @return MessageDtoRequest
    */
@@ -51,7 +52,7 @@ public final class TestUtils {
   }
 
   /**
-   * create MessageDtoResponse.
+   * Create MessageDtoResponse.
    *
    * @return MessageDtoResponse
    */
@@ -66,7 +67,7 @@ public final class TestUtils {
   }
 
   /**
-   * create Short Task 1.
+   * Create Short Task 1.
    *
    * @return Task
    */
@@ -85,7 +86,7 @@ public final class TestUtils {
   }
 
   /**
-   * create Short Task 2.
+   * Create Short Task 2.
    *
    * @return Task
    */
@@ -104,7 +105,7 @@ public final class TestUtils {
   }
 
   /**
-   * create Long Task.
+   * Create Long Task.
    *
    * @return Task
    */
@@ -123,7 +124,7 @@ public final class TestUtils {
   }
 
   /**
-   * compare if expected Task and actual Task have same data.
+   * Compare if expected Task and actual Task have same data.
    *
    * @param expected Task
    * @param actual Task
@@ -141,7 +142,7 @@ public final class TestUtils {
   }
 
   /**
-   * create ParameterDto.
+   * Create ParameterDto.
    *
    * @return ParameterDto
    */
@@ -153,21 +154,35 @@ public final class TestUtils {
   }
 
   /**
-   * create new DomainIdentifier.
+   * Create new DomainIdentifier.
    *
    * @param clazz the DomainIdentifier class.
    * @param id the id
-   * @return a new DomainIdentifier Object
+   * @return a new DomainIdentifier
    * @throws Exception if error occurs
    */
-  public static <T> Object createNewDomain(Class<T> clazz, Long id) throws Exception {
+  public static <T> DomainIdentifier createNewDomain(Class<T> clazz, Long id) throws Exception {
     var domainObj = (DomainIdentifier) clazz.getConstructor().newInstance();
     domainObj.setId(id);
     return domainObj;
   }
 
   /**
-   * assert that obj1 is equal to obj2 and also their hashCode and ToString.
+   * Create new DtoIdentifier.
+   *
+   * @param clazz the DtoIdentifier class.
+   * @param id the id
+   * @return a new DtoIdentifier
+   * @throws Exception if error occurs
+   */
+  public static <T> DtoIdentifier createNewDtoIdentifier(Class<T> clazz, Long id) throws Exception {
+    var dtoObj = (DtoIdentifier) clazz.getConstructor().newInstance();
+    dtoObj.setId(id);
+    return dtoObj;
+  }
+
+  /**
+   * Assert that obj1 is equal to obj2 and also their hashCode and ToString.
    *
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare
@@ -179,7 +194,7 @@ public final class TestUtils {
   }
 
   /**
-   * assert that obj1 is not equal to obj2 and also their hashCode and ToString.
+   * Assert that obj1 is not equal to obj2 and also their hashCode and ToString.
    *
    * @param obj1 the Object to compare
    * @param obj2 the Object to compare

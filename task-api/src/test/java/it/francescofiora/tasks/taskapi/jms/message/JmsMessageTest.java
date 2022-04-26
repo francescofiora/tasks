@@ -39,19 +39,25 @@ class JmsMessageTest {
   }
 
   @Test
+  void equalsObjectVerifier() throws Exception {
+    Object message1 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
+    assertThat(message1).isNotEqualTo(new Object());
+  }
+
+  @Test
   void equalsVerifier() throws Exception {
     var message1 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message1);
-    assertThat(message1.equals(null)).isFalse();
-    assertThat(message1.equals(new Object())).isFalse();
+    JmsMessage message2 = null;
+    assertThat(message1).isNotEqualTo(message2);
 
-    var message2 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
-    TestUtils.checkEqualHashAndToString(message1, message2);
+    var message3 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
+    TestUtils.checkEqualHashAndToString(message1, message3);
 
-    message2 = new JmsMessage(RESPONSE, "notequals", TIMESTAMP);
-    TestUtils.checkNotEqualHashAndToString(message1, message2);
+    message3 = new JmsMessage(RESPONSE, "notequals", TIMESTAMP);
+    TestUtils.checkNotEqualHashAndToString(message1, message3);
 
-    message2 = new JmsMessage(RESPONSE, null, TIMESTAMP);
-    TestUtils.checkNotEqualHashAndToString(message1, message2);
+    message3 = new JmsMessage(RESPONSE, null, TIMESTAMP);
+    TestUtils.checkNotEqualHashAndToString(message1, message3);
   }
 }
