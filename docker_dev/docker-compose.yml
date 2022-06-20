@@ -49,10 +49,3 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=password
     ports:
       - "8085:8081"
-
-  tasks-sonarqube:
-    image: sonarqube:8.9.7-community
-    environment:
-      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-    ports:
-      - "9000:9000"

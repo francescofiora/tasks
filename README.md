@@ -1,7 +1,7 @@
 # Tasks
 Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
 
-# Topics covered
+### Topics covered
 - Spring Boot Rest Api
 - Spring Boot Batch
 - SSL connections
@@ -20,14 +20,29 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
 - JMX-HTTP
 
 # Getting Started
-### Using Docker to simplify development
-The purpose of this tutorial is a Producer consumer microservice, however I have added a Dockerfile for MySql + phpMyAdmin + ActiveMQ Artemis + MongoDb + Sonarqube.
-
 ### Compile
     ./gradlew clean build
 
-Check Reports available on task-api/build/reports/checkstyle/main.html and task-executor/build/reports/checkstyle/main.html
-Tests Reports available on task-api/build/reports/tests/test/index.html and task-executor/build/reports/tests/test/index.html
+### Dependency-Check
+    ./gradlew dependencyCheckAnalyze --info
+
+### Pitest
+    ./gradlew pitest
+
+### SonarQube
+Run SonarQube
+
+    docker-compose -f docker_dev/docker-compose-sonar.yml up
+
+ - Sonarqube (http://localhost:9000/)
+
+For SonarQube configuration follow this link: [Try Out SonarQube](https://docs.sonarqube.org/latest/setup/get-started-2-minutes/)
+
+Scan project
+
+    ./gradlew sonarqube \
+    -Dsonar.projectKey=yourProjectKey \
+    -Dsonar.login=yourAuthenticationToken
 
 ### Create artemis-debian image
  - Download Apache Artemis (https://activemq.apache.org/components/artemis/download/)
@@ -43,23 +58,14 @@ Tests Reports available on task-api/build/reports/tests/test/index.html and task
 
     docker image ls artemis-debian
 
-## Dependency-Check
-    ./gradlew dependencyCheckAnalyze --info
+### Using Docker for tests
+There is a docker compose file to run MySql, phpMyAdmin, ActiveMQ Artemis and MongoDb.
 
-## Pitest
-    ./gradlew pitest
-
-## SonarQube
-    ./gradlew sonarqube \
-    -Dsonar.projectKey=yourProjectKey \
-    -Dsonar.login=yourAuthenticationToken
-
-### Hot to execute applications in debug mode
     docker-compose -f docker_dev/docker-compose.yml up
+
+### Execute applications
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
     java -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
-
-it could be possible run applications using Eclipse 
 
 **Links**
  - http://localhost:8081/swagger-ui.html (Tasks-Api Swagger)
@@ -70,8 +76,6 @@ it could be possible run applications using Eclipse
  - http://localhost:8085/ (Mongo Express)
  - http://localhost:8161/console/login (ActiveMQ)
  - http://localhost:9000/ (Sonarqube)
-
-For SonarQube configuration follow this link: [Try Out SonarQube](https://docs.sonarqube.org/latest/setup/get-started-2-minutes/)
 
 ### Debug Support
 java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
@@ -86,8 +90,7 @@ Environment with SSL connection.
     cd docker
     ./create_all_certificates.sh
 
-### Hot to execute all applications with docker
-Docker images and self-signed certificates required
+### Execute all applications with docker
 
     docker-compose -f docker/docker-compose.yml up
 
@@ -99,7 +102,7 @@ Docker images and self-signed certificates required
  - http://localhost:8080/ (PhpMyAdmin)
  - https://localhost:8161/console/login (ActiveMQ)
 
-## reports
+### Reports
     task-api/build/reports/checkstyle/main.html
     task-api/build/reports/checkstyle/test.html
     task-api/build/reports/tests/test/index.html
