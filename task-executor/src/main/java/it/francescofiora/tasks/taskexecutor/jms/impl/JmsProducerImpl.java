@@ -2,6 +2,7 @@ package it.francescofiora.tasks.taskexecutor.jms.impl;
 
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.taskexecutor.jms.JmsProducer;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
@@ -12,16 +13,13 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JmsProducerImpl implements JmsProducer {
 
   @Value("${activemq.queue.response:QUEUE_RESPONSE}")
   private String destination;
 
   private final JmsTemplate jmsTemplate;
-
-  public JmsProducerImpl(JmsTemplate jmsTemplate) {
-    this.jmsTemplate = jmsTemplate;
-  }
 
   @Override
   public void send(MessageDtoResponse response) {

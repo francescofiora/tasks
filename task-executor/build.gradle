@@ -85,7 +85,8 @@ eclipse {
 pitest {
   timestampedReports = false
   junit5PluginVersion = '0.15'
-  excludedTestClasses = ['it.francescofiora.tasks.taskexecutor.tasklet.*']
+  excludedTestClasses = ['it.francescofiora.tasks.taskexecutor.tasklet.*',
+    'it.francescofiora.tasks.taskexecutor.jms.JmsConsumerTest']
 }
 
 dependencyCheck {

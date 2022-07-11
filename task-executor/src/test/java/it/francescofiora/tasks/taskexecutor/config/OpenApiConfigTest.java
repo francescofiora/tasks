@@ -1,4 +1,4 @@
-package it.francescofiora.tasks.taskapi.config;
+package it.francescofiora.tasks.taskexecutor.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,7 +18,7 @@ class OpenApiConfigTest {
   void testOpenApiConfig() {
     var openApi = new OpenApiConfig().customOpenApi();
 
-    assertThat(openApi.getInfo().getTitle()).isEqualTo("Tasks-Api Demo App");
+    assertThat(openApi.getInfo().getTitle()).isEqualTo("Tasks-Executor Demo App");
     assertThat(openApi.getInfo().getDescription())
         .isEqualTo("This is a sample Spring Boot RESTful service");
   }
