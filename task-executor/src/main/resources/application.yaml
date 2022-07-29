@@ -23,7 +23,7 @@ spring:
       password: ${APP_PASSWORD:password}
   datasource:
     url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/tasks}
-    username: ${DATASOURCE_USERNAME:root}
+    username: ${DATASOURCE_USERNAME:japp}
     password: ${DATASOURCE_PASSWORD:secret}
     hikari:
       connectionTimeout: 30000
@@ -40,6 +40,10 @@ spring:
           time_zone: UTC
         id:
           new_generator_mappings: false
+  liquibase:
+    user: ${DATASOURCE_ADMIN_USERNAME:jadmin}
+    password: ${DATASOURCE_ADMIN_PASSWORD:moresecret}
+    change-log: classpath:changelog/db.changelog.sql
   activemq:
     in-memory: false
     broker-url: ${BROKER_URL:tcp://localhost:61616}

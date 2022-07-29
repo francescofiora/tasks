@@ -8,6 +8,7 @@ plugins {
 
 def main_class = 'it.francescofiora.tasks.taskexecutor.Application'
 
+def liquibase_version = property('liquibase.version')
 def springdoc_openapi_version = parent.property('springdoc-openapi.version')
 def mysql_connector_version = parent.property('mysql_connector.version')
 def mapstruct_version = parent.property('mapstruct.version')
@@ -23,6 +24,8 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.springframework.boot:spring-boot-starter-activemq'
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+  implementation "org.liquibase:liquibase-core:${liquibase_version}"
 
   implementation "org.springdoc:springdoc-openapi-ui:${springdoc_openapi_version}"
   implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
