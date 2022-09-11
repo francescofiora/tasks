@@ -1,4 +1,4 @@
-package it.francescofiora.tasks.itt;
+package it.francescofiora.tasks.itt.container;
 
 import java.net.URI;
 import lombok.Getter;
@@ -54,7 +54,8 @@ public class SpringAplicationContainer extends GenericContainer<SpringAplication
   }
 
   public String getHttpPath(String path) {
-    return "http://" + getHost() + ":" + getFirstMappedPort() + path;
+    var http = "true".equals(super.getEnvMap().get("SSL_ENABLED")) ? "https" : "http";
+    return http + "://" + getHost() + ":" + getFirstMappedPort() + path;
   }
 
   public Long createAndReturnId(String path, String jsonBody) throws Exception {

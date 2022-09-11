@@ -27,6 +27,7 @@ def lombok_version = property('lombok.version')
 def logback_version = property('logback.version')
 def openpojo_version = property('openpojo.version')
 def apache_httpclient_version = property('apache-httpclient.version')
+def testcontainers_version = property('testcontainers.version')
 
 dependencies {
 
@@ -40,10 +41,11 @@ dependencies {
   implementation "org.springdoc:springdoc-openapi-ui:${springdoc_openapi_version}"
   implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
 
-  implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
   implementation "mysql:mysql-connector-java:${mysql_connector_version}"
 
-  implementation platform('org.testcontainers:testcontainers-bom:1.17.3')
+  implementation "org.apache.httpcomponents:httpclient:${apache_httpclient_version}"
+
+  implementation platform("org.testcontainers:testcontainers-bom:${testcontainers_version}")
 
   implementation "org.testcontainers:testcontainers"
 
@@ -57,7 +59,6 @@ dependencies {
 
   testImplementation "org.testcontainers:junit-jupiter"
   testImplementation 'org.testcontainers:mysql'
-  testImplementation "org.apache.httpcomponents:httpclient:${apache_httpclient_version}"
   
   testAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
 }
