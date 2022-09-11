@@ -1,20 +1,23 @@
 package it.francescofiora.tasks.util;
 
 import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * Dto Utils.
  */
-public interface DtoUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class DtoUtils {
 
   /**
-   * return true if obj1 and obj2 are same reference or they have same id.
+   * Return true if obj1 and obj2 are same reference or they have same id.
    *
    * @param obj1 DtoIdentifier
    * @param obj2 Object
    * @return true if obj1 and obj2 are same reference or they have same id
    */
-  static boolean equals(DtoIdentifier obj1, Object obj2) {
+  public static boolean equals(DtoIdentifier obj1, Object obj2) {
     if (obj1 == obj2) {
       return true;
     }
