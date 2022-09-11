@@ -6,16 +6,24 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=secret
-    command:
-      - '--config'
-      - '/etc/mongo.conf'
-      - '--bind_ip_all'
     ports:
       - '27017:27017'
     volumes:
       - tasks-mongodb-data:/data/db
-      - "./mongodb/mongo.conf:/etc/mongo.conf"
-      - "./certs:/etc/ssl"
+
+  tasks-mongoclient:
+    image: mongo-express:1.0.0-alpha.4
+    restart: unless-stopped
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
+      - ME_CONFIG_MONGODB_URL="mongodb://root:secret@tasks-mongodb:27017"
+      - ME_CONFIG_BASICAUTH_USERNAME=user
+      - ME_CONFIG_BASICAUTH_PASSWORD=password
+    ports:
+      - "8085:8081"
+    depends_on:
+      - tasks-mongodb
 
   tasks-activemq:
     image: artemis-debian
@@ -24,8 +32,6 @@ services:
       ARTEMIS_PASSWORD: artemis
       ANONYMOUS_LOGIN: "false"
       EXTRA_ARGS: "--http-host tasks-activemq --relax-jolokia"
-    volumes:
-      - "./artemis-instance:/var/lib/artemis-instance"
     ports:
       - "61616:61616"
       - "8161:8161"
@@ -36,9 +42,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - tasks-mysql-data:/var/lib/mysql
-      - "./mysql/conf.d:/etc/mysql/conf.d/"
-      - "./certs:/etc/certs"
-      - "./mysql/data:/docker-entrypoint-initdb.d"
+      - "./mysql:/docker-entrypoint-initdb.d"
     ports:
       - "3306:3306"
 
@@ -48,26 +52,17 @@ services:
       - PMA_HOST=tasks-mysql
       - PMA_USER=root
       - PMA_PASSWORD=secret
-    volumes:
-      - "./certs:/etc/certs"
-      - "./phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
     ports:
       - "8080:80"
+    depends_on:
+      - tasks-mysql
 
   tasks-api:
     image: francescofiora-task-api
     environment:
-      - "SPRING_PROFILES_ACTIVE=MongoSsl,AmqSsl,Logging"
-      - "SSL_ENABLED=true"
-      - "KEYSTORE_PASSWORD=mypass"
-      - "KEYSTORE_FILE=/workspace/config/tasks-api-keystore.jks"
-      - "TRUSTSTORE_PASSWORD=mypass"
-      - "TRUSTSTORE_FILE=/workspace/config/truststore.ts"
-      - "MONGODB_URI=mongodb://root:secret@tasks-mongodb:27017/?ssl=true"
-      - "BROKER_URL=ssl://tasks-activemq:61616"
-      - "BROKER_USER=tasksapi"
-    volumes:
-      - "./tasks-api:/workspace"
+      - "SPRING_PROFILES_ACTIVE=Logging"
+      - "MONGODB_URI=mongodb://root:secret@tasks-mongodb:27017"
+      - "BROKER_URL=tcp://tasks-activemq:61616"
     ports:
       - '8081:8081'
     depends_on:
@@ -77,17 +72,8 @@ services:
   task-executor:
     image: francescofiora-task-executor
     environment:
-      - "SPRING_PROFILES_ACTIVE=AmqSsl,Logging"
-      - "SSL_ENABLED=true"
-      - "KEYSTORE_PASSWORD=mypass"
-      - "KEYSTORE_FILE=/workspace/config/tasks-executor-keystore.jks"
-      - "TRUSTSTORE_PASSWORD=mypass"
-      - "TRUSTSTORE_FILE=/workspace/config/truststore.ts"
-      - "DATASOURCE_URL=jdbc:mysql://tasks-mysql:3306/tasks?verifyServerCertificate=true&useSSL=true&requireSSL=true&clientCertificateKeyStoreUrl=file:./config/tasks-executor-keystore.jks&clientCertificateKeyStorePassword=mypass&trustCertificateKeyStoreUrl=file:./config/truststore.ts&trustCertificateKeyStorePassword=mypass"
-      - "BROKER_URL=ssl://tasks-activemq:61616"
-      - "BROKER_USER=tasksexecutor"
-    volumes:
-      - "./tasks-executor:/workspace"
+      - "DATASOURCE_URL=jdbc:mysql://tasks-mysql:3306/tasks"
+      - "BROKER_URL=tcp://tasks-activemq:61616"
     ports:
       - '8082:8082'
     depends_on:
