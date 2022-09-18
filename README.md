@@ -17,6 +17,7 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
     - Services using Mockito
     - EndPoints using WebMvcTest
     - Pojos and Dtos using OpenPojo
+    - Integration test using TestContainers
 - JMX-HTTP
 
 # Getting Started
@@ -28,6 +29,26 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
 
 ### Pitest
     ./gradlew pitest
+
+### Reports
+    task-api/build/reports/checkstyle/main.html
+    task-api/build/reports/checkstyle/test.html
+    task-api/build/reports/tests/test/index.html
+    task-api/build/reports/jacoco/test/html/index.html
+    task-api/build/reports/dependency-check-report.html
+    task-api/build/reports/pitest/index.html
+    task-executor/build/reports/checkstyle/main.html
+    task-executor/build/reports/checkstyle/test.html
+    task-executor/build/reports/tests/test/index.html
+    task-executor/build/reports/jacoco/test/html/index.html
+    task-executor/build/reports/dependency-check-report.html
+    task-executor/build/reports/pitest/index.html
+    task-message/build/reports/checkstyle/main.html
+    task-message/build/reports/checkstyle/test.html
+    task-message/build/reports/tests/test/index.html
+    task-message/build/reports/jacoco/test/html/index.html
+    task-message/build/reports/dependency-check-report.html
+    task-message/build/reports/pitest/index.html
 
 ### SonarQube
 Run SonarQube
@@ -59,7 +80,7 @@ Scan project
     docker image ls artemis-debian
 
 ### Using Docker for tests
-There is a docker compose file to run MySql, phpMyAdmin, ActiveMQ Artemis and MongoDb.
+There is a docker compose file to run MySql, phpMyAdmin, ActiveMQ Artemis, MongoDb and Mongo Express.
 
     docker-compose -f docker_dev/docker-compose.yml up
 
@@ -81,47 +102,18 @@ There is a docker compose file to run MySql, phpMyAdmin, ActiveMQ Artemis and Mo
 java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
 
 ## System Integration Test environment
-Environment with SSL connection.
 
 ### Create docker images
     ./gradlew jibDockerBuild
 
-### Create self-signed certificates
-    cd docker
-    ./create_all_certificates.sh
-
-### Execute all applications with docker
+### Manul tests - execute all applications with docker
 
     docker-compose -f docker/docker-compose.yml up
 
-**Links**
- - https://localhost:8081/swagger-ui.html (Tasks-Api Swagger)
- - https://localhost:8081/actuator (Tasks-Api /info,/health,/jolokia)
- - https://localhost:8082/swagger-ui.html (Tasks-Executor Swagger)
- - https://localhost:8082/actuator (Tasks-Executor /info,/health,/jolokia)
- - http://localhost:8080/ (PhpMyAdmin)
- - https://localhost:8161/console/login (ActiveMQ)
+### Integration Test
 
-### Reports
-    task-api/build/reports/checkstyle/main.html
-    task-api/build/reports/checkstyle/test.html
-    task-api/build/reports/tests/test/index.html
-    task-api/build/reports/jacoco/test/html/index.html
-    task-api/build/reports/dependency-check-report.html
-    task-api/build/reports/pitest/index.html
-    task-executor/build/reports/checkstyle/main.html
-    task-executor/build/reports/checkstyle/test.html
-    task-executor/build/reports/tests/test/index.html
-    task-executor/build/reports/jacoco/test/html/index.html
-    task-executor/build/reports/dependency-check-report.html
-    task-executor/build/reports/pitest/index.html
-    task-message/build/reports/checkstyle/main.html
-    task-message/build/reports/checkstyle/test.html
-    task-message/build/reports/tests/test/index.html
-    task-message/build/reports/jacoco/test/html/index.html
-    task-message/build/reports/dependency-check-report.html
-    task-message/build/reports/pitest/index.html
-    
+    cd task-integration-test/
+    ./gradlew clean build
 
 # Technologies used
 - [Gradle 7.0](https://gradle.org/)
@@ -146,3 +138,4 @@ Environment with SSL connection.
 - [Jacoco 0.8](https://www.jacoco.org/)
 - [Pitest 1.7](https://pitest.org/)
 - [Jolokia 1.7](https://jolokia.org/)
+- [TestContainers 1.17](https://www.testcontainers.org/)
