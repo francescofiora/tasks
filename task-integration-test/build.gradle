@@ -1,11 +1,10 @@
 plugins {
   id 'java'
   id 'eclipse-wtp'
-  id 'org.springframework.boot' version '2.6.7'
-  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'org.springframework.boot' version '2.6.11'
+  id 'io.spring.dependency-management' version '1.0.13.RELEASE'
   id 'checkstyle'
   id 'jacoco'
-  id 'info.solidsoft.pitest' version '1.7.0'
   id 'org.owasp.dependencycheck' version '6.2.2'
   id 'org.sonarqube' version '3.3'
  }
@@ -135,11 +134,6 @@ jacocoTestReport {
     html.destination file("${buildDir}/reports/jacoco/test")
     xml.destination  file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
   }
-}
-
-pitest {
-  timestampedReports = false
-  junit5PluginVersion = '0.15'
 }
 
 wrapper {
