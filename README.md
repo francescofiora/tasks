@@ -4,12 +4,13 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
 ### Topics covered
 - Spring Boot Rest Api
 - Spring Boot Batch
+- Spring Cloud Netflix
 - SSL connections
 - JMS(Java Message Service)
 - Swagger UI for visualizing APIs
 - Error Handling
 - Basic Authentication
-- Mapper for POJO<->DTO 
+- Mapper for POJO<->DTO
 - Logging
 - Testing
     - Repositories using DataJpaTest
@@ -18,7 +19,6 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
     - EndPoints using WebMvcTest
     - Pojos and Dtos using OpenPojo
     - Integration test using TestContainers
-- JMX-HTTP
 
 # Getting Started
 ### Compile
@@ -49,6 +49,11 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
     task-message/build/reports/jacoco/test/html/index.html
     task-message/build/reports/dependency-check-report.html
     task-message/build/reports/pitest/index.html
+    task-eureka/build/reports/checkstyle/main.html
+    task-eureka/build/reports/checkstyle/test.html
+    task-eureka/build/reports/tests/test/index.html
+    task-eureka/build/reports/jacoco/test/index.html
+
 
 ### SonarQube
 Run SonarQube
@@ -85,6 +90,7 @@ There is a docker compose file to run MySql, phpMyAdmin, ActiveMQ Artemis, Mongo
     docker-compose -f docker_dev/docker-compose.yml up
 
 ### Execute applications
+    java -jar task-eureka/build/libs/task-eureka-1.0-SNAPSHOT.jar
     java -jar task-api/build/libs/task-api-1.0-SNAPSHOT.jar
     java -jar task-executor/build/libs/task-executor-1.0-SNAPSHOT.jar
 
@@ -96,6 +102,7 @@ There is a docker compose file to run MySql, phpMyAdmin, ActiveMQ Artemis, Mongo
  - http://localhost:8080/ (PhpMyAdmin)
  - http://localhost:8085/ (Mongo Express)
  - http://localhost:8161/console/login (ActiveMQ)
+ - http://localhost:8761/ (Eureka)
  - http://localhost:9000/ (Sonarqube)
 
 ### Debug Support
@@ -122,6 +129,7 @@ java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar tas
 - [Spring Batch 4.2](https://spring.io/projects/spring-batch)
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Swagger OpeApi 3.0](https://swagger.io/specification/)
+- [Spring Cloud Netflix](https://spring.io/projects/spring-cloud-netflix)
 - [Mapstruct 1.4](https://mapstruct.org/)
 - [Lombok 1.18](https://projectlombok.org/)
 - [Spring Data JPA](https://projects.spring.io/spring-data-jpa)

@@ -16,6 +16,16 @@ def lombok_version = parent.property('lombok.version')
 def logback_version = parent.property('logback.version')
 def openpojo_version = parent.property('openpojo.version')
 
+ext {
+	set('springCloudVersion', "2021.0.4")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.springframework.boot:spring-boot-starter-batch'
@@ -29,6 +39,10 @@ dependencies {
 
   implementation "org.springdoc:springdoc-openapi-ui:${springdoc_openapi_version}"
   implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
+
+  implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+  implementation 'org.springframework.cloud:spring-cloud-starter-config'
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
   implementation "org.jolokia:jolokia-core"
 

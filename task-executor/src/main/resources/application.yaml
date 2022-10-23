@@ -7,11 +7,13 @@ server:
   error:
     path: errorPath
   ssl:
-    key-store: file:${KEYSTORE_FILE}
-    key-store-password: ${KEYSTORE_PASSWORD}
+    key-store: file:${KEYSTORE_FILE:}
+    key-store-password: ${KEYSTORE_PASSWORD:}
     enabled: ${SSL_ENABLED:false}
 
 spring:
+  application:
+    name: tasks-executor
   profiles:
     active: Logging
   batch:
@@ -77,3 +79,10 @@ management:
       enabled: true
     jolokia:
       enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://user:password@localhost:8761/eureka}
+  instance:
+    preferIpAddress: true

@@ -16,6 +16,16 @@ def openpojo_version = parent.property('openpojo.version')
 def apache_httpclient_version = parent.property('apache-httpclient.version')
 def mongo_version = parent.property('mongo.version')
 
+ext {
+	set('springCloudVersion', "2021.0.4")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -26,6 +36,10 @@ dependencies {
 
   implementation "org.springdoc:springdoc-openapi-ui:${springdoc_openapi_version}"
   implementation "org.springdoc:springdoc-openapi-data-rest:${springdoc_openapi_version}"
+
+  implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+  implementation 'org.springframework.cloud:spring-cloud-starter-config'
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
   implementation "org.jolokia:jolokia-core"
 
