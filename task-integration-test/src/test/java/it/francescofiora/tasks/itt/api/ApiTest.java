@@ -16,8 +16,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 
 @Slf4j
@@ -26,10 +24,9 @@ class ApiTest extends AbstractTestContainer {
   private static final String BROKER_URL = "tcp://tasks-activemq:61616";
   private static final String DATASOURCE_URL = "jdbc:mysql://tasks-mysql:3306/tasks";
   private static final String MONGODB_URI = "mongodb://root:secret@tasks-mongodb:27017";
+  private static final String EUREKA_SERVER = "task-eureka";
+  private static final String EUREKA_URI = "http://user:password@task-eureka:8761/eureka";
 
-  private static MySQLContainer<?> mySqlContainer;
-  private static GenericContainer<?> myMongoDBContainer;
-  private static GenericContainer<?> myArtemis;
   private static SpringAplicationContainer taskExecutor;
   private static SpringAplicationContainer taskApi;
 
@@ -39,14 +36,23 @@ class ApiTest extends AbstractTestContainer {
 
   @BeforeAll
   public static void init() {
-    mySqlContainer = containerGenerator.createMySqlContainer();
+    var mySqlContainer = containerGenerator.createMySqlContainer();
     containers.add(mySqlContainer);
 
-    myArtemis = containerGenerator.createArtemisContainer();
-    containers.add(myArtemis);
+    var artemis = containerGenerator.createArtemisContainer();
+    containers.add(artemis);
 
-    myMongoDBContainer = containerGenerator.createMongoDbContainer();
-    containers.add(myMongoDBContainer);
+    var mongoDbContainer = containerGenerator.createMongoDbContainer();
+    containers.add(mongoDbContainer);
+
+    // @formatter:off
+    var eureka = containerGenerator
+        .createSpringAplicationContainer("francescofiora-task-eureka")
+        .withEnv("EUREKA_SERVER", EUREKA_SERVER)
+        .withNetworkAliases(EUREKA_SERVER)
+        .withExposedPorts(8761);
+    // @formatter:on
+    containers.add(eureka);
 
     // @formatter:off
     taskExecutor = containerGenerator
@@ -55,6 +61,7 @@ class ApiTest extends AbstractTestContainer {
         .withEnv("BROKER_URL", BROKER_URL)
         .withEnv("DATASOURCE_ADMIN_USERNAME", ContainerGenerator.MYSQL_USER_ADMIN)
         .withEnv("DATASOURCE_ADMIN_PASSWORD", ContainerGenerator.MYSQL_PASSWORD_ADMIN)
+        .withEnv("EUREKA_URI", EUREKA_URI)
         .withUsername(USER)
         .withPassword(PASSWORD)
         .withLogConsumer(new Slf4jLogConsumer(log))
@@ -69,6 +76,7 @@ class ApiTest extends AbstractTestContainer {
         .withEnv("BROKER_URL", BROKER_URL)
         .withUsername(USER)
         .withPassword(PASSWORD)
+        .withEnv("EUREKA_URI", EUREKA_URI)
         .withLogConsumer(new Slf4jLogConsumer(log))
         .withExposedPorts(8081);
     // @formatter:on
