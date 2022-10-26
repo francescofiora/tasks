@@ -19,6 +19,9 @@ Producer consumer microservice tutorial with Spring Boot and ActiveMQ Artemis.
     - EndPoints using WebMvcTest
     - Pojos and Dtos using OpenPojo
     - Integration test using TestContainers
+- Monitoring
+    - Netflix Eureka service
+    - Prometheus
 
 # Getting Started
 ### Compile
@@ -110,12 +113,15 @@ java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar tas
 
 ## System Integration Test environment
 
-### Create docker images
+### Create Docker images
     ./gradlew jibDockerBuild
 
-### Manul tests - execute all applications with docker
+### Manual tests - execute all applications with Docker
 
     docker-compose -f docker/docker-compose.yml up
+
+### Manual tests - Prometheus with Docker
+    docker-compose -f docker/docker-compose-metrics.yml up
 
 ### Integration Test
 
@@ -130,6 +136,7 @@ java -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y -jar tas
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Swagger OpeApi 3.0](https://swagger.io/specification/)
 - [Spring Cloud Netflix](https://spring.io/projects/spring-cloud-netflix)
+- [Micrometer Prometheus 1.9](https://micrometer.io/docs/registry/prometheus)
 - [Mapstruct 1.4](https://mapstruct.org/)
 - [Lombok 1.18](https://projectlombok.org/)
 - [Spring Data JPA](https://projects.spring.io/spring-data-jpa)
