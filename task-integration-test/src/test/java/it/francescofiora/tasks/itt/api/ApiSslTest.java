@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import it.francescofiora.tasks.itt.container.SpringAplicationContainer;
 import it.francescofiora.tasks.itt.container.StartStopContainers;
+import it.francescofiora.tasks.itt.ssl.CertificateGenerator;
 import it.francescofiora.tasks.itt.util.ContainerGenerator;
 import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -25,8 +27,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.BindMode;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 
 @Slf4j
@@ -40,12 +40,12 @@ class ApiSslTest extends AbstractTestContainer {
       + "&trustCertificateKeyStoreUrl=file:./config/truststore.ts"
       + "&trustCertificateKeyStorePassword=mypass";
   private static final String MONGODB_URI = "mongodb://root:secret@tasks-mongodb:27017/?ssl=true";
+  private static final String EUREKA_URI =
+      "http://" + USER + ":" + PASSWORD + "@" + ContainerGenerator.TASKS_EUREKA + ":8761/eureka";
 
-  private static MySQLContainer<?> mySqlContainer;
-  private static GenericContainer<?> myMongoDBContainer;
-  private static GenericContainer<?> myArtemis;
   private static SpringAplicationContainer taskExecutor;
   private static SpringAplicationContainer taskApi;
+  private static SpringAplicationContainer eureka;
 
   private static StartStopContainers containers = new StartStopContainers();
   private static ContainerGenerator containerGenerator = new ContainerGenerator(true);
@@ -64,14 +64,26 @@ class ApiSslTest extends AbstractTestContainer {
   public static void init() throws Exception {
     containerGenerator.useSsl();
 
-    mySqlContainer = containerGenerator.createMySqlContainer();
-    containers.add(mySqlContainer);
+    var mySql = containerGenerator.createMySqlContainer();
+    containers.add(mySql);
 
-    myArtemis = containerGenerator.createArtemisContainer();
-    containers.add(myArtemis);
+    var artemis = containerGenerator.createArtemisContainer();
+    containers.add(artemis);
 
-    myMongoDBContainer = containerGenerator.createMongoDbContainer();
-    containers.add(myMongoDBContainer);
+    var mongoDb = containerGenerator.createMongoDbContainer();
+    containers.add(mongoDb);
+
+    // @formatter:off
+    eureka = containerGenerator
+        .createSpringAplicationContainer("francescofiora-task-eureka")
+        .withEnv("EUREKA_SERVER", ContainerGenerator.TASKS_EUREKA)
+        .withNetworkAliases(ContainerGenerator.TASKS_EUREKA)
+        .withUsername(USER)
+        .withPassword(PASSWORD)
+        .withLogConsumer(new Slf4jLogConsumer(log))
+        .withExposedPorts(8761);
+    // @formatter:on
+    containers.add(eureka);
 
     var tmpDir = containerGenerator.getTmpDir();
 
@@ -80,15 +92,16 @@ class ApiSslTest extends AbstractTestContainer {
         .createSpringAplicationContainer("francescofiora-task-executor")
         .withEnv("SPRING_PROFILES_ACTIVE", "AmqSsl,Logging")
         .withEnv("SSL_ENABLED", "true")
-        .withEnv("KEYSTORE_PASSWORD", "mypass")
+        .withEnv("KEYSTORE_PASSWORD", CertificateGenerator.PASSWORD)
         .withEnv("KEYSTORE_FILE", "/workspace/config/tasks-executor-keystore.jks")
-        .withEnv("TRUSTSTORE_PASSWORD", "mypass")
+        .withEnv("TRUSTSTORE_PASSWORD", CertificateGenerator.PASSWORD)
         .withEnv("TRUSTSTORE_FILE", "/workspace/config/truststore.ts")
         .withEnv("DATASOURCE_URL", DATASOURCE_URL)
         .withEnv("DATASOURCE_ADMIN_USERNAME", ContainerGenerator.MYSQL_USER_ADMIN)
         .withEnv("DATASOURCE_ADMIN_PASSWORD", ContainerGenerator.MYSQL_PASSWORD_ADMIN)
         .withEnv("BROKER_URL", BROKER_URL)
         .withEnv("BROKER_USER", "tasksexecutor")
+        .withEnv("EUREKA_URI", EUREKA_URI)
         .withUsername(USER)
         .withPassword(PASSWORD)
         .withLogConsumer(new Slf4jLogConsumer(log))
@@ -106,13 +119,14 @@ class ApiSslTest extends AbstractTestContainer {
         .createSpringAplicationContainer("francescofiora-task-api")
         .withEnv("SPRING_PROFILES_ACTIVE", "MongoSsl,AmqSsl,Logging")
         .withEnv("SSL_ENABLED", "true")
-        .withEnv("KEYSTORE_PASSWORD", "mypass")
+        .withEnv("KEYSTORE_PASSWORD", CertificateGenerator.PASSWORD)
         .withEnv("KEYSTORE_FILE", "/workspace/config/tasks-api-keystore.jks")
-        .withEnv("TRUSTSTORE_PASSWORD", "mypass")
+        .withEnv("TRUSTSTORE_PASSWORD", CertificateGenerator.PASSWORD)
         .withEnv("TRUSTSTORE_FILE", "/workspace/config/truststore.ts")
         .withEnv("MONGODB_URI", MONGODB_URI)
         .withEnv("BROKER_URL", BROKER_URL)
         .withEnv("BROKER_USER", "tasksapi")
+        .withEnv("EUREKA_URI", EUREKA_URI)
         .withUsername(USER)
         .withPassword(PASSWORD)
         .withLogConsumer(new Slf4jLogConsumer(log))
@@ -131,12 +145,39 @@ class ApiSslTest extends AbstractTestContainer {
     assertTrue(containers.areRunning());
 
     var result = taskApi.performGet(HEALTH_URI);
-    assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(result.getBody()).contains("UP");
+    assertUp(result);
 
     result = taskExecutor.performGet(HEALTH_URI);
-    assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(result.getBody()).contains("UP");
+    assertUp(result);
+
+    result = eureka.performGet(HEALTH_URI);
+    assertUp(result);
+  }
+
+  @Test
+  void testEureka() throws Exception {
+    Set<String> chek = new HashSet<>();
+    chek.add(taskApi.getContainerInfo().getNetworkSettings().getNetworks().values().iterator()
+        .next().getIpAddress());
+    chek.add(taskExecutor.getContainerInfo().getNetworkSettings().getNetworks().values().iterator()
+        .next().getIpAddress());
+    var max = 50;
+    while (!chek.isEmpty() && max > 0) {
+      max--;
+      var result = eureka.performGet(EUREKA_APPS);
+      assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+      for (Iterator<String> itr = chek.iterator(); itr.hasNext();) {
+        if (result.getBody().contains(itr.next())) {
+          itr.remove();
+        }
+        try {
+          Thread.sleep(100);
+        } catch (InterruptedException e) {
+          log.error(e.getMessage());
+        }
+      }
+    }
+    assertThat(chek).isEmpty();
   }
 
   @Test

@@ -23,6 +23,8 @@ public class ContainerGenerator {
   private CertificateGenerator generator;
   private final boolean useSsl;
 
+  public static final String ETC_EXTRA = File.separator + "etcextra";
+
   public static final String MYSQL_USER_ADMIN = "japp";
   public static final String MYSQL_PASSWORD_ADMIN = "secret";
 
@@ -31,6 +33,7 @@ public class ContainerGenerator {
   public static final String TASKS_ACTIVEMQ = "tasks-activemq";
   public static final String TASKS_EXECUTOR = "tasks-executor";
   public static final String TASKS_API = "tasks-api";
+  public static final String TASKS_EUREKA = "tasks-eureka";
 
   @Getter
   private String tmpDir = "";
@@ -58,14 +61,13 @@ public class ContainerGenerator {
     generator.appendCertificate(TASKS_MONGODB);
 
     var fromPath = generator.getFullPath(CertificateGenerator.TRUSTSTORE);
-    var toPath = UtilResource.getResourceFile("artemis") + File.separator + "etcextra"
-        + File.separator + CertificateGenerator.TRUSTSTORE;
+    var toPath = UtilResource.getResourceFile("artemis") + ETC_EXTRA + File.separator
+        + CertificateGenerator.TRUSTSTORE;
     Files.copy(new File(fromPath), new File(toPath));
 
     var name = String.format(CertificateGenerator.KEY_STORE_JKS_FILE, TASKS_ACTIVEMQ);
     fromPath = generator.getFullPath(name);
-    toPath = UtilResource.getResourceFile("artemis") + File.separator + "etcextra" + File.separator
-        + name;
+    toPath = UtilResource.getResourceFile("artemis") + ETC_EXTRA + File.separator + name;
     Files.copy(new File(fromPath), new File(toPath));
   }
 
@@ -113,7 +115,7 @@ public class ContainerGenerator {
       artemis.start();
       artemis.stop();
       try {
-        FileUtils.copyDirectory(new File(artemisInstance + File.separator + "etcextra"),
+        FileUtils.copyDirectory(new File(artemisInstance + ETC_EXTRA),
             new File(artemisInstance + File.separator + "etc"));
       } catch (IOException e) {
         e.printStackTrace();

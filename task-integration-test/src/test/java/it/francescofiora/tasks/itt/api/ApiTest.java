@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,32 +25,34 @@ class ApiTest extends AbstractTestContainer {
   private static final String BROKER_URL = "tcp://tasks-activemq:61616";
   private static final String DATASOURCE_URL = "jdbc:mysql://tasks-mysql:3306/tasks";
   private static final String MONGODB_URI = "mongodb://root:secret@tasks-mongodb:27017";
-  private static final String EUREKA_SERVER = "task-eureka";
-  private static final String EUREKA_URI = "http://user:password@task-eureka:8761/eureka";
+  private static final String EUREKA_URI =
+      "http://" + USER + ":" + PASSWORD + "@" + ContainerGenerator.TASKS_EUREKA + ":8761/eureka";
 
   private static SpringAplicationContainer taskExecutor;
   private static SpringAplicationContainer taskApi;
+  private static SpringAplicationContainer eureka;
 
   private static StartStopContainers containers = new StartStopContainers();
-
   private static ContainerGenerator containerGenerator = new ContainerGenerator(false);
 
   @BeforeAll
   public static void init() {
-    var mySqlContainer = containerGenerator.createMySqlContainer();
-    containers.add(mySqlContainer);
+    var mySql = containerGenerator.createMySqlContainer();
+    containers.add(mySql);
 
     var artemis = containerGenerator.createArtemisContainer();
     containers.add(artemis);
 
-    var mongoDbContainer = containerGenerator.createMongoDbContainer();
-    containers.add(mongoDbContainer);
+    var mongoDb = containerGenerator.createMongoDbContainer();
+    containers.add(mongoDb);
 
     // @formatter:off
-    var eureka = containerGenerator
+    eureka = containerGenerator
         .createSpringAplicationContainer("francescofiora-task-eureka")
-        .withEnv("EUREKA_SERVER", EUREKA_SERVER)
-        .withNetworkAliases(EUREKA_SERVER)
+        .withEnv("EUREKA_SERVER", ContainerGenerator.TASKS_EUREKA)
+        .withNetworkAliases(ContainerGenerator.TASKS_EUREKA)
+        .withUsername(USER)
+        .withPassword(PASSWORD)
         .withExposedPorts(8761);
     // @formatter:on
     containers.add(eureka);
@@ -88,16 +91,43 @@ class ApiTest extends AbstractTestContainer {
     assertTrue(containers.areRunning());
 
     var result = taskApi.performGet(HEALTH_URI);
-    assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(result.getBody()).contains("UP");
+    assertUp(result);
 
     result = taskExecutor.performGet(HEALTH_URI);
-    assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(result.getBody()).contains("UP");
+    assertUp(result);
+
+    result = eureka.performGet(HEALTH_URI);
+    assertUp(result);
   }
 
   @Test
-  void test() throws Exception {
+  void testEureka() throws Exception {
+    Set<String> chek = new HashSet<>();
+    chek.add(taskApi.getContainerInfo().getNetworkSettings().getNetworks().values().iterator()
+        .next().getIpAddress());
+    chek.add(taskExecutor.getContainerInfo().getNetworkSettings().getNetworks().values().iterator()
+        .next().getIpAddress());
+    var max = 50;
+    while (!chek.isEmpty() && max > 0) {
+      max--;
+      var result = eureka.performGet(EUREKA_APPS);
+      assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+      for (Iterator<String> itr = chek.iterator(); itr.hasNext();) {
+        if (result.getBody().contains(itr.next())) {
+          itr.remove();
+        }
+        try {
+          Thread.sleep(100);
+        } catch (InterruptedException e) {
+          log.error(e.getMessage());
+        }
+      }
+    }
+    assertThat(chek).isEmpty();
+  }
+
+  @Test
+  void testTasks() throws Exception {
     Map<Long, String> tasks = new HashMap<>();
 
     for (var i = 0; i < 10; i++) {

@@ -19,7 +19,7 @@ public class CertificateGenerator {
       PosixFilePermissions.fromString("r--r--r--");
   private static final int KEY_LENGHT = 2048;
   private static final int DAYS = 3600;
-  private static final String PASSWORD = "mypass";
+  public static final String PASSWORD = "mypass";
   private static final String ROOT_CERT_KEY = "ca-key.pem";
   private static final String ROOT_CERT = "ca.pem";
   public static final String TRUSTSTORE = "truststore.ts";
