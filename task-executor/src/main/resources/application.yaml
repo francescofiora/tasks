@@ -67,22 +67,19 @@ activemq:
 
 management:
   endpoints:
-    enabled-by-default: false
     web:
      base-path: /actuator
      exposure:
-       include: info,health,jolokia
-  endpoint:
-    info:
-      enabled: true
-    health:
-      enabled: true
-    jolokia:
-      enabled: true
+       include: info,health,metrics,prometheus
 
 eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://user:password@localhost:8761/eureka}
   instance:
-    preferIpAddress: true
+    secure-port-enabled: ${EUREKA_SECURE:false}
+    non-secure-port-enabled: ${EUREKA_NOSECURE:true}
+    metadata-map:
+      metrics.path: /actuator/prometheus
+      health.path: /actuator/health
+      management.context-path: /actuator

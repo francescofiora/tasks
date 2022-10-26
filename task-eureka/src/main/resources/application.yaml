@@ -1,5 +1,11 @@
 server:
   port: 8761
+  servlet:
+    context-path: /
+  ssl:
+    key-store: file:${KEYSTORE_FILE:}
+    key-store-password: ${KEYSTORE_PASSWORD:}
+    enabled: ${SSL_ENABLED:false}
 
 spring:
   security:
@@ -7,9 +13,18 @@ spring:
       name: ${EUREKA_USER:user}
       password: ${EUREKA_PASSWORD:password}
 
+management:
+  endpoints:
+    web:
+     base-path: /actuator
+     exposure:
+       include: info,health,metrics,prometheus
+
 eureka:
   instance:
     hostname: ${EUREKA_SERVER:localhost}
+    metadata-map:
+      metrics.path: /actuator/prometheus
   client:
     registerWithEureka: false
     fetchRegistry: false

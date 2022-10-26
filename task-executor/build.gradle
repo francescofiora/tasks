@@ -15,6 +15,7 @@ def mapstruct_version = parent.property('mapstruct.version')
 def lombok_version = parent.property('lombok.version')
 def logback_version = parent.property('logback.version')
 def openpojo_version = parent.property('openpojo.version')
+def micrometer_prometheus_version = parent.property('micrometer-prometheus.version')
 
 ext {
 	set('springCloudVersion', "2021.0.4")
@@ -44,7 +45,7 @@ dependencies {
   implementation 'org.springframework.cloud:spring-cloud-starter-config'
   implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-  implementation "org.jolokia:jolokia-core"
+  implementation "io.micrometer:micrometer-registry-prometheus:${micrometer_prometheus_version}"
 
   implementation 'org.messaginghub:pooled-jms'
 

@@ -6,6 +6,7 @@ plugins {
 }
 
 def main_class = 'it.francescofiora.tasks.eureka.TaskEurekaApplication'
+def micrometer_prometheus_version = parent.property('micrometer-prometheus.version')
 
 ext {
 	set('springCloudVersion', "2021.0.4")
@@ -20,6 +21,9 @@ dependencyManagement {
 dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
   implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+  implementation "io.micrometer:micrometer-registry-prometheus:${micrometer_prometheus_version}"
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
