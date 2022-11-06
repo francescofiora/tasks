@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Tag(name = "task-executor", description = "Task Executor Rest API")
-@RequestMapping("/tasks-executor/api/v1")
+@RequestMapping("/api/v1")
 public class TaskExecutorApi extends AbstractApi {
 
   private static final String ENTITY_NAME = "TaskExecutorDto";

@@ -32,9 +32,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class TasksApiTest extends AbstractTestApi {
 
   private static final Long ID = 1L;
-  private static final String TASKS_URI = "/tasks-api/api/v1/tasks";
-  private static final String TASKS_ID_URI = "/tasks-api/api/v1/tasks/{id}";
-  private static final String WRONG_URI = "/tasks-api/api/v1/wrong";
+  private static final String TASKS_URI = "/api/v1/tasks";
+  private static final String TASKS_ID_URI = "/api/v1/tasks/{id}";
+  private static final String WRONG_URI = "/api/v1/wrong";
 
   @MockBean
   private TaskService taskService;

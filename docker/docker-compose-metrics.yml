@@ -32,10 +32,10 @@ services:
     ports:
       - "3306:3306"
 
-  task-eureka:
+  tasks-eureka:
     image: francescofiora-task-eureka
     environment:
-      - "EUREKA_SERVER=task-eureka"
+      - "EUREKA_SERVER=tasks-eureka"
     ports:
       - "8761:8761"
 
@@ -51,7 +51,7 @@ services:
     ports:
       - "9090:9090"
     depends_on:
-      - task-eureka
+      - tasks-eureka
 
   tasks-api:
     image: francescofiora-task-api
@@ -59,26 +59,26 @@ services:
       - "SPRING_PROFILES_ACTIVE=Logging"
       - "MONGODB_URI=mongodb://root:secret@tasks-mongodb:27017"
       - "BROKER_URL=tcp://tasks-activemq:61616"
-      - "EUREKA_URI=http://user:password@task-eureka:8761/eureka"
+      - "EUREKA_URI=http://user:password@tasks-eureka:8761/eureka"
     ports:
       - '8081:8081'
     depends_on:
       - tasks-mongodb
       - tasks-activemq
-      - task-eureka
+      - tasks-eureka
 
   task-executor:
     image: francescofiora-task-executor
     environment:
       - "DATASOURCE_URL=jdbc:mysql://tasks-mysql:3306/tasks"
       - "BROKER_URL=tcp://tasks-activemq:61616"
-      - "EUREKA_URI=http://user:password@task-eureka:8761/eureka"
+      - "EUREKA_URI=http://user:password@tasks-eureka:8761/eureka"
     ports:
       - '8082:8082'
     depends_on:
       - tasks-mysql
       - tasks-activemq
-      - task-eureka
+      - tasks-eureka
 
 volumes:
   tasks-mysql-data:
