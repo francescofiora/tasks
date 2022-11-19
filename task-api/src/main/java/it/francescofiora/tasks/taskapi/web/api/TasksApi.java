@@ -13,7 +13,6 @@ import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
 import it.francescofiora.tasks.taskapi.web.errors.BadRequestAlertException;
-import java.net.URISyntaxException;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +49,6 @@ public class TasksApi extends AbstractApi {
    * @param taskDto the taskDto to create.
    * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new
    *         taskDto, or with status {@code 400 (Bad Request)} if the task has already an ID.
-   * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
   @Operation(summary = "Add new Task", description = "Add a new Task to the system",
       tags = {"task"})
@@ -59,8 +57,7 @@ public class TasksApi extends AbstractApi {
       @ApiResponse(responseCode = "409", description = "An existing Task already exists")})
   @PostMapping("/tasks")
   public ResponseEntity<Void> createTask(
-      @Parameter(description = "Add new Task") @Valid @RequestBody NewTaskDto taskDto)
-      throws URISyntaxException {
+      @Parameter(description = "Add new Task") @Valid @RequestBody NewTaskDto taskDto) {
     var result = taskService.create(taskDto);
     return postResponse("/api/v1/tasks/" + result.getId(), result.getId());
   }
@@ -138,7 +135,6 @@ public class TasksApi extends AbstractApi {
    * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with status
    *         {@code 400 (Bad Request)} if the taskDto is not valid, or with status
    *         {@code 500 (Internal Server Error)} if the taskDto couldn't be deleted.
-   * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
   @Operation(summary = "delete Task", description = "delete an Task to the system", tags = {"task"})
   @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Task deleted"),
@@ -146,7 +142,7 @@ public class TasksApi extends AbstractApi {
       @ApiResponse(responseCode = "404", description = "not found")})
   @DeleteMapping("/tasks/{id}")
   public ResponseEntity<Void> deleteTask(@Parameter(description = "id of the task to delete",
-      required = true, example = "1") @PathVariable Long id) throws URISyntaxException {
+      required = true, example = "1") @PathVariable Long id) {
     taskService.delete(id);
     return deleteResponse(id);
   }
