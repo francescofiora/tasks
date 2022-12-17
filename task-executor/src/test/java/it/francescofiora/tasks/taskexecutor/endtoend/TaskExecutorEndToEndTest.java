@@ -37,18 +37,18 @@ class TaskExecutorEndToEndTest extends AbstractTestEndToEnd {
   private TaskService taskService;
 
   @Test
-  void testAuth() throws Exception {
+  void testAuth() {
     testUnauthorized(TASKS_URI);
   }
 
   @Test
-  void testGetTaskBadRequest() throws Exception {
+  void testGetTaskBadRequest() {
     assertGetBadRequest(TASKS_URI + "/999999999999999999999999", String.class, "id.badRequest",
         PARAM_NOT_VALID_LONG);
   }
 
   @Test
-  void testGetTask() throws Exception {
+  void testGetTask() {
     var task = TestUtils.createLongTask();
     task.setParameters(Set.of(new Parameter().name("name").value("value")));
     task = taskService.save(task);

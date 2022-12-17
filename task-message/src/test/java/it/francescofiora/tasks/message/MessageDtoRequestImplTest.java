@@ -62,7 +62,7 @@ class MessageDtoRequestImplTest {
   }
 
   @Test
-  void equalsVerifier() throws Exception {
+  void equalsVerifier() {
     var request1 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
     var request2 = buildRequest(ID, TASK_TYPE, KEY, VALUE);
     TestUtils.checkEqualHashAndToString(request1, request2);
@@ -75,7 +75,7 @@ class MessageDtoRequestImplTest {
   }
 
   @Test
-  void addParameters() throws Exception {
+  void addParameters() {
     // @formatter:off
     var request = new MessageDtoRequestImpl()
         .addParameters(null)

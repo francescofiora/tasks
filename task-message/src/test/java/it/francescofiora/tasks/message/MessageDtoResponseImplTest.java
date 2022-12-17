@@ -65,7 +65,7 @@ class MessageDtoResponseImplTest {
   }
 
   @Test
-  void equalsVerifier() throws Exception {
+  void equalsVerifier() {
     var response1 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
     var response2 = buildResponse(ID, TASK_TYPE_LONG, RESULT, STATUS_TERMINATED);
     TestUtils.checkEqualHashAndToString(response1, response2);

@@ -5,14 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.batch.item.ExecutionContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Abstract Tasklet For Tests.
  */
-@ExtendWith(SpringExtension.class)
 public class AbstractTaskletTest {
 
   private static final String KEY = "test";
