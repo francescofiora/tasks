@@ -11,13 +11,13 @@ class DatabaseSequenceTest {
   private static final String ID_2 = "ID2";
 
   @Test
-  void dtoEqualsObjectVerifier() throws Exception {
+  void dtoEqualsObjectVerifier() {
     Object dbSequence1 = TestUtils.createDatabaseSequence(ID_1);
     assertThat(dbSequence1).isNotEqualTo(new Object());
   }
 
   @Test
-  void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() {
     var dbSequence1 = TestUtils.createDatabaseSequence(ID_1);
     DatabaseSequence dbSequence2 = null;
     assertThat(dbSequence1).isNotEqualTo(dbSequence2);

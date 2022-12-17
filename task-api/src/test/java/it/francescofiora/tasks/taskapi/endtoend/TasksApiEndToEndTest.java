@@ -54,12 +54,12 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   private ObjectMapper mapper;
 
   @Test
-  void testAuth() throws Exception {
+  void testAuth() {
     testUnauthorized(TASKS_URI);
   }
 
   @Test
-  void testCreateTask() throws Exception {
+  void testCreateTask() {
     var newTaskDto = TestUtils.createNewTaskDto();
     var id = createAndReturnId(TASKS_URI, newTaskDto, ALERT_CREATED);
 
@@ -90,7 +90,7 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   }
 
   @Test
-  void testBadRequest() throws Exception {
+  void testBadRequest() {
     var newTaskDto = TestUtils.createNewTaskDto();
 
     // description
@@ -147,7 +147,7 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   }
 
   @Test
-  void testGetTaskBadRequest() throws Exception {
+  void testGetTaskBadRequest() {
     assertGetBadRequest(TASKS_URI + "/999999999999999999999999", String.class, "id.badRequest",
         PARAM_NOT_VALID_LONG);
   }

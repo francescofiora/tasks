@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class ResultDtoTest {
 
   @Test
-  void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() {
     var resultDto1 = new ResultDto();
     resultDto1.setValue("Value1");
     var resultDto2 = new ResultDto();

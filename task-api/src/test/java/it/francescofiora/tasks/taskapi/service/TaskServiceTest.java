@@ -25,55 +25,32 @@ import it.francescofiora.tasks.taskapi.service.mapper.TaskMapperImpl;
 import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 class TaskServiceTest {
 
   private static final Long ID = 1L;
   private static final String ERROR_MSG = "Error message";
 
-  private TaskService taskService;
-
-  @MockBean
-  private SequenceGeneratorService sequenceGenerator;
-
-  @MockBean
-  private TaskRepository taskRepository;
-
-  @MockBean
-  private TaskMapper taskMapper;
-
-  @MockBean
-  private JmsProducer jmsProducer;
-
-  /**
-   * Set up.
-   */
-  @BeforeEach
-  void setUp() {
-    taskService =
-        new TaskServiceImpl(taskRepository, taskMapper, sequenceGenerator, jmsProducer);
-  }
-
   @Test
-  void testCreate() throws Exception {
+  void testCreate() {
     var task = new Task();
+    var taskMapper = mock(TaskMapper.class);
     when(taskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
 
+    var taskRepository = mock(TaskRepository.class);
     when(taskRepository.save(any(Task.class))).thenReturn(task);
 
     var expected = new TaskDto();
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
 
     var taskDto = new NewTaskDto();
+    var jmsProducer = mock(JmsProducer.class);
+    var taskService = new TaskServiceImpl(taskRepository, taskMapper,
+        mock(SequenceGeneratorService.class), jmsProducer);
     var actual = taskService.create(taskDto);
     assertThat(actual).isEqualTo(expected);
 
@@ -81,10 +58,12 @@ class TaskServiceTest {
   }
 
   @Test
-  void testSendError() throws Exception {
+  void testSendError() {
     var task = new Task();
+    var taskMapper = mock(TaskMapper.class);
     when(taskMapper.toEntity(any(NewTaskDto.class))).thenReturn(task);
 
+    var taskRepository = mock(TaskRepository.class);
     when(taskRepository.save(any(Task.class))).thenReturn(task);
 
     var jmsProducerErr = mock(JmsProducer.class);
@@ -92,7 +71,7 @@ class TaskServiceTest {
         .send(any(MessageDtoRequest.class));
 
     var taskServiceErr = new TaskServiceImpl(taskRepository, new TaskMapperImpl(),
-        sequenceGenerator, jmsProducerErr);
+        mock(SequenceGeneratorService.class), jmsProducerErr);
 
     var actual = taskServiceErr.create(new NewTaskDto());
     assertThat(actual.getResult().getValue()).isEqualTo(ERROR_MSG);
@@ -100,48 +79,61 @@ class TaskServiceTest {
   }
 
   @Test
-  void testPatchNotFound() throws Exception {
+  void testPatchNotFound() {
     var taskDto = new UpdatableTaskDto();
+    var taskService = new TaskServiceImpl(mock(TaskRepository.class), mock(TaskMapper.class),
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     assertThrows(NotFoundAlertException.class, () -> taskService.patch(taskDto));
   }
 
   @Test
-  void testPatch() throws Exception {
+  void testPatch() {
     var task = new Task();
+    var taskRepository = mock(TaskRepository.class);
     when(taskRepository.findById(ID)).thenReturn(Optional.of(task));
 
     var taskDto = new UpdatableTaskDto();
     taskDto.setId(ID);
+    var taskService = new TaskServiceImpl(taskRepository, mock(TaskMapper.class),
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     taskService.patch(taskDto);
-
   }
 
   @Test
-  void testFindAll() throws Exception {
+  void testFindAll() {
     var task = new Task();
-    when(taskRepository.findAll(any(Pageable.class)))
-        .thenReturn(new PageImpl<Task>(List.of(task)));
+    var taskRepository = mock(TaskRepository.class);
+    when(taskRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<Task>(List.of(task)));
     var expected = new TaskDto();
+    var taskMapper = mock(TaskMapper.class);
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
     var pageable = PageRequest.of(1, 1);
+    var taskService = new TaskServiceImpl(taskRepository, taskMapper,
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     var page = taskService.findAll(pageable);
     assertThat(page.getContent().get(0)).isEqualTo(expected);
   }
 
   @Test
-  void testFindOneNotFound() throws Exception {
+  void testFindOneNotFound() {
+    var taskService = new TaskServiceImpl(mock(TaskRepository.class), mock(TaskMapper.class),
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     var taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isNotPresent();
   }
 
   @Test
-  void testFindOne() throws Exception {
+  void testFindOne() {
     var task = new Task();
     task.setId(ID);
+    var taskRepository = mock(TaskRepository.class);
     when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
     var expected = new TaskDto();
+    var taskMapper = mock(TaskMapper.class);
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
 
+    var taskService = new TaskServiceImpl(taskRepository, taskMapper,
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     var taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isPresent();
     var actual = taskOpt.get();
@@ -149,24 +141,32 @@ class TaskServiceTest {
   }
 
   @Test
-  void testDelete() throws Exception {
+  void testDelete() {
+    var taskService = new TaskServiceImpl(mock(TaskRepository.class), mock(TaskMapper.class),
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     taskService.delete(ID);
   }
 
   @Test
-  void testResponse() throws Exception {
+  void testResponse() {
     var task = new Task();
     task.setId(ID);
+    var taskRepository = mock(TaskRepository.class);
     when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
 
     var response = new MessageDtoResponseImpl().taskId(ID).result("Result");
+    var taskService = new TaskServiceImpl(taskRepository, mock(TaskMapper.class),
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     taskService.response(response);
   }
 
   @Test
-  void testResponseNotFound() throws Exception {
+  void testResponseNotFound() {
+    var taskRepository = mock(TaskRepository.class);
     when(taskRepository.findById(ID)).thenReturn(Optional.empty());
     var response = new MessageDtoResponseImpl().taskId(ID).result("Result");
+    var taskService = new TaskServiceImpl(taskRepository, mock(TaskMapper.class),
+        mock(SequenceGeneratorService.class), mock(JmsProducer.class));
     assertThrows(JmsException.class, () -> taskService.response(response));
   }
 }

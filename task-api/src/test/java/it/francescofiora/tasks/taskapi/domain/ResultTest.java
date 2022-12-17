@@ -11,13 +11,13 @@ class ResultTest {
   private static final String VALUE_2 = "Result2";
 
   @Test
-  void equalsObjectVerifier() throws Exception {
+  void equalsObjectVerifier() {
     Object result1 = TestUtils.createResult(VALUE_1);
     assertThat(result1).isNotEqualTo(new Object());
   }
 
   @Test
-  void equalsVerifier() throws Exception {
+  void equalsVerifier() {
     var result1 = TestUtils.createResult(VALUE_1);
     Result result2 = null;
 

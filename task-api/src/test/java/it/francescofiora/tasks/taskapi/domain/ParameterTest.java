@@ -11,13 +11,13 @@ class ParameterTest {
   private static final String NAME_2 = "Name2";
 
   @Test
-  void equalsObjectVerifier() throws Exception {
+  void equalsObjectVerifier() {
     Object parameter1 = TestUtils.createParameter(NAME_1);
     assertThat(parameter1).isNotEqualTo(new Object());
   }
 
   @Test
-  void equalsVerifier() throws Exception {
+  void equalsVerifier() {
     var parameter1 = TestUtils.createParameter(NAME_1);
     Parameter parameter2 = null;
 

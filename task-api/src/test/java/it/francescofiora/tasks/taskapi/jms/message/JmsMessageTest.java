@@ -39,13 +39,13 @@ class JmsMessageTest {
   }
 
   @Test
-  void equalsObjectVerifier() throws Exception {
+  void equalsObjectVerifier() {
     Object message1 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
     assertThat(message1).isNotEqualTo(new Object());
   }
 
   @Test
-  void equalsVerifier() throws Exception {
+  void equalsVerifier() {
     var message1 = new JmsMessage(RESPONSE, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message1);
     JmsMessage message2 = null;

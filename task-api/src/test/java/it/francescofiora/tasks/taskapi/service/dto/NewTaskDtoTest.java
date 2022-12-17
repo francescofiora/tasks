@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class NewTaskDtoTest {
 
   @Test
-  void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() {
     var newTaskDto1 = TestUtils.createNewTaskDto();
     newTaskDto1.setDescription("Description");
     var newTaskDto2 = TestUtils.createNewTaskDto();
