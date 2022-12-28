@@ -17,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -38,6 +37,7 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
   private static final String ALERT_NOT_FOUND = "TaskDto.notFound";
 
   private static final String PARAM_PAGE_20 = "0 20";
+  private static final String PARAM_PAGE_10 = "0 10";
   private static final String PARAM_NOT_VALID_LONG =
       "'id' should be a valid 'Long' and '999999999999999999999999' isn't";
 
@@ -72,10 +72,15 @@ class TasksApiEndToEndTest extends AbstractTestEndToEnd {
     assertThat(taskDto.getParameters()).hasSize(newTaskDto.getParameters().size());
     assertThat(taskDto.getParameters()).isEqualTo(newTaskDto.getParameters());
 
-    var taskDtoArr =
-        get(TASKS_URI, PageRequest.of(1, 1), TaskDto[].class, ALERT_GET, PARAM_PAGE_20);
-    assertThat(taskDtoArr).isNotEmpty();
-    var option = Stream.of(taskDtoArr).filter(task -> task.getId().equals(id)).findAny();
+    var tasks = get(TASKS_URI, TaskDto[].class, ALERT_GET, PARAM_PAGE_20);
+    assertThat(tasks).isNotEmpty();
+    var option = Stream.of(tasks).filter(task -> task.getId().equals(id)).findAny();
+    assertThat(option).isPresent().contains(taskDto);
+
+    var pageRequest = TestUtils.createPageRequestAsMap(0, 10);
+    tasks = get(TASKS_URI, pageRequest, TaskDto[].class, ALERT_GET, PARAM_PAGE_10);
+    assertThat(tasks).isNotEmpty();
+    option = Stream.of(tasks).filter(task -> task.getId().equals(id)).findAny();
     assertThat(option).isPresent().contains(taskDto);
 
     var updatabletaskDto = TestUtils.createUpdatableTaskDto(id);

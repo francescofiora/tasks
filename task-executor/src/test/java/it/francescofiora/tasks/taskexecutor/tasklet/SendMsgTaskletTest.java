@@ -24,7 +24,6 @@ import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -42,7 +41,7 @@ class SendMsgTaskletTest {
   @Autowired
   private JobLauncherTestUtils jobLauncherTestUtils;
 
-  @SpyBean
+  @Autowired
   private JmsProducer jmsProducer;
 
   private Task createTask() {

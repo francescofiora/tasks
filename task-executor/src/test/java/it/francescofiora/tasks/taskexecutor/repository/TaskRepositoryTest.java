@@ -13,7 +13,7 @@ class TaskRepositoryTest extends AbstractTestRepository {
   private TaskRepository taskRepository;
 
   @Test
-  void testCrud() throws Exception {
+  void testCrud() {
     var expected1 = TestUtils.createLongTask();
     var expected2 = TestUtils.createShortTask2();
     taskRepository.save(expected1);

@@ -40,7 +40,7 @@ class JmsMessageTest {
   }
 
   @Test
-  void equalsVerifier() throws Exception {
+  void equalsVerifier() {
     var message1 = new JmsMessage(REQUEST, ID, TIMESTAMP);
     TestUtils.checkEqualHashAndToString(message1, message1);
     assertThat(message1.equals(null)).isFalse();

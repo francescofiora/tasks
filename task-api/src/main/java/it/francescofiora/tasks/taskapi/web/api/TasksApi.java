@@ -2,12 +2,15 @@ package it.francescofiora.tasks.taskapi.web.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.francescofiora.tasks.message.enumeration.TaskStatus;
+import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.service.TaskService;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -35,6 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TasksApi extends AbstractApi {
 
   private static final String ENTITY_NAME = "TaskDto";
+  private static final String TAG = "task";
 
   private final TaskService taskService;
 
@@ -46,15 +51,12 @@ public class TasksApi extends AbstractApi {
   /**
    * {@code POST  /tasks} : Create a new task.
    *
-   * @param taskDto the taskDto to create.
-   * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new
-   *         taskDto, or with status {@code 400 (Bad Request)} if the task has already an ID.
+   * @param taskDto the task to create
+   * @return the {@link ResponseEntity}
    */
-  @Operation(summary = "Add new Task", description = "Add a new Task to the system",
-      tags = {"task"})
+  @Operation(summary = "Add new Task", description = "Add a new Task to the system", tags = {TAG})
   @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Task created"),
-      @ApiResponse(responseCode = "400", description = "Invalid input, object invalid"),
-      @ApiResponse(responseCode = "409", description = "An existing Task already exists")})
+      @ApiResponse(responseCode = "400", description = "Invalid input, object invalid")})
   @PostMapping("/tasks")
   public ResponseEntity<Void> createTask(
       @Parameter(description = "Add new Task") @Valid @RequestBody NewTaskDto taskDto) {
@@ -65,13 +67,11 @@ public class TasksApi extends AbstractApi {
   /**
    * {@code PATCH  /tasks:id} : Patches an existing task.
    *
-   * @param taskDto the taskDto to patch.
+   * @param taskDto the task to patch
    * @param id the id of the author to update
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with status
-   *         {@code 400 (Bad Request)} if the taskDto is not valid, or with status
-   *         {@code 500 (Internal Server Error)} if the taskDto couldn't be patched.
+   * @return the {@link ResponseEntity}
    */
-  @Operation(summary = "Patch Task", description = "Patch an Task to the system", tags = {"task"})
+  @Operation(summary = "Patch Task", description = "Patch an Task to the system", tags = {TAG})
   @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Task patched"),
       @ApiResponse(responseCode = "400", description = "Invalid input, object invalid"),
       @ApiResponse(responseCode = "404", description = "Not found")})
@@ -91,32 +91,41 @@ public class TasksApi extends AbstractApi {
   /**
    * {@code GET  /tasks} : get all the tasks.
    *
-   * @param pageable the pagination information.
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
+   * @param description the description
+   * @param type the type of the task
+   * @param status the status of the task
+   * @param pageable the pagination information
+   * @return the {@link ResponseEntity} with the list of tasks
    */
   @Operation(summary = "Searches tasks",
       description = "By passing in the appropriate options, "
           + "you can search for available tasks in the system",
-      tags = {"task"})
+      tags = {TAG})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Search results matching criteria",
           content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = TaskDto.class)))),
       @ApiResponse(responseCode = "400", description = "Bad input parameter")})
   @GetMapping("/tasks")
-  public ResponseEntity<List<TaskDto>> getAllTasks(Pageable pageable) {
-    return getResponse(taskService.findAll(pageable));
+  public ResponseEntity<List<TaskDto>> getAllTasks(
+      @Parameter(description = "Description", example = "description",
+          in = ParameterIn.QUERY) @RequestParam(required = false) String description,
+      @Parameter(description = "Type of task", example = "SHORT",
+          in = ParameterIn.QUERY) @RequestParam(required = false) TaskType type,
+      @Parameter(description = "Status of task", example = "TERMINATED",
+          in = ParameterIn.QUERY) @RequestParam(required = false) TaskStatus status,
+      @Parameter(example = "{\n  \"page\": 0,  \"size\": 10}",
+          in = ParameterIn.QUERY) Pageable pageable) {
+    return getResponse(taskService.findAll(description, type, status, pageable));
   }
 
   /**
    * {@code GET  /tasks/:id} : get the "id" task.
    *
-   * @param id the id of the taskDto to retrieve.
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the taskDto, or
-   *         with status {@code 404 (Not Found)}.
+   * @param id the id of the taskDto to retrieve
+   * @return the {@link ResponseEntity} with the task
    */
-  @Operation(summary = "Searches task by 'id'", description = "Searches task by 'id'",
-      tags = {"task"})
+  @Operation(summary = "Searches task by 'id'", description = "Searches task by 'id'", tags = {TAG})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Search results matching criteria",
           content = @Content(schema = @Schema(implementation = TaskDto.class))),
@@ -131,12 +140,10 @@ public class TasksApi extends AbstractApi {
   /**
    * {@code DELETE  /tasks} : Deletes an existing task.
    *
-   * @param id the id of the taskDto to retrieve.
-   * @return the {@link ResponseEntity} with status {@code 200 (OK)} or with status
-   *         {@code 400 (Bad Request)} if the taskDto is not valid, or with status
-   *         {@code 500 (Internal Server Error)} if the taskDto couldn't be deleted.
+   * @param id the id of the task to retrieve
+   * @return the {@link ResponseEntity}
    */
-  @Operation(summary = "delete Task", description = "delete an Task to the system", tags = {"task"})
+  @Operation(summary = "delete Task", description = "delete an Task to the system", tags = {TAG})
   @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Task deleted"),
       @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
       @ApiResponse(responseCode = "404", description = "not found")})

@@ -1,6 +1,8 @@
 package it.francescofiora.tasks.taskapi.service;
 
 import it.francescofiora.tasks.message.MessageDtoResponse;
+import it.francescofiora.tasks.message.enumeration.TaskStatus;
+import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.service.dto.NewTaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.TaskDto;
 import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
@@ -31,10 +33,13 @@ public interface TaskService {
   /**
    * Get all the tasks.
    *
+   * @param description the description
+   * @param type the type of the task
+   * @param status the status of the task
    * @param pageable the pagination information.
    * @return the list of entities.
    */
-  Page<TaskDto> findAll(Pageable pageable);
+  Page<TaskDto> findAll(String description, TaskType type, TaskStatus status, Pageable pageable);
 
   /**
    * Get the "id" task.

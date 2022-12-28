@@ -2,6 +2,7 @@ package it.francescofiora.tasks.taskexecutor.web.errors;
 
 import it.francescofiora.tasks.taskexecutor.web.util.HeaderUtil;
 import java.util.stream.Collectors;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,5 +100,18 @@ public class GlobalControllerExceptionHandler {
         .headers(HeaderUtil.createFailureAlert(ex.getEntityName() + ALERT_NOT_FOUND,
             ex.getErrorKey(), ex.getMessage()))
         .build();
+  }
+
+  /**
+   * Handle Property Reference Exception.
+   *
+   * @param ex PropertyReferenceException
+   * @return ResponseEntity
+   */
+  @ExceptionHandler(PropertyReferenceException.class)
+  public ResponseEntity<Void> handlePropertyReferenceException(PropertyReferenceException ex) {
+
+    return createBadRequest(
+        HeaderUtil.createFailureAlert(ALERT_BAD_REQUEST, ex.getPropertyName(), ex.getMessage()));
   }
 }

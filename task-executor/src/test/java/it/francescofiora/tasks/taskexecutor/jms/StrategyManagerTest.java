@@ -13,49 +13,30 @@ import it.francescofiora.tasks.taskexecutor.jms.impl.StrategyManagerImpl;
 import it.francescofiora.tasks.taskexecutor.jms.message.JmsMessage;
 import it.francescofiora.tasks.taskexecutor.util.TestUtils;
 import java.util.Date;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 class StrategyManagerTest {
 
-  private StrategyManager strategyManager;
+  private static final String MESSAGE_ID = "ID";
 
-  private JobLauncher jobLauncher;
-
-  private Job jobLong;
-  private Job jobShort;
-  private Job jobNope;
-
-  /**
-   * Set up.
-   */
-  @BeforeEach
-  void setUp() {
-    jobLauncher = mock(JobLauncher.class);
-
-    jobLong = mock(Job.class);
-    when(jobLong.getName()).thenReturn(JobType.LONG.name());
-
-    jobShort = mock(Job.class);
-    when(jobShort.getName()).thenReturn(JobType.SHORT.name());
-
-    jobNope = mock(Job.class);
-    when(jobNope.getName()).thenReturn(JobType.NOPE.name());
-
-    strategyManager = new StrategyManagerImpl(jobLauncher, new Job[] {jobLong, jobShort, jobNope});
+  private Job createJob(JobType type) {
+    var job = mock(Job.class);
+    when(job.getName()).thenReturn(type.name());
+    return job;
   }
 
   @Test
   void testExec() throws Exception {
     var request = TestUtils.createMessageDtoRequest();
-    var message = new JmsMessage(request, "ID", new Date().getTime());
+    var message = new JmsMessage(request, MESSAGE_ID, new Date().getTime());
 
+    var jobLauncher = mock(JobLauncher.class);
+    var jobLong = createJob(JobType.LONG);
+    var strategyManager = new StrategyManagerImpl(jobLauncher,
+        new Job[] {jobLong, createJob(JobType.SHORT), createJob(JobType.NOPE)});
     strategyManager.exec(message);
     verify(jobLauncher).run(eq(jobLong), any(JobParameters.class));
   }
@@ -63,19 +44,27 @@ class StrategyManagerTest {
   @Test
   void testExecNope() throws Exception {
     var request = TestUtils.createMessageDtoRequestNewType();
-    var message = new JmsMessage(request, "ID", new Date().getTime());
+    var message = new JmsMessage(request, MESSAGE_ID, new Date().getTime());
 
+    var jobLauncher = mock(JobLauncher.class);
+    var jobNope = createJob(JobType.NOPE);
+    var strategyManager = new StrategyManagerImpl(jobLauncher,
+        new Job[] {createJob(JobType.LONG), createJob(JobType.SHORT), jobNope});
     strategyManager.exec(message);
     verify(jobLauncher).run(eq(jobNope), any(JobParameters.class));
   }
 
   @Test
   void testExecException() throws Exception {
+    var jobLauncher = mock(JobLauncher.class);
+    var jobLong = createJob(JobType.LONG);
     when(jobLauncher.run(eq(jobLong), any(JobParameters.class))).thenThrow(new RuntimeException());
 
     var request = TestUtils.createMessageDtoRequest();
-    var message = new JmsMessage(request, "ID", new Date().getTime());
+    var message = new JmsMessage(request, MESSAGE_ID, new Date().getTime());
 
+    var strategyManager = new StrategyManagerImpl(jobLauncher,
+        new Job[] {jobLong, createJob(JobType.SHORT), createJob(JobType.NOPE)});
     assertThrows(JmsException.class, () -> strategyManager.exec(message));
   }
 }

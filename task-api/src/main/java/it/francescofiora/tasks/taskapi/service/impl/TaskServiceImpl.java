@@ -3,6 +3,7 @@ package it.francescofiora.tasks.taskapi.service.impl;
 import it.francescofiora.tasks.message.MessageDtoRequestImpl;
 import it.francescofiora.tasks.message.MessageDtoResponse;
 import it.francescofiora.tasks.message.enumeration.TaskStatus;
+import it.francescofiora.tasks.message.enumeration.TaskType;
 import it.francescofiora.tasks.taskapi.domain.Parameter;
 import it.francescofiora.tasks.taskapi.domain.Result;
 import it.francescofiora.tasks.taskapi.domain.Task;
@@ -20,6 +21,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,6 +38,10 @@ import org.springframework.stereotype.Service;
 public class TaskServiceImpl implements TaskService {
 
   private static final String ENTITY_NAME = "TaskDto";
+  private static final GenericPropertyMatcher PROPERTY_MATCHER_DEFAULT =
+      GenericPropertyMatchers.contains().ignoreCase();
+  private static final GenericPropertyMatcher PROPERTY_MATCHER_EXACT =
+      GenericPropertyMatchers.exact();
 
   private final TaskRepository taskRepository;
   private final TaskMapper taskMapper;
@@ -82,9 +91,19 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public Page<TaskDto> findAll(Pageable pageable) {
+  public Page<TaskDto> findAll(String description, TaskType type, TaskStatus status,
+      Pageable pageable) {
     log.debug("Request to get all Tasks");
-    return taskRepository.findAll(pageable).map(taskMapper::toDto);
+    var task = new Task();
+    task.setDescription(description);
+    task.setType(type);
+    task.setStatus(status);
+    task.setParameters(null);
+    var exampleMatcher = ExampleMatcher.matchingAll()
+        .withMatcher("description", PROPERTY_MATCHER_DEFAULT)
+        .withMatcher("type", PROPERTY_MATCHER_EXACT).withMatcher("status", PROPERTY_MATCHER_EXACT);
+    var example = Example.of(task, exampleMatcher);
+    return taskRepository.findAll(example, pageable).map(taskMapper::toDto);
   }
 
   @Override

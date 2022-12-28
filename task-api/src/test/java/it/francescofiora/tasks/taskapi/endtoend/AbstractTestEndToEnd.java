@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Abstract Test class for EndToEnd tests.
@@ -51,23 +52,24 @@ public class AbstractTestEndToEnd {
   protected <T> ResponseEntity<T> unauthorizedGetWrongUser(String path, Class<T> responseType) {
     var headers = new HttpHeaders();
     headers.setBasicAuth("wrong_user", "wrong_password");
-    var request = new HttpEntity<>(null, headers);
+    var request = new HttpEntity<>(headers);
     return restTemplate.exchange(getPath(path), HttpMethod.GET, request, responseType);
   }
 
   protected <T> ResponseEntity<T> performGet(String path, Class<T> responseType) {
-    var request = new HttpEntity<>(null, createHttpHeaders());
+    var request = new HttpEntity<>(createHttpHeaders());
     return restTemplate.exchange(getPath(path), HttpMethod.GET, request, responseType);
   }
 
-  protected <T> ResponseEntity<T> performGet(String path, Pageable pageable,
+  protected <T> ResponseEntity<T> performGet(String path, MultiValueMap<String, String> pageable,
       Class<T> responseType) {
-    var request = new HttpEntity<>(pageable, createHttpHeaders());
-    return restTemplate.exchange(getPath(path), HttpMethod.GET, request, responseType);
+    var request = new HttpEntity<>(createHttpHeaders());
+    var uri = UriComponentsBuilder.fromHttpUrl(getPath(path)).queryParams(pageable).build();
+    return restTemplate.exchange(uri.toUriString(), HttpMethod.GET, request, responseType);
   }
 
   protected ResponseEntity<Void> performDelete(String path) {
-    var request = new HttpEntity<>(null, createHttpHeaders());
+    var request = new HttpEntity<>(createHttpHeaders());
     return restTemplate.exchange(getPath(path), HttpMethod.DELETE, request, Void.class);
   }
 
@@ -132,8 +134,8 @@ public class AbstractTestEndToEnd {
     return value;
   }
 
-  protected <T> T get(String path, Pageable pageable, Class<T> responseType, String alert,
-      String param) {
+  protected <T> T get(String path, MultiValueMap<String, String> pageable, Class<T> responseType,
+      String alert, String param) {
     var result = performGet(path, pageable, responseType);
     checkHeaders(result.getHeaders(), alert, param);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -149,8 +151,8 @@ public class AbstractTestEndToEnd {
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
-  protected <T> void assertGetNotFound(String path, Pageable pageable, Class<T> responseType,
-      String alert, String param) {
+  protected <T> void assertGetNotFound(String path, MultiValueMap<String, String> pageable,
+      Class<T> responseType, String alert, String param) {
     var result = performGet(path, pageable, responseType);
     checkHeadersError(result.getHeaders(), alert, param);
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

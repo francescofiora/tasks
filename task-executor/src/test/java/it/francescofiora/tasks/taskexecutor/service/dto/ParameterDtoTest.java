@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class ParameterDtoTest {
 
   @Test
-  void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() {
     var parameterDto1 = TestUtils.createParameterDto();
     var parameterDto2 = TestUtils.createParameterDto();
     TestUtils.checkEqualHashAndToString(parameterDto1, parameterDto2);

@@ -26,6 +26,8 @@ import it.francescofiora.tasks.taskapi.web.errors.NotFoundAlertException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -103,14 +105,15 @@ class TaskServiceTest {
   void testFindAll() {
     var task = new Task();
     var taskRepository = mock(TaskRepository.class);
-    when(taskRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<Task>(List.of(task)));
+    when(taskRepository.findAll(ArgumentMatchers.<Example<Task>>any(), any(Pageable.class)))
+        .thenReturn(new PageImpl<Task>(List.of(task)));
     var expected = new TaskDto();
     var taskMapper = mock(TaskMapper.class);
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
     var pageable = PageRequest.of(1, 1);
     var taskService = new TaskServiceImpl(taskRepository, taskMapper,
         mock(SequenceGeneratorService.class), mock(JmsProducer.class));
-    var page = taskService.findAll(pageable);
+    var page = taskService.findAll(null, null, null, pageable);
     assertThat(page.getContent().get(0)).isEqualTo(expected);
   }
 

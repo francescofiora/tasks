@@ -1,7 +1,6 @@
 package it.francescofiora.tasks.taskexecutor.tasklet;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 import it.francescofiora.tasks.taskexecutor.config.SpringBatchConfig;
@@ -22,7 +21,6 @@ import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -40,7 +38,7 @@ class LongTaskletTest {
   @Autowired
   private JobLauncherTestUtils jobLauncherTestUtils;
 
-  @SpyBean
+  @Autowired
   private TaskService taskService;
 
   @Test
@@ -53,7 +51,7 @@ class LongTaskletTest {
     var jobExecution = jobLauncherTestUtils.launchStep(LongTasklet.NAME, new ExecutionContext(map));
     assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
 
-    verify(taskService).save(eq(task));
+    verify(taskService).save(task);
   }
 
   @Configuration

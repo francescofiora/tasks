@@ -18,10 +18,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 class TaskServiceTest {
 
@@ -29,7 +30,7 @@ class TaskServiceTest {
   private static final Long TASK_REF = 10L;
 
   @Test
-  void testCreate() throws Exception {
+  void testCreate() {
     var task = new Task();
     task.setId(ID);
     var taskRepository = mock(TaskRepository.class);
@@ -41,7 +42,7 @@ class TaskServiceTest {
   }
 
   @Test
-  void testFindByTaskRef() throws Exception {
+  void testFindByTaskRef() {
     var task = new Task();
     task.setId(ID);
     var taskRepository = mock(TaskRepository.class);
@@ -54,28 +55,29 @@ class TaskServiceTest {
   }
 
   @Test
-  void testFindAll() throws Exception {
+  void testFindAll() {
     var task = new Task();
     var taskRepository = mock(TaskRepository.class);
-    when(taskRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<Task>(List.of(task)));
+    when(taskRepository.findAll(ArgumentMatchers.<Example<Task>>any(), any(Pageable.class)))
+        .thenReturn(new PageImpl<Task>(List.of(task)));
     var expected = new TaskExecutorDto();
     var taskMapper = mock(TaskMapper.class);
     when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
     var pageable = PageRequest.of(1, 1);
     var taskService = new TaskServiceImpl(taskRepository, taskMapper);
-    var page = taskService.findAll(pageable);
+    var page = taskService.findAll(null, null, null, null, pageable);
     assertThat(page.getContent().get(0)).isEqualTo(expected);
   }
 
   @Test
-  void testFindOneNotFound() throws Exception {
+  void testFindOneNotFound() {
     var taskService = new TaskServiceImpl(mock(TaskRepository.class), mock(TaskMapper.class));
     var taskOpt = taskService.findOne(ID);
     assertThat(taskOpt).isNotPresent();
   }
 
   @Test
-  void testFindOne() throws Exception {
+  void testFindOne() {
     var task = new Task();
     task.setId(ID);
     var taskRepository = mock(TaskRepository.class);
@@ -92,7 +94,7 @@ class TaskServiceTest {
   }
 
   @Test
-  void testDelete() throws Exception {
+  void testDelete() {
     var task = new Task();
     task.setId(ID);
     task.setParameters(Set.of(new Parameter()));
@@ -105,7 +107,7 @@ class TaskServiceTest {
   }
 
   @Test
-  void testDeleteNope() throws Exception {
+  void testDeleteNope() {
     var taskRepository = mock(TaskRepository.class);
     when(taskRepository.findById(eq(ID))).thenReturn(Optional.empty());
 

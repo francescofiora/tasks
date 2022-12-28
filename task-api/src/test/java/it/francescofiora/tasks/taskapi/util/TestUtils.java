@@ -19,6 +19,8 @@ import it.francescofiora.tasks.taskapi.service.dto.UpdatableTaskDto;
 import it.francescofiora.tasks.util.DtoIdentifier;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 /**
  * Utility for testing.
@@ -242,5 +244,19 @@ public final class TestUtils {
     assertThat(obj1.equals(obj2)).isFalse();
     assertThat(obj1.hashCode()).isNotEqualTo(obj2.hashCode());
     assertThat(obj1.toString()).isNotEqualTo(obj2.toString());
+  }
+
+  /**
+   * Create PageRequest As MultiValueMap.
+   *
+   * @param page the page
+   * @param size the size
+   * @return the MultiValueMap
+   */
+  public static MultiValueMap<String, String> createPageRequestAsMap(int page, int size) {
+    MultiValueMap<String, String> pageRequest = new LinkedMultiValueMap<>();
+    pageRequest.add("page", String.valueOf(page));
+    pageRequest.add("size", String.valueOf(size));
+    return pageRequest;
   }
 }

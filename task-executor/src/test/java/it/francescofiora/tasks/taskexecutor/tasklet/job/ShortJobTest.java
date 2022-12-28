@@ -2,7 +2,6 @@ package it.francescofiora.tasks.taskexecutor.tasklet.job;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -92,8 +91,7 @@ class ShortJobTest {
       taskInProgress.setId(ID);
       taskInProgress.setStatus(TaskStatus.IN_PROGRESS);
 
-      when(taskService.findByTaskRef(eq(TASK_REF_IN_PROGRESS)))
-          .thenReturn(Optional.of(taskInProgress));
+      when(taskService.findByTaskRef(TASK_REF_IN_PROGRESS)).thenReturn(Optional.of(taskInProgress));
 
       return taskService;
     }

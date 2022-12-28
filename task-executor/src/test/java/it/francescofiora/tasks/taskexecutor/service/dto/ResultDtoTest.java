@@ -10,7 +10,7 @@ class ResultDtoTest {
   private static final String VALUE = "Value";
 
   @Test
-  void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() {
     var resultDto1 = new ResultDto();
     resultDto1.setValue(VALUE);
     var resultDto2 = new ResultDto();

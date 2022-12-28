@@ -1,6 +1,8 @@
 package it.francescofiora.tasks.taskexecutor.service.impl;
 
+import it.francescofiora.tasks.message.enumeration.TaskStatus;
 import it.francescofiora.tasks.taskexecutor.domain.Task;
+import it.francescofiora.tasks.taskexecutor.domain.enumeration.JobType;
 import it.francescofiora.tasks.taskexecutor.repository.TaskRepository;
 import it.francescofiora.tasks.taskexecutor.service.TaskService;
 import it.francescofiora.tasks.taskexecutor.service.dto.TaskExecutorDto;
@@ -8,6 +10,10 @@ import it.francescofiora.tasks.taskexecutor.service.mapper.TaskMapper;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
+
+  private static final GenericPropertyMatcher PROPERTY_MATCHER_DEFAULT =
+      GenericPropertyMatchers.contains().ignoreCase();
+  private static final GenericPropertyMatcher PROPERTY_MATCHER_EXACT =
+      GenericPropertyMatchers.exact();
 
   private final TaskRepository taskRepository;
   private final TaskMapper taskMapper;
@@ -41,9 +52,22 @@ public class TaskServiceImpl implements TaskService {
 
   @Override
   @Transactional(readOnly = true)
-  public Page<TaskExecutorDto> findAll(Pageable pageable) {
+  public Page<TaskExecutorDto> findAll(JobType jobName, Long taskRef, String type,
+      TaskStatus status, Pageable pageable) {
     log.debug("Request to get all Tasks");
-    return taskRepository.findAll(pageable).map(taskMapper::toDto);
+    var task = new Task();
+    task.setJobName(jobName);
+    task.setTaskRef(taskRef);
+    task.setTaskType(type);
+    task.setStatus(status);
+    task.setParameters(null);
+    var exampleMatcher = ExampleMatcher.matchingAll()
+        .withMatcher("jobName", PROPERTY_MATCHER_EXACT)
+        .withMatcher("taskRef", PROPERTY_MATCHER_EXACT)
+        .withMatcher("type", PROPERTY_MATCHER_DEFAULT)
+        .withMatcher("status", PROPERTY_MATCHER_EXACT);
+    var example = Example.of(task, exampleMatcher);
+    return taskRepository.findAll(example, pageable).map(taskMapper::toDto);
   }
 
   @Override

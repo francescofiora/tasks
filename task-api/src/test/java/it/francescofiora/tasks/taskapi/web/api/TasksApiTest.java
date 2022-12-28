@@ -154,7 +154,7 @@ class TasksApiTest extends AbstractTestApi {
     var pageable = PageRequest.of(1, 1);
     var expected = new TaskDto();
     expected.setId(ID);
-    given(taskService.findAll(any(Pageable.class)))
+    given(taskService.findAll(any(), any(), any(), any(Pageable.class)))
         .willReturn(new PageImpl<TaskDto>(List.of(expected)));
 
     var result = performGet(TASKS_URI, pageable).andExpect(status().isOk()).andReturn();
